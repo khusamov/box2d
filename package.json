@@ -1,0 +1,11 @@
+{
+	"name": "khusamov-box2d",
+	"description": "Исследование библиотеки box2d",
+	"packageManager": "yarn@3.1.1",
+	"workspaces": [
+		"packages/*"
+	],
+	"scripts": {
+		"start": "yarn workspaces foreach --include 'sample1' run start"
+	}
+}
