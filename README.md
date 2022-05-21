@@ -5,6 +5,9 @@ Box2D
 https://www.npmjs.com/package/@box2d/core  
 https://github.com/flyover/box2d.ts
 
+Rewrite of Box2D physics engine  
+https://github.com/shakiba/planck.js
+
 Top Games made with Box2D tagged 2D  
 https://itch.io/games/made-with-box2d/tag-2d
 

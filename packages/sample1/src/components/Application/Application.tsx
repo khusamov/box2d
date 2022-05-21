@@ -1,9 +1,33 @@
-import styles from './Application.module.scss'
+import {ApplicationStyle} from './Application.module.scss';
+import useResizeObserver from 'use-resize-observer';
+import {useRequestAnimationFrame} from '../../hooks/useRequestAnimationFrame';
+// import {Box2dRenderer} from '../renderer/Box2dRenderer';
+// import {createBox2dWorld, update} from '../../model/createBox2dWorld';
+import {createPlanckWorld, update} from '../../model/createPlanckWorld';
+import {Canvas} from '../svg/Canvas';
+import {PlanckRenderer} from '../renderer/PlanckRenderer';
 
-export default function Application() {
+const mirrorY = (height: number) => `scale(1, -1), translate(0, -${height})`
+
+// const world = createBox2dWorld()
+const world = createPlanckWorld()
+
+export function Application() {
+	const {ref, height = 0} = useResizeObserver()
+	useRequestAnimationFrame(step => update(world, step))
+
+	const cameraTransform = [
+		mirrorY(height),
+		`scale(10)`,
+	]
+
 	return (
-		<div className={styles.Application}>
-			Application
+		<div ref={ref} className={ApplicationStyle}>
+			<Canvas>
+				<g transform={cameraTransform.join(', ')}>
+					<PlanckRenderer world={world}/>
+				</g>
+			</Canvas>
 		</div>
 	)
 }
