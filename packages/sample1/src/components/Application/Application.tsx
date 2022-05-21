@@ -13,12 +13,12 @@ const mirrorY = (height: number) => `scale(1, -1), translate(0, -${height})`
 const world = createPlanckWorld()
 
 export function Application() {
-	const {ref, height = 0} = useResizeObserver()
+	const {ref, width = 0, height = 0} = useResizeObserver()
 	useRequestAnimationFrame(step => update(world, step))
 
 	const cameraTransform = [
 		mirrorY(height),
-		`scale(10)`,
+		`translate(${width / 2}, ${height / 2}), scale(14)`,
 	]
 
 	return (
