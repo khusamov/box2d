@@ -1,6 +1,15 @@
 # box2d
 Исследование библиотеки box2d
 
+ECS  
+https://en.wikipedia.org/wiki/Entity_component_system  
+https://habr.com/ru/company/mygames/blog/590953/  
+https://github.com/Doraku/DefaultEcs  
+https://github.com/Doraku/DefaultEcs/tree/master/source/Sample  
+
+Документация на Planck  
+https://github.com/shakiba/planck.js/wiki
+
 Box2D  
 https://www.npmjs.com/package/@box2d/core  
 https://github.com/flyover/box2d.ts

@@ -1406,6 +1406,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/events@npm:^3":
+  version: 3.0.0
+  resolution: "@types/events@npm:3.0.0"
+  checksum: 9a424c2da210957d5636e0763e8c9fc3aaeee35bf411284ddec62a56a6abe31de9c7c2e713dabdd8a76ff98b47db2bd52f61310be6609641d6234cc842ecbbe3
+  languageName: node
+  linkType: hard
+
 "@types/minimist@npm:^1.2.0":
   version: 1.2.2
   resolution: "@types/minimist@npm:1.2.2"
@@ -1594,6 +1601,28 @@ __metadata:
   checksum: 348edfdd931b0b50868b55402c01c3f64df1d4c229ab6f063539a5025fd6c5f5bb8a0cab409bbed8d75d34762d22aa91b7c20b4204eb8177063158d9ba792981
   languageName: node
   linkType: hard
+
+"arkanoid@workspace:packages/arkanoid":
+  version: 0.0.0-use.local
+  resolution: "arkanoid@workspace:packages/arkanoid"
+  dependencies:
+    "@parcel/packager-ts": 2.5.0
+    "@parcel/transformer-sass": 2.5.0
+    "@parcel/transformer-svg-react": ^2.5.0
+    "@parcel/transformer-typescript-types": 2.5.0
+    "@types/events": ^3
+    "@types/react": ^18.0.9
+    "@types/react-dom": ^18.0.3
+    "@types/three": ^0.140.0
+    events: ^3.3.0
+    node-sass: ^7.0.1
+    parcel: ^2.5.0
+    planck: ^1.0.0-alpha.4
+    react: ^18.1.0
+    react-dom: ^18.1.0
+    use-resize-observer: ^9.0.0
+  languageName: unknown
+  linkType: soft
 
 "arrify@npm:^1.0.1":
   version: 1.0.1
@@ -2291,6 +2320,13 @@ __metadata:
   version: 1.0.5
   resolution: "escape-string-regexp@npm:1.0.5"
   checksum: 6092fda75c63b110c706b6a9bfde8a612ad595b628f0bd2147eea1d3406723020810e591effc7db1da91d80a71a737a313567c5abb3813e8d9c71f4aa595b410
+  languageName: node
+  linkType: hard
+
+"events@npm:^3.3.0":
+  version: 3.3.0
+  resolution: "events@npm:3.3.0"
+  checksum: f6f487ad2198aa41d878fa31452f1a3c00958f46e9019286ff4787c84aac329332ab45c9cdc8c445928fc6d7ded294b9e005a7fce9426488518017831b272780
   languageName: node
   linkType: hard
 
