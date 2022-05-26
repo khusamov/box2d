@@ -18,7 +18,7 @@ export function update(world: World, timeStep = 1 / 60) {
 }
 
 function world3(world: World) {
-	const COUNT = 200;
+	const COUNT = 100;
 
 	const ground = world.createBody();
 
@@ -27,23 +27,27 @@ function world3(world: World) {
 		position: Vec2(0, 0)
 	});
 
-	container.createFixture(new Box(0.5, 20, Vec2(20, 0), 0), 5);
-	container.createFixture(new Box(0.5, 20, Vec2(-20, 0), 0), 5);
-	container.createFixture(new Box(20, 0.5, Vec2(0, 20), 0), 5);
-	container.createFixture(new Box(20, 0.5, Vec2(0, -20), 0), 5);
+	const density = 5
+	container.createFixture(new Box(0.5, 20, Vec2(20, 0), 0), density);
+	container.createFixture(new Box(0.5, 20, Vec2(-20, 0), 0), density);
+	container.createFixture(new Box(20, 0.5, Vec2(0, 20), 0), density);
+	container.createFixture(new Box(20, 0.5, Vec2(0, -20), 0), density);
 
 	world.createJoint(new RevoluteJoint({
-		motorSpeed: 0.08 * Math.PI,
+		motorSpeed: -0.2 * Math.PI,
 		maxMotorTorque: 1e8,
 		enableMotor: true,
 	}, ground, container, Vec2(0, 0)));
 
-	const shape = new Box(0.5, 0.5);
 	let count = 0;
 	while (count < COUNT) {
-		const body = world.createDynamicBody();
+		const size = Math.random(0.1, 1)
+		const shape = new Box(size, size);
+		const body = world.createDynamicBody({
+			linearDamping: 0.5 / size
+		});
 		body.setPosition(Vec2(Math.random(-10, 10), 10 + Math.random(-10, 10)));
-		body.createFixture(shape, 1);
+		body.createFixture(shape, 10);
 		++count;
 	}
 }
