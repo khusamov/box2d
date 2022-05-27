@@ -12,7 +12,7 @@ svg.CanvasStyle {
 		vector-effect: non-scaling-stroke;
 	}
 
-	path, circle {
+	path, circle, line, rect {
 		fill: transparent;
 		stroke: black;
 	}

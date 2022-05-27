@@ -3,36 +3,14 @@ import useResizeObserver from 'use-resize-observer';
 import {useRequestAnimationFrame} from '../../hooks/useRequestAnimationFrame';
 import {Canvas} from '../svg/Canvas';
 import {PlanckRenderer} from '../renderer/PlanckRenderer';
+import {PlanckWorld} from '../../game/data/PlanckWorld';
+import {Level1} from '../../game/levels/Level1';
 import {Game} from '../../game/base/Game';
-import {PlanckWorldRule} from '../../game/rigidbody/PlanckWorldRule';
-import {RigidbodyCreatorRule} from '../../game/rigidbody/RigidbodyCreatorRule';
-import {Entity} from '../../game/base/Entity';
-import {Rigidbody} from '../../game/rigidbody/Rigidbody';
-import {BoxShape} from '../../game/rigidbody/shape/BoxShape';
-import {PlanckWorld} from '../../game/rigidbody/PlanckWorld';
 
 const mirrorY = (height: number) => `scale(1, -1), translate(0, -${height})`
 
-const game = new Game([
-	new PlanckWorldRule,
-	new RigidbodyCreatorRule
-])
-
+const game = new Game(new Level1)
 game.init()
-
-game.entityList.push(
-	new Entity('DynamicSampleBody', [
-		new Rigidbody('dynamic', 0, 0),
-		new BoxShape(1, 1, 1)
-	])
-)
-
-game.entityList.push(
-	new Entity('GroundBody', [
-		new Rigidbody('static', 0, -10),
-		new BoxShape(10, 1, 1)
-	])
-)
 
 export function Application() {
 	const {ref, width = 0, height = 0} = useResizeObserver()
@@ -50,6 +28,8 @@ export function Application() {
 			<Canvas>
 				<g transform={cameraTransform.join(', ')}>
 					{planckWorldData && planckWorldData.world && <PlanckRenderer world={planckWorldData.world}/>}
+					<line x1={0} y1={100} x2={0} y2={-100} style={{stroke: 'silver'}}/>
+					<line x1={100} y1={0} x2={-100} y2={0} style={{stroke: 'silver'}}/>
 				</g>
 			</Canvas>
 		</div>

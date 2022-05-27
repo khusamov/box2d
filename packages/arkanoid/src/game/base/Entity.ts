@@ -1,10 +1,10 @@
-import {Data} from './Data';
 import {IEntity} from './interfaces/IEntity';
+import {IData} from './interfaces/IData';
 
-type DataConstructor<D extends Data> = new(...params: any[]) => D
-type DataParameters<D extends Data> = ConstructorParameters<DataConstructor<D>>
-const isDataClass = <D extends Data>(object: object): object is DataConstructor<D> => object.toString().startsWith('class')
-type TDataPredicate = (data: Data) => boolean
+type DataConstructor<D extends IData> = new(...params: any[]) => D
+type DataParameters<D extends IData> = ConstructorParameters<DataConstructor<D>>
+type TDataPredicate = (data: IData) => boolean
+const isDataClass = <D extends IData>(object: object): object is DataConstructor<D> => object.toString().startsWith('class')
 
 /**
  * Игровая сущность.
@@ -12,11 +12,12 @@ type TDataPredicate = (data: Data) => boolean
 export class Entity implements IEntity {
 	constructor(
 		public name: string,
+
 		/**
 		 * Внимание, в массиве данных не может находится элемент одного типа более одного экземпляра.
 		 * @private
 		 */
-		public data: Data[] = []
+		public data: IData[] = []
 	) {}
 
 	/**
@@ -25,7 +26,7 @@ export class Entity implements IEntity {
 	 * @param DataClass
 	 * @param parameters
 	 */
-	public addData<D extends Data>(DataClass: DataConstructor<D>, ...parameters: DataParameters<D>) {
+	public addData<D extends IData>(DataClass: DataConstructor<D>, ...parameters: DataParameters<D>) {
 		if (this.hasData<D>(DataClass)) {
 			throw new Error(`Повторное добавление данных '${DataClass.name}' в игровую сущность`)
 		}
@@ -37,7 +38,7 @@ export class Entity implements IEntity {
 	 * @param DataClass
 	 * @param parameters
 	 */
-	public replaceData<D extends Data>(DataClass: DataConstructor<D>, ...parameters: DataParameters<D>) {
+	public replaceData<D extends IData>(DataClass: DataConstructor<D>, ...parameters: DataParameters<D>) {
 		this.deleteData(DataClass)
 		this.addData(DataClass, ...parameters)
 	}
@@ -46,7 +47,7 @@ export class Entity implements IEntity {
 	 * Получить данные. Если данные не найдены, то они будут созданы.
 	 * @param DataClass
 	 */
-	public getData<D extends Data>(DataClass: DataConstructor<D>): D {
+	public getData<D extends IData>(DataClass: DataConstructor<D>): D {
 		let data = this.data.find(data => data instanceof DataClass)
 
 		if (!data) {
@@ -60,7 +61,7 @@ export class Entity implements IEntity {
 	 * Удалить данные.
 	 * @param DataClass
 	 */
-	public deleteData<D extends Data>(DataClass: DataConstructor<D>) {
+	public deleteData<D extends IData>(DataClass: DataConstructor<D>) {
 		this.data = this.data.filter(data => !(data instanceof DataClass))
 	}
 
@@ -68,7 +69,7 @@ export class Entity implements IEntity {
 	 * Проверка наличия данных.
 	 * @param predicate
 	 */
-	public hasData<D extends Data>(predicate: DataConstructor<D> | TDataPredicate): boolean {
+	public hasData<D extends IData>(predicate: DataConstructor<D> | TDataPredicate): boolean {
 		const found = this.data.find(
 			data => isDataClass(predicate)
 				? data instanceof predicate

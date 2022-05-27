@@ -1,6 +1,6 @@
 import {IRule} from '../base/interfaces/IRule';
 import {IGameEnvironment} from '../base/interfaces/IGameEnvironment';
-import {PlanckWorld} from './PlanckWorld';
+import {PlanckWorld} from '../data/PlanckWorld';
 import {Vec2, World} from 'planck';
 import {Entity} from '../base/Entity';
 
