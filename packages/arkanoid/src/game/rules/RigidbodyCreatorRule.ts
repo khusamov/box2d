@@ -5,11 +5,11 @@ import {PlanckWorld} from '../data/PlanckWorld';
 import {Vec2, Box, Shape, Circle} from 'planck';
 import {BoxShape} from '../data/BoxShape';
 import {CircleShape} from '../data/CircleShape';
-import {Data} from '../base/Data';
 import {EdgeShape} from '../data/EdgeShape';
 import {Edge} from 'planck/dist/planck';
+import {IData} from '../base/interfaces/IData';
 
-const isShapeData = (data: Data): data is CircleShape | BoxShape | EdgeShape => (
+const isShapeData = (data: IData): data is CircleShape | BoxShape | EdgeShape => (
 	data instanceof CircleShape
 	|| data instanceof BoxShape
 	|| data instanceof EdgeShape
