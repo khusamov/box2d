@@ -58,7 +58,7 @@ export class RigidbodyCreatorRule implements IRule {
 
 				if (!shapeData) {
 					console.warn('Добавьте к сущности данные CircleShape или BoxShape или EdgeShape')
-					throw new Error(`Не определена форма твердого тела сущности '${rigidbodyEntity.name}'`)
+					throw new Error(`Не определена форма твердого тела сущности`)
 				}
 
 				let shape: Shape;

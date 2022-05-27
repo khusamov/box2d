@@ -25,19 +25,19 @@ export class Level1 implements ILevel {
 		}
 
 		game.entityList.push(
-			new Entity('GameEdge1', [
+			new Entity([
 				new Rigidbody('static', 0, 0),
 				new EdgeShape(-gameEdge.width / 2, -gameEdge.height / 2, -gameEdge.width / 2, gameEdge.height / 2)
 			]),
-			new Entity('GameEdge2', [
+			new Entity([
 				new Rigidbody('static', 0, 0),
 				new EdgeShape(gameEdge.width / 2, -gameEdge.height / 2, gameEdge.width / 2, gameEdge.height / 2)
 			]),
-			new Entity('GameEdge3', [
+			new Entity([
 				new Rigidbody('static', 0, 0),
 				new EdgeShape(-gameEdge.width / 2, -gameEdge.height / 2, gameEdge.width / 2, -gameEdge.height / 2)
 			]),
-			new Entity('GameEdge4', [
+			new Entity([
 				new Rigidbody('static', 0, 0),
 				new EdgeShape(-gameEdge.width / 2, gameEdge.height / 2, gameEdge.width / 2, gameEdge.height / 2)
 			])
@@ -45,15 +45,17 @@ export class Level1 implements ILevel {
 
 		const baseballBatOffsetY = -15
 
+		// Бита.
 		game.entityList.push(
-			new Entity('BaseballBat', [
+			new Entity([
 				new Rigidbody('dynamic', 0, baseballBatOffsetY),
 				new BoxShape(4, 0.5, 1)
 			])
 		)
 
+		// Мячик.
 		game.entityList.push(
-			new Entity('Ball', [
+			new Entity([
 				new Rigidbody('dynamic', 0, 1 + baseballBatOffsetY),
 				new CircleShape(0.5, 1)
 			])
@@ -85,7 +87,6 @@ function createBricks(parameters: IBrickWallParameters = {}) {
 	for (let row = 0; row < rows; row++) {
 		for (let col = 0; col < cols; col++) {
 			result.push(createBrick(
-				cols * row + col,
 				-offsetCenterX + x + col * (width + padding),
 				-offsetCenterY + y + row * (height + padding),
 				width, height
@@ -95,8 +96,8 @@ function createBricks(parameters: IBrickWallParameters = {}) {
 	return result
 }
 
-function createBrick(index: number, x: number, y: number, width: number, height: number) {
-	return new Entity('Brick#' + index, [
+function createBrick(x: number, y: number, width: number, height: number) {
+	return new Entity([
 		new Rigidbody('static', x, y),
 		new BoxShape(width / 2, height / 2, 1)
 	])

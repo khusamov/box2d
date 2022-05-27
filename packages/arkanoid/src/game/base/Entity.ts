@@ -11,8 +11,6 @@ const isDataClass = <D extends IData>(object: object): object is DataConstructor
  */
 export class Entity implements IEntity {
 	constructor(
-		public name: string,
-
 		/**
 		 * Внимание, в массиве данных не может находится элемент одного типа более одного экземпляра.
 		 * @private
@@ -83,8 +81,7 @@ export class Entity implements IEntity {
 	 * @link https://refactoring.guru/ru/design-patterns/prototype
 	 */
 	public clone(): Entity {
-		const dataCloneList = this.data.map(data => data.clone())
-		return new Entity(this.name, dataCloneList)
+		return new Entity(this.data.map(data => data.clone()))
 	}
 }
 

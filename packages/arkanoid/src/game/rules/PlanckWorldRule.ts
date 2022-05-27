@@ -17,7 +17,7 @@ export class PlanckWorldRule implements IRule {
 		let planckWorldEntity = game.entityList.find(entity => entity.hasData(PlanckWorld))
 
 		if (!planckWorldEntity) {
-			planckWorldEntity = new Entity('PlanckWorld', [new PlanckWorld])
+			planckWorldEntity = new Entity([new PlanckWorld])
 			game.entityList.push(planckWorldEntity)
 		}
 
