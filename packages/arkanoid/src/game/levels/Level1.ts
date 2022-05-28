@@ -25,40 +25,40 @@ export class Level1 implements ILevel {
 		}
 
 		game.entityList.push(
-			new Entity([
+			new Entity(
 				new Rigidbody('static', 0, 0),
 				new EdgeShape(-gameEdge.width / 2, -gameEdge.height / 2, -gameEdge.width / 2, gameEdge.height / 2)
-			]),
-			new Entity([
+			),
+			new Entity(
 				new Rigidbody('static', 0, 0),
 				new EdgeShape(gameEdge.width / 2, -gameEdge.height / 2, gameEdge.width / 2, gameEdge.height / 2)
-			]),
-			new Entity([
+			),
+			new Entity(
 				new Rigidbody('static', 0, 0),
 				new EdgeShape(-gameEdge.width / 2, -gameEdge.height / 2, gameEdge.width / 2, -gameEdge.height / 2)
-			]),
-			new Entity([
+			),
+			new Entity(
 				new Rigidbody('static', 0, 0),
 				new EdgeShape(-gameEdge.width / 2, gameEdge.height / 2, gameEdge.width / 2, gameEdge.height / 2)
-			])
+			)
 		)
 
 		const baseballBatOffsetY = -15
 
 		// Бита.
 		game.entityList.push(
-			new Entity([
+			new Entity(
 				new Rigidbody('dynamic', 0, baseballBatOffsetY),
 				new BoxShape(4, 0.5, 1)
-			])
+			)
 		)
 
 		// Мячик.
 		game.entityList.push(
-			new Entity([
+			new Entity(
 				new Rigidbody('dynamic', 0, 1 + baseballBatOffsetY),
 				new CircleShape(0.5, 1)
-			])
+			)
 		)
 
 		game.entityList.push(...createBricks({y: 10}))
@@ -97,8 +97,8 @@ function createBricks(parameters: IBrickWallParameters = {}) {
 }
 
 function createBrick(x: number, y: number, width: number, height: number) {
-	return new Entity([
+	return new Entity(
 		new Rigidbody('static', x, y),
 		new BoxShape(width / 2, height / 2, 1)
-	])
+	)
 }

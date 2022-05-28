@@ -2,40 +2,41 @@ import {IRule} from '../base/interfaces/IRule';
 import {IGameEnvironment} from '../base/interfaces/IGameEnvironment';
 import {PlanckWorld} from '../data/PlanckWorld';
 import {Vec2, World} from 'planck';
-import {Entity} from '../base/Entity';
+import {Entity, hasData} from '../base/Entity';
+import {isData} from '../base/interfaces/IData';
 
 export class PlanckWorldRule implements IRule {
 	private game: IGameEnvironment | undefined
 
-	constructor(
+	public constructor(
 		private gravity = new Vec2(0, -10)
 	) {}
 
-	init(game: IGameEnvironment): void {
+	public init(game: IGameEnvironment): void {
 		this.game = game
 
-		let planckWorldEntity = game.entityList.find(entity => entity.hasData(PlanckWorld))
+		let planckWorldEntity = game.entityList.find(isData(PlanckWorld))
 
 		if (!planckWorldEntity) {
-			planckWorldEntity = new Entity([new PlanckWorld])
+			planckWorldEntity = new Entity(new PlanckWorld)
 			game.entityList.push(planckWorldEntity)
 		}
 
-		const planckWorld = planckWorldEntity.getData(PlanckWorld)
-		if (!planckWorld.world) {
-			planckWorld.world = new World({
+		const planckWorldData = planckWorldEntity.find(isData(PlanckWorld))
+		if (planckWorldData && !planckWorldData.world) {
+			planckWorldData.world = new World({
 				gravity: this.gravity,
 				blockSolve: true
 			})
 		}
 	}
 
-	update(timeInterval: number) {
+	public update(timeInterval: number) {
 		if (this.game) {
 			const planckWorldData = (
 				this.game.entityList
-					.find(entity => entity.hasData(PlanckWorld))
-					?.getData(PlanckWorld)
+					.find(hasData(PlanckWorld))
+					?.find(isData(PlanckWorld))
 			)
 			if (planckWorldData) {
 				planckWorldData.world?.step(timeInterval)

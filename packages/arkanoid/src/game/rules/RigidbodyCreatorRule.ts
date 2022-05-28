@@ -7,7 +7,7 @@ import {BoxShape} from '../data/BoxShape';
 import {CircleShape} from '../data/CircleShape';
 import {EdgeShape} from '../data/EdgeShape';
 import {Edge} from 'planck/dist/planck';
-import {IData} from '../base/interfaces/IData';
+import {isData, IData} from '../base/interfaces/IData';
 
 const isShapeData = (data: IData): data is CircleShape | BoxShape | EdgeShape => (
 	data instanceof CircleShape
@@ -32,29 +32,34 @@ export class RigidbodyCreatorRule implements IRule {
 			const rigidbodyEntityList = entityList.filter(
 				// Выбираем сущности, для которых не созданы твердые тела.
 				entity => {
-					if (!entity.hasData(Rigidbody)) {
+					if (!entity.find(isData(Rigidbody))) {
 						return false
 					}
 					return (
-						!entity.getData(Rigidbody).body
-						&& (entity.hasData(BoxShape) || entity.hasData(CircleShape) || entity.hasData(EdgeShape))
+						!entity.find(isData(Rigidbody))?.body
+						&& (entity.find(isData(BoxShape)) || entity.find(isData(CircleShape)) || entity.find(isData(EdgeShape)))
 					)
 				}
 			)
 
-			const planckWorldData = entityList.find(entity => entity.hasData(PlanckWorld))?.getData(PlanckWorld)
+			const planckWorldData = entityList.find(entity => entity.find(isData(PlanckWorld)))?.find(isData(PlanckWorld))
 			if (!planckWorldData || !planckWorldData.world) {
 				return
 			}
 
 			for (const rigidbodyEntity of rigidbodyEntityList) {
-				const rigidbody = rigidbodyEntity.getData(Rigidbody)
+				const rigidbody = rigidbodyEntity.find(isData(Rigidbody))
+
+				if (!rigidbody) {
+					throw new Error('Не найдены данные Rigidbody')
+				}
+
 				rigidbody.body = planckWorldData.world.createBody({
 					type: rigidbody.type,
 					position: new Vec2(rigidbody.x, rigidbody.y)
 				})
 
-				const shapeData = rigidbodyEntity.data.find(isShapeData)
+				const shapeData = rigidbodyEntity.find(isShapeData)
 
 				if (!shapeData) {
 					console.warn('Добавьте к сущности данные CircleShape или BoxShape или EdgeShape')

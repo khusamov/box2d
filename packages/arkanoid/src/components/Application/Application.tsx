@@ -6,6 +6,7 @@ import {PlanckRenderer} from '../renderer/PlanckRenderer';
 import {PlanckWorld} from '../../game/data/PlanckWorld';
 import {Level1} from '../../game/levels/Level1';
 import {Game} from '../../game/base/Game';
+import {isData} from '../../game/base/interfaces/IData';
 
 const mirrorY = (height: number) => `scale(1, -1), translate(0, -${height})`
 
@@ -21,13 +22,18 @@ export function Application() {
 		`translate(${width / 2}, ${height / 2}), scale(14)`,
 	]
 
-	const planckWorldData = game.entityList.find(entity => entity.hasData(PlanckWorld))?.getData(PlanckWorld)
+	const world = (
+		game.entityList
+			.find(entity => entity.find(isData(PlanckWorld)))
+			?.find(isData(PlanckWorld))
+			?.world
+	)
 
 	return (
 		<div ref={ref} className={ApplicationStyle}>
 			<Canvas>
 				<g transform={cameraTransform.join(', ')}>
-					{planckWorldData && planckWorldData.world && <PlanckRenderer world={planckWorldData.world}/>}
+					{world && <PlanckRenderer world={world}/>}
 					<line x1={0} y1={100} x2={0} y2={-100} style={{stroke: 'silver'}}/>
 					<line x1={100} y1={0} x2={-100} y2={0} style={{stroke: 'silver'}}/>
 				</g>
