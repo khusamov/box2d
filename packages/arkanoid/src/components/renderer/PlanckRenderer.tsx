@@ -1,3 +1,4 @@
+import {Fragment} from 'react'
 import {World, Fixture, Edge, Polygon, Circle, Vec2} from 'planck';
 import {convertPlanckListToArray} from '../../functions/convertPlanckListToArray';
 import {toDegree} from '../../functions/toDegree';
@@ -38,7 +39,7 @@ interface IFixtureRendererProps {
 
 function FixtureRenderer({fixtureList}: IFixtureRendererProps) {
 	return (
-		<>
+		<Fragment>
 			{
 				fixtureList.map((fixture, index) => {
 					switch (fixture.getShape().getType()) {
@@ -76,6 +77,6 @@ function FixtureRenderer({fixtureList}: IFixtureRendererProps) {
 					return null
 				})
 			}
-		</>
+		</Fragment>
 	)
 }

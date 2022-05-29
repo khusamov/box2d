@@ -1,15 +1,16 @@
 import {IData} from '../base/interfaces/IData';
+import {Shape} from './Shape';
 
-export class CircleShape implements IData {
+export class CircleShape extends Shape implements IData {
 	constructor(
-		public radius: number = 0,
-		public density: number = 0
-	) {}
+		public radius: number = 0
+	) {
+		super()
+	}
 
 	clone() {
 		return new CircleShape(
-			this.radius,
-			this.density
+			this.radius
 		)
 	}
 }

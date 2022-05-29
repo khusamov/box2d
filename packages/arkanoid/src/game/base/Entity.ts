@@ -1,7 +1,15 @@
 import {IEntity} from './interfaces/IEntity';
 import {DataConstructor, IData, isData} from './interfaces/IData';
 
-export const hasData = <D extends IData>(DataClass: DataConstructor<D>) => (entity: IEntity) => entity.find(isData<D>(DataClass))
+// export const hasData = <D extends IData>(DataClass: DataConstructor<D>) => (entity: IEntity) => entity.find(isData<D>(DataClass))
+
+// hasAllOfData
+export function hasData(...DataClass: DataConstructor<IData>[]) {
+	return (entity: IEntity) => DataClass.reduce(
+		(result, DataClass) => result && entity.find(isData(DataClass)) !== undefined,
+		true
+	)
+}
 
 /**
  * Игровая сущность.
