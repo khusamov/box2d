@@ -3,7 +3,7 @@ import {RigidbodyCreatorRule} from './RigidbodyCreatorRule';
 import {ShapeCreatorRule} from './ShapeCreatorRule';
 import {FixtureCreatorRule} from './FixtureCreatorRule';
 
-export class PlanckEntityCreator extends MacroRule {
+export class PlanckEntityCreatorRule extends MacroRule {
 	constructor() {
 		super(
 			new RigidbodyCreatorRule,

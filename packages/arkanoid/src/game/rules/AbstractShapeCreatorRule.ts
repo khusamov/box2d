@@ -28,7 +28,9 @@ export class AbstractShapeCreatorRule<S extends Shape> implements IRule {
 			for (const entity of shapeUndefinedEntityList) {
 				const shapeData = entity.find(isData(this.ShapeClass))
 				if (shapeData) {
-					shapeData.shape = this.createShape(shapeData)
+					const shapeDataClone = shapeData.clone()
+					shapeDataClone.shape = this.createShape(shapeData)
+					entity.splice(entity.indexOf(shapeData), 1, shapeDataClone)
 				}
 			}
 		}

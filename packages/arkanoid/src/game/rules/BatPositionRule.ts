@@ -7,6 +7,10 @@ import {Identification} from '../data/Identification';
 import {Rigidbody} from '../data/Rigidbody';
 import {Vec2} from 'planck';
 
+/**
+ * Вместо BatPositionRule используйте BatMoveOrder.
+ * @deprecated
+ */
 export class BatPositionRule implements IRule {
 	private game: IGameEnvironment | undefined
 
@@ -31,7 +35,8 @@ export class BatPositionRule implements IRule {
 				if (mouse && batRigidbodyData && batRigidbodyData.body) {
 					batRigidbodyData.body.setPosition(
 						new Vec2(
-							mouse.x,
+							// mouse.x,
+							batRigidbodyData.body.getPosition().x + mouse.movementX,
 							batRigidbodyData.body.getPosition().y
 						)
 					)

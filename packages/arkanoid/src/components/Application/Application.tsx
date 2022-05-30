@@ -7,20 +7,23 @@ import {PlanckWorld} from '../../game/data/PlanckWorld';
 import {Level1} from '../../game/levels/Level1';
 import {Game} from '../../game/base/Game';
 import {isData} from '../../game/base/interfaces/IData';
-import {MouseEvent} from 'react';
-import {Mouse} from '../../game/data/Mouse';
+import {useRef} from 'react'
 import {Identification} from '../../game/data/Identification';
-import {BallState, BallStateType} from '../../game/data/BallState';
-import {Rigidbody} from '../../game/data/Rigidbody';
-import {Vec2} from 'planck';
+import {Entity} from '../../game/base/Entity'
+import {OrderExecutorRule} from '../../game/rules/OrderExecutorRule'
+import {StartGameOrder} from '../../game/orders/StartGameOrder'
+import {BatMoveOrder} from '../../game/orders/BatMoveOrder'
+import {useRequestPointerLock} from '../../hooks/useRequestPointerLock'
 
 const mirrorY = (height: number) => `scale(1, -1), translate(0, -${height})`
 
-const game = new Game(new Level1)
+const game = new Game(new Level1, new OrderExecutorRule)
+game.entityList.push(new Entity(new Identification({type: 'OrderList'})))
 game.init()
 
 export function Application() {
-	const {ref, width = 0, height = 0} = useResizeObserver()
+	const ref = useRef<HTMLDivElement>(null)
+	const {width = 0, height = 0} = useResizeObserver({ref})
 	useRequestAnimationFrame(game.update.bind(game))
 
 	const scale = 14
@@ -38,36 +41,29 @@ export function Application() {
 	)
 
 	const onMouseMove = (event: MouseEvent) => {
-		const mouse = (
-			game.entityList
-				.find(entity => entity.find(isData(Mouse)))
-				?.find(isData(Mouse))
-		)
-		if (mouse) {
-			mouse.x = (event.clientX - width / 2) / scale
-			mouse.y = -(event.clientY - height / 2) / scale
-		}
+		// Отдать приказ BatMoveOrder.
+		game.entityList.find(entity => {
+			const identification = entity.find(isData(Identification))
+			if (identification && identification.type === 'OrderList') {
+				entity.push(new BatMoveOrder(event.movementX / scale, event.movementY / scale))
+			}
+		})
 	}
 
 	const onMouseDown = () => {
 		// Отдать приказ StartGame.
-		const ballEntity = game.entityList.find(entity => {
-			const ballStateData = entity.find(isData(BallState))
+		game.entityList.find(entity => {
 			const identification = entity.find(isData(Identification))
-			return identification && identification.type === 'Ball' && ballStateData && ballStateData.state === BallStateType.Stopped
-		})
-		if (ballEntity) {
-			const ballStateData = ballEntity.find(isData(BallState))
-			const ballRigidbodyData = ballEntity.find(isData(Rigidbody))
-			if (ballStateData && ballRigidbodyData && ballRigidbodyData.body) {
-				ballStateData.state = BallStateType.Moving
-				ballRigidbodyData.body.applyForceToCenter(new Vec2(1000, 2500))
+			if (identification && identification.type === 'OrderList') {
+				entity.push(new StartGameOrder)
 			}
-		}
+		})
 	}
 
+	const [onClick] = useRequestPointerLock({ref, onMouseMove, onMouseDown})
+
 	return (
-		<div ref={ref} className={ApplicationStyle} onMouseMove={onMouseMove} onMouseDown={onMouseDown}>
+		<div ref={ref} className={ApplicationStyle} onClick={onClick}>
 			<Canvas>
 				<g transform={cameraTransform.join(', ')}>
 					{world && <PlanckRenderer world={world}/>}

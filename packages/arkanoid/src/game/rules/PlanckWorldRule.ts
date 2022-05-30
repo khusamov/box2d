@@ -9,7 +9,7 @@ export class PlanckWorldRule implements IRule {
 	private game: IGameEnvironment | undefined
 
 	public constructor(
-		private gravity = new Vec2(0, -10)
+		private gravity = new Vec2(0, 0)
 	) {}
 
 	public init(game: IGameEnvironment): void {

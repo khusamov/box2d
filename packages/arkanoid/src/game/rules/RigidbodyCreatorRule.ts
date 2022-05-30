@@ -3,6 +3,7 @@ import {IGameEnvironment} from '../base/interfaces/IGameEnvironment';
 import {Rigidbody} from '../data/Rigidbody';
 import {PlanckWorld} from '../data/PlanckWorld';
 import {isData} from '../base/interfaces/IData';
+import {Identification} from '../data/Identification'
 
 /**
  * Для новых сущностей без твердых тел требуется их создать.
@@ -40,7 +41,12 @@ export class RigidbodyCreatorRule implements IRule {
 					throw new Error('Не найдены данные Rigidbody')
 				}
 
-				rigidbodyData.body = planckWorldData.world.createBody(rigidbodyData.parameters)
+				const identification = rigidbodyEntity.find(isData(Identification))
+
+				rigidbodyData.body = planckWorldData.world.createBody({
+					userData: {identification, entity: rigidbodyEntity} || {},
+					...rigidbodyData.parameters
+				})
 			}
 		}
 	}

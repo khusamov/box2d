@@ -10,30 +10,27 @@ import {BoxShape} from '../data/BoxShape';
 import {CircleShape} from '../data/CircleShape';
 import {Fixture} from '../data/Fixture';
 import {Identification} from '../data/Identification';
-import {Mouse} from '../data/Mouse';
-import {BatPositionRule} from '../rules/BatPositionRule';
 import {BallPositionRule} from '../rules/BallPositionRule';
-import {PlanckEntityCreator} from '../rules/PlanckEntityCreator';
+import {PlanckEntityCreatorRule} from '../rules/PlanckEntityCreatorRule';
 import {BallState, BallStateType} from '../data/BallState';
 import {PolygonShape} from '../data/PolygonShape';
+import {RigidBodyDeleterRule} from '../rules/RigidBodyDeleterRule'
+import {BrickBallCollisionRule} from '../rules/BrickBallCollisionRule'
 
 export class Level1 implements ILevel {
-	public get ruleList() {
-		return [
-			new PlanckWorldRule(new Vec2(0, 0)),
-			new PlanckEntityCreator,
-			new BatPositionRule,
-			new BallPositionRule
-		]
-	}
+	readonly ruleList = [
+		new PlanckWorldRule,
+		new BrickBallCollisionRule,
+		new PlanckEntityCreatorRule,
+		new RigidBodyDeleterRule,
+		new BallPositionRule
+	]
 
 	public init(game: IGameEnvironment & IGameLifeCycle) {
 		const gameEdge = {
 			width: 70,
 			height: 40
 		}
-
-		game.entityList.push(new Entity(new Mouse))
 
 		game.entityList.push(
 			new Entity(
@@ -65,18 +62,22 @@ export class Level1 implements ILevel {
 		const batOffsetY = -15
 
 		// Бита.
+		const width = 11
+		const height = 0.5
+		const width2 = 5
+		const height2 = 0.5
 		game.entityList.push(
 			new Entity(
 				new Identification({type: 'Bat'}),
 				new Rigidbody({type: 'kinematic', position: new Vec2(0, batOffsetY), fixedRotation: true}),
 				new Fixture({density: 1, friction: 0}),
 				new PolygonShape(
-					new Vec2(-4.5, -1.5),
-					new Vec2(-4.5, 0.5),
-					new Vec2(-1.5, 1.5),
-					new Vec2(1.5, 1.5),
-					new Vec2(4.5, 0.5),
-					new Vec2(4.5, -1.5),
+					new Vec2(-width / 2, -(height + height2) / 2),
+					new Vec2(-width / 2, (height + height2) / 2 - height2),
+					new Vec2(-width2 / 2, (height + height2) / 2),
+					new Vec2(width2 / 2, (height + height2) / 2),
+					new Vec2(width / 2, (height + height2) / 2 - height2),
+					new Vec2(width / 2, -(height + height2) / 2),
 				)
 			)
 		)
