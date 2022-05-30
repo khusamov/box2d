@@ -1,0 +1,19 @@
+Найденные ошибки
+================
+
+No transformers found for index.html
+------------------------------------
+
+```
+@parcel/core: No transformers found for packages/arkanoid/src/index.html with pipeline: 'types'.
+```
+
+В файле `package.json` следует удалить следующие узлы:
+
+```json
+{
+	"main": "dist/main.js",
+	"module": "dist/module.js",
+	"types": "dist/types.d.ts"
+}
+```
