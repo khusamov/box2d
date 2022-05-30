@@ -1,6 +1,9 @@
 # box2d
 Исследование библиотеки box2d
 
+Демка:  
+https://khusamov.github.io/box2d/
+
 ECS  
 https://en.wikipedia.org/wiki/Entity_component_system  
 https://habr.com/ru/company/mygames/blog/590953/  
