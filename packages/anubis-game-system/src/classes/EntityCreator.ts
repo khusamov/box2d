@@ -16,6 +16,7 @@ export class EntityCreator {
 		const messageEmitter = resolve<MessageEmitter>('MessageEmitter')
 
 		const entity = new Entity()
+		entityDataList.push(entity)
 
 		const dataAddingOperation = new DataAddingOperation(entity, entityDataList, messageEmitter)
 		dataAddingOperation.execute(...dataList)
