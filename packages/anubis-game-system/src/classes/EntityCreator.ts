@@ -4,7 +4,6 @@ import {IData} from '../interfaces/IData'
 import {DataAddingOperation} from './DataAddingOperation'
 import {resolve} from 'inversion-of-control'
 import {MessageEmitter} from './MessageEmitter'
-import {EntityCreationMessage} from '../messages/EntityCreationMessage'
 
 /**
  * @event EntityCreationMessage
@@ -20,7 +19,6 @@ export class EntityCreator {
 
 		const dataAddingOperation = new DataAddingOperation(entity, entityDataList, messageEmitter)
 		dataAddingOperation.execute(...dataList)
-		messageEmitter.emit(new EntityCreationMessage(entity))
 
 		return entity
 	}
