@@ -2,7 +2,6 @@ import {IEntity} from '../interfaces/IEntity'
 import {resolve} from 'inversion-of-control'
 import {IData} from '../interfaces/IData'
 import {MessageEmitter} from './MessageEmitter'
-import {EntityDestructionMessage} from '../messages/EntityDestructionMessage'
 import {belongToEntity} from '../functions/belongToEntity'
 import {DataDeletingOperation} from './DataDeletingOperation'
 
@@ -26,7 +25,5 @@ export class EntityDestructor {
 
 		// Удалить саму сущность.
 		entityDataList.splice(entityDataList.indexOf(this.entity), 1)
-
-		messageEmitter.emit(new EntityDestructionMessage(this.entity))
 	}
 }
