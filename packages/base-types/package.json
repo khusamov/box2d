@@ -1,0 +1,29 @@
+{
+	"name": "base-types",
+	"version": "0.0.0",
+	"packageManager": "yarn@3.1.1",
+	"license": "MIT",
+	"main": "dist/main.js",
+	"module": "dist/module.js",
+	"types": "dist/types.d.ts",
+	"source": "src/index.ts",
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"build": "parcel build",
+		"build:watch": "parcel watch",
+		"prepublishOnly": "yarn build"
+	},
+	"dependencies": {
+		"events": "^3.3.0",
+		"react": "^18.1.0"
+	},
+	"devDependencies": {
+		"@parcel/packager-ts": "2.5.0",
+		"@parcel/transformer-typescript-types": "2.5.0",
+		"@types/react": "^18.0.9",
+		"parcel": "^2.5.0",
+		"typescript": "^4.6.4"
+	}
+}
