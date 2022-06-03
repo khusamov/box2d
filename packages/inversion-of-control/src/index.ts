@@ -1,0 +1,6 @@
+export {resolve} from './functions/resolve'
+export {register} from './functions/register'
+export {createResolver} from './functions/createResolver'
+export {isResolver} from './functions/isResolver'
+export type {IResolver} from './interfaces/IResolver'
+export type {TDependencyName, TDependencyContainer} from './types/TDependencyContainer'
