@@ -15,9 +15,11 @@ export class EntityCreator {
 		const entityDataList = resolve<IData[]>('EntityDataList')
 		const messageEmitter = resolve<MessageEmitter>('MessageEmitter')
 
+		// Создать новую сущность.
 		const entity = new Entity()
 		entityDataList.push(entity)
 
+		// Добавить данные в новую сущность.
 		const dataAddingOperation = new DataAddingOperation(entity, entityDataList, messageEmitter)
 		dataAddingOperation.execute(...dataList)
 
