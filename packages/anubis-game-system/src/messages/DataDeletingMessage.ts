@@ -1,11 +1,11 @@
 import {IData} from '../interfaces/IData'
 import {IEntity} from '../interfaces/IEntity'
-import {IMessage} from '../interfaces/IMessage'
+import {Message} from '../classes/Message'
 
 /**
  * Сообщение об удалении данных из сущности.
  */
-export class DataDeletingMessage implements IMessage {
+export class DataDeletingMessage extends Message {
 	public constructor(
 		/**
 		 * Удаляемые данные.
@@ -15,5 +15,7 @@ export class DataDeletingMessage implements IMessage {
 		 * Сущность, из которой данные были удалены.
 		 */
 		public readonly entity: IEntity
-	) {}
+	) {
+		super()
+	}
 }

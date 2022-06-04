@@ -1,5 +1,5 @@
-import {IMessage} from '../interfaces/IMessage'
 import {IEntity} from '../interfaces/IEntity'
+import {Message} from '../classes/Message'
 
 /**
  * Сообщение о создании игровой сущности.
@@ -8,8 +8,10 @@ import {IEntity} from '../interfaces/IEntity'
  *
  * @deprecated
  */
-export class EntityCreationMessage implements IMessage {
+export class EntityCreationMessage extends Message {
 	public constructor(
 		public readonly entity: IEntity
-	) {}
+	) {
+		super()
+	}
 }

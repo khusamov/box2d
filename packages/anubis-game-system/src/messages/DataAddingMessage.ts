@@ -1,6 +1,8 @@
 import {IData} from '../interfaces/IData'
-import {IMessage} from '../interfaces/IMessage'
+import {Message} from '../classes/Message'
 
-export class DataAddingMessage implements IMessage {
-	public constructor(public readonly data: IData) {}
+export class DataAddingMessage extends Message {
+	public constructor(public readonly data: IData) {
+		super()
+	}
 }
