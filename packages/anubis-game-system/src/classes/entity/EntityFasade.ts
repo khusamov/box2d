@@ -1,10 +1,10 @@
-import {IEntity} from '../interfaces/IEntity'
-import {IData} from '../interfaces/IData'
-import {DataAddingOperation} from './DataAddingOperation'
+import {IEntity} from '../../interfaces/IEntity'
+import {IData} from '../../interfaces/IData'
+import {DataAddingOperation} from '../data/operation/DataAddingOperation'
 import {resolve} from 'inversion-of-control'
-import {MessageEmitter} from './MessageEmitter'
-import {DataDeletingOperation} from './DataDeletingOperation'
-import {DataReplacingOperation} from './DataReplacingOperation'
+import {MessageEmitter} from '../message/MessageEmitter'
+import {DataDeletingOperation} from '../data/operation/DataDeletingOperation'
+import {DataReplacingOperation} from '../data/operation/DataReplacingOperation'
 
 /**
  * @event DataAddingMessage
@@ -35,8 +35,8 @@ export class EntityFasade {
 		return this
 	}
 
-	public replace(previousData: IData, data: IData) {
-		this.dataReplacingOperation.execute(previousData, data)
+	public replace<D extends IData>(previousData: D, data: D) {
+		this.dataReplacingOperation.execute<D>(previousData, data)
 		return this
 	}
 }

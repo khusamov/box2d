@@ -1,9 +1,9 @@
-import {IEntity} from '../interfaces/IEntity'
-import {IData} from '../interfaces/IData'
-import {MessageEmitter} from './MessageEmitter'
+import {IEntity} from '../../../interfaces/IEntity'
+import {IData} from '../../../interfaces/IData'
+import {MessageEmitter} from '../../message/MessageEmitter'
 import {DataAddingOperation} from './DataAddingOperation'
 import {DataDeletingOperation} from './DataDeletingOperation'
-import {DataReplacingMessage} from '../messages/DataReplacingMessage'
+import {DataReplacingMessage} from '../../../messages/DataReplacingMessage'
 
 /**
  * @event DataDeletingMessage
@@ -18,7 +18,7 @@ export class DataReplacingOperation {
 		private readonly messageEmitter: MessageEmitter
 	) {}
 
-	public execute(previousData: IData, data: IData) {
+	public execute<D extends IData>(previousData: D, data: D) {
 		const dataAddingOperation = new DataAddingOperation(this.entity, this.entityDataList, this.messageEmitter)
 		const dataDeletingOperation = new DataDeletingOperation(this.entity, this.entityDataList, this.messageEmitter)
 

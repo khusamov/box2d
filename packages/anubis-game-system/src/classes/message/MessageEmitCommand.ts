@@ -1,7 +1,7 @@
 import {ICommand} from 'base-types'
 import {resolve} from 'inversion-of-control'
 import {MessageEmitter} from './MessageEmitter'
-import {IMessage} from '../interfaces/IMessage'
+import {IMessage} from '../../interfaces/IMessage'
 
 /**
  * Команда для обработки сообщений из очереди resolve<IMessage[]>('MessageQueue').

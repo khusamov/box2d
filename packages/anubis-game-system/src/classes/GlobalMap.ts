@@ -2,6 +2,9 @@ import {TDependencyName} from 'inversion-of-control'
 
 export type TResolvedDependencyMap = Map<TDependencyName, any>
 
+/**
+ * Глобальные зависимости.
+ */
 export class GlobalMap {
 	private resolvedDependencyMap: TResolvedDependencyMap = new Map
 	public get<D = any>(dependencyName: TDependencyName, creator: () => D): D {

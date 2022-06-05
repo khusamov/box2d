@@ -1,5 +1,5 @@
 import {IData} from '../interfaces/IData'
-import {Message} from '../classes/Message'
+import {Message} from '../classes/message/Message'
 
 export class DataReplacingMessage extends Message {
 	public constructor(

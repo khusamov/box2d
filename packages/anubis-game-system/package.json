@@ -17,9 +17,9 @@
 		"prepublishOnly": "yarn build"
 	},
 	"dependencies": {
+		"base-types": "workspaces:*",
 		"events": "^3.3.0",
 		"inversion-of-control": "workspaces:*",
-		"base-types": "workspaces:*",
 		"react": "^18.1.0"
 	},
 	"devDependencies": {
@@ -27,6 +27,6 @@
 		"@parcel/transformer-typescript-types": "2.5.0",
 		"@types/react": "^18.0.9",
 		"parcel": "^2.5.0",
-		"typescript": "^4.6.4"
+		"typescript": "^4.7.3"
 	}
 }

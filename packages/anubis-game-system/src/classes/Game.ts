@@ -4,16 +4,19 @@ import {ILevel} from '../interfaces/ILevel'
 import {IData} from '../interfaces/IData'
 import {isEntity} from '../functions/isEntity'
 import {IMessage} from '../interfaces/IMessage'
-import {MessageEmitCommand} from './MessageEmitCommand'
-import {MacroRule} from './MacroRule'
+import {MessageEmitCommand} from './message/MessageEmitCommand'
 import {CommandTimer} from './CommandTimer'
-import {EntityDestructor} from './EntityDestructor'
+import {EntityDestructor} from './entity/EntityDestructor'
 
+/**
+ * Глобальное управление игрой.
+ * Инициализация уровня, запуск игры, постановка на паузу, остановка игры, уничтожение всех данных игры.
+ */
 export class Game {
 	public static readonly timer = new CommandTimer
 
 	public static init(level: ILevel) {
-		new MacroRule(...level.rules).execute()
+		level.execute()
 		resolve<IMessage[]>('MessageQueue').push(...level.messages || [])
 		resolve<ICommand[]>('CommandQueue').push(new MessageEmitCommand)
 	}

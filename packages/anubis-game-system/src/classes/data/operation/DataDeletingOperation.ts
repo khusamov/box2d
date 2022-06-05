@@ -1,9 +1,9 @@
-import {IEntity} from '../interfaces/IEntity'
-import {IData} from '../interfaces/IData'
-import {MessageEmitter} from './MessageEmitter'
-import {EntitySymbol} from './EntitySymbol'
-import {DataDeletingMessage} from '../messages/DataDeletingMessage'
-import {DataNotFoundError} from '../errors/DataNotFoundError'
+import {IEntity} from '../../../interfaces/IEntity'
+import {IData} from '../../../interfaces/IData'
+import {MessageEmitter} from '../../message/MessageEmitter'
+import {EntitySymbol} from '../../entity/EntitySymbol'
+import {DataDeletingMessage} from '../../../messages/DataDeletingMessage'
+import {DataNotFoundError} from '../../../errors/DataNotFoundError'
 
 /**
  * @event DataDeletingMessage

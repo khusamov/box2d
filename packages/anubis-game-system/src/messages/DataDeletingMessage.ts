@@ -1,6 +1,6 @@
 import {IData} from '../interfaces/IData'
 import {IEntity} from '../interfaces/IEntity'
-import {Message} from '../classes/Message'
+import {Message} from '../classes/message/Message'
 
 /**
  * Сообщение об удалении данных из сущности.
@@ -8,7 +8,7 @@ import {Message} from '../classes/Message'
 export class DataDeletingMessage extends Message {
 	public constructor(
 		/**
-		 * Удаляемые данные.
+		 * Удаленные данные.
 		 */
 		public readonly data: IData,
 		/**

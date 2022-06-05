@@ -1,6 +1,7 @@
 import {createResolver, resolve} from 'inversion-of-control'
 import {GlobalMap} from '../classes/GlobalMap'
-import {MessageEmitter} from '../classes/MessageEmitter'
+import {MessageEmitter} from '../classes/message/MessageEmitter'
+import {MessageDeferredEmitter} from '../classes/message/MessageDeferredEmitter'
 
 export const messageEmitterResolver = (
 	createResolver<MessageEmitter>(
@@ -8,7 +9,7 @@ export const messageEmitterResolver = (
 		() => (
 			resolve<GlobalMap>('GlobalMap').get(
 				'MessageEmitter',
-				() => new MessageEmitter
+				() => new MessageDeferredEmitter
 			)
 		)
 	)

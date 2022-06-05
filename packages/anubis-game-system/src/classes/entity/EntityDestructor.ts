@@ -1,17 +1,17 @@
-import {IEntity} from '../interfaces/IEntity'
+import {IEntity} from '../../interfaces/IEntity'
 import {resolve} from 'inversion-of-control'
-import {IData} from '../interfaces/IData'
-import {MessageEmitter} from './MessageEmitter'
-import {belongToEntity} from '../functions/belongToEntity'
-import {DataDeletingOperation} from './DataDeletingOperation'
+import {IData} from '../../interfaces/IData'
+import {MessageEmitter} from '../message/MessageEmitter'
+import {belongToEntity} from '../../functions/belongToEntity'
+import {DataDeletingOperation} from '../data/operation/DataDeletingOperation'
+import {IDestructor} from '../../interfaces/IDestructor'
 
 /**
  * Уничтожение игровой сущности.
  * Сначала удаляются все данные сущности, а затем и сама сущность.
  * @event DataDeletingMessage
- * @event EntityDestructionMessage
  */
-export class EntityDestructor {
+export class EntityDestructor implements IDestructor {
 	public constructor(private readonly entity: IEntity) {}
 
 	public destroy() {
