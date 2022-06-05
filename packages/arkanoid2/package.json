@@ -1,0 +1,48 @@
+{
+  "name": "arkanoid2",
+  "description": "sample1",
+  "version": "0.0.0",
+  "packageManager": "yarn@3.1.1",
+  "license": "MIT",
+  "source": "src/index.html",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "start": "parcel",
+    "build": "parcel build --target github-pages",
+    "serve": "serve ../../docs",
+    "check": "tsc --noEmit",
+    "prepublishOnly": "yarn build"
+  },
+  "targets": {
+    "github-pages": {
+      "distDir": "../../docs/arkanoid",
+      "publicUrl": "."
+    }
+  },
+  "devDependencies": {
+    "@parcel/packager-ts": "2.5.0",
+    "@parcel/transformer-sass": "2.5.0",
+    "@parcel/transformer-svg-react": "^2.5.0",
+    "@parcel/transformer-typescript-types": "2.5.0",
+    "@types/events": "^3",
+    "@types/react": "^18.0.9",
+    "@types/react-dom": "^18.0.3",
+    "@types/three": "^0.140.0",
+    "node-sass": "^7.0.1",
+    "parcel": "^2.5.0",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
+    "serve": "^13.0.2",
+    "typescript": "^4.7.3"
+  },
+  "dependencies": {
+    "anubis-game-system": "workspaces:*",
+    "base-types": "workspaces:*",
+    "events": "^3.3.0",
+    "inversion-of-control": "workspaces:*",
+    "planck": "^1.0.0-alpha.4",
+    "use-resize-observer": "^9.0.0"
+  }
+}
