@@ -1,0 +1,29 @@
+{
+	"name": "anubis-message-broker",
+	"version": "0.0.0",
+	"packageManager": "yarn@3.1.1",
+	"license": "MIT",
+	"main": "dist/main.js",
+	"module": "dist/module.js",
+	"types": "dist/types.d.ts",
+	"source": "src/index.ts",
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"build": "parcel build",
+		"build:watch": "parcel watch",
+		"check": "tsc --noEmit",
+		"prepublishOnly": "yarn build"
+	},
+	"dependencies": {
+		"base-types": "workspaces:*",
+		"events": "^3.3.0"
+	},
+	"devDependencies": {
+		"@parcel/packager-ts": "2.5.0",
+		"@parcel/transformer-typescript-types": "2.5.0",
+		"parcel": "^2.5.0",
+		"typescript": "^4.7.3"
+	}
+}
