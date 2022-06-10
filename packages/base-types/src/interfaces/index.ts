@@ -12,3 +12,4 @@ export type {ITyped} from './ITyped'
 
 export type {IQueue} from './IQueue'
 export type {IEventEmitter} from './IEventEmitter'
+export type {ITimer} from './ITimer'

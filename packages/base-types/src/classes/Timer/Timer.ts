@@ -1,11 +1,11 @@
-import {IStartable, IStoppable} from '../../interfaces';
+import {ITimer} from '../../interfaces'
 import {ETimerState, TTimerAction} from './timerTypes';
 import {handleByState} from './handleByState';
 
 /**
  * Простая реализация таймера.
  */
-export class Timer implements IStartable, IStoppable {
+export class Timer implements ITimer {
 	private timerId: number | undefined
 
 	/**
@@ -41,7 +41,7 @@ export class Timer implements IStartable, IStoppable {
 	 * @param timeout
 	 * @param action
 	 */
-	constructor(
+	public constructor(
 		private timeout: number,
 		private action: TTimerAction
 	) {}
