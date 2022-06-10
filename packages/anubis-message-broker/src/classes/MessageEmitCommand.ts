@@ -1,6 +1,7 @@
 import {ICommand} from 'base-types'
 import {IMessage} from '../interfaces/IMessage'
 import {IMessageEmitter} from '../interfaces/IMessageEmitter'
+import {IMessageEmitCommand} from '../interfaces/IMessageEmitCommand'
 
 /**
  * Команда для обработки сообщений из очереди resolve<IMessage[]>('MessageQueue').
@@ -8,7 +9,7 @@ import {IMessageEmitter} from '../interfaces/IMessageEmitter'
  * Команда после этого себя помещает заново в очередь команд resolve<ICommand[]>('CommandQueue').
  * Этот процесс можно заверишть вызовом метода stop().
  */
-export class MessageEmitCommand implements ICommand {
+export class MessageEmitCommand implements IMessageEmitCommand {
 	private active: boolean = true
 
 	public constructor(
