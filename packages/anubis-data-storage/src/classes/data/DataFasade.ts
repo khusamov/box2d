@@ -3,6 +3,7 @@ import {IData} from '../../interfaces/IData'
 import {DataDeletingOperation} from './DataDeletingOperation'
 import {DataReplacingOperation} from './DataReplacingOperation'
 import {parentNodeSymbol} from '../../interfaces/INode'
+import {IEntity} from '../../interfaces/IEntity'
 
 export class DataFasade {
 	private readonly dataDeletingOperation: DataDeletingOperation
@@ -12,18 +13,21 @@ export class DataFasade {
 		private readonly messageBroker: IMessageBroker,
 		private readonly data: IData
 	) {
-		const parentEntity = data[parentNodeSymbol]
-		if (!parentEntity) {
-			throw new Error('Не определена сущность')
-		}
 		this.dataDeletingOperation = new DataDeletingOperation(
 			this.messageBroker,
-			parentEntity
+			this.entity
 		)
 		this.dataReplacingOperation = new DataReplacingOperation(
 			this.messageBroker,
-			parentEntity
+			this.entity
 		)
+	}
+
+	public get entity(): IEntity {
+		if (!this.data[parentNodeSymbol]) {
+			throw new Error('Не определена сущность')
+		}
+		return this.data[parentNodeSymbol]
 	}
 
 	public delete() {

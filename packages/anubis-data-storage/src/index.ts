@@ -28,5 +28,6 @@ export {DataReplacingOperation} from './classes/data/DataReplacingOperation'
 
 export {Entity} from './classes/entity/Entity'
 export {EntityFasade} from './classes/entity/EntityFasade'
+export {EntityCollection} from './classes/entity/EntityCollection'
 export {EntityAddingOperation} from './classes/entity/EntityAddingOperation'
 export {EntityDeletingOperation} from './classes/entity/EntityDeletingOperation'
