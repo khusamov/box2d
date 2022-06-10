@@ -1,28 +1,40 @@
 Брокер сообщений
 ----------------
 
+Главная идея брокера сообщений в том, что сообщения:
+1) сначала попадают в очередь сообщений IMessage[] при помощи метода MessageBroker.emit(), 
+2) а затем оттуда извлекаются командой MessageEmitCommand при помощи метода IMessage[].shift()
+3) и отправляются в передатчик сообщений MessageEmitter при помощи метода MessageEmitter.emit()
+4) и вызываются все слушатели этого сообщения.
+
+То есть сообщения обрабатываются не сразу в в порядке очереди команд ICommand[].
+
 ```typescript
-import {MessageBroker, MessageEmitter, IMessage} from 'message-broker'
+import {ICommand} from 'base-types'
+import {MessageBroker, IMessage} from 'message-broker'
 
 // Настройка брокера сообщений.
 
 const commandQueue: ICommand[] = []
-const messageQueue: IMessage[] = []
-const messageEmitter = new MessageEmitter
+const messageBroker = new MessageBroker(commandQueue)
 
-commandQueue.push(new MessageEmitCommand(messageQueue, messageEmitter, commandQueue))
-
-const messageBroker = new MessageBroker(messageQueue, messageEmitter)
+messageBroker.start()
 
 // Далее работа идет только с messageBroker.
 
-class Message implements IMessage {}
+class MyMessage implements IMessage {
+	// Любые данные для передачи в сообщении.
+}
 
-const disposer = messageBroker.on(Message, () => {
+const myMessageDisposer = messageBroker.on(MyMessage, (myMessage: MyMessage) => {
 	//...
 })
 
-messageBroker.emit(new Message)
+messageBroker.emit(new MyMessage)
 
-disposer.dispose()
+myMessageDisposer.dispose()
+
+// Остановка обработки очереди сообщений.
+
+messageBroker.stop()
 ```

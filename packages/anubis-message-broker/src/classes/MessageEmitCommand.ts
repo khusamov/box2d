@@ -4,9 +4,8 @@ import {IMessageEmitter} from '../interfaces/IMessageEmitter'
 import {IMessageEmitCommand} from '../interfaces/IMessageEmitCommand'
 
 /**
- * Команда для обработки сообщений из очереди resolve<IMessage[]>('MessageQueue').
- * Каждое сообщение попадает в resolve<MessageEmitter>('MessageEmitter').
- * Команда после этого себя помещает заново в очередь команд resolve<ICommand[]>('CommandQueue').
+ * Команда передачи сообщений из очереди IMessage[] в передатчик сообщений IMessageEmitter.
+ * После передачи команда заново размещает себя в очереди команд ICommand[].
  * Этот процесс можно заверишть вызовом метода stop().
  */
 export class MessageEmitCommand implements IMessageEmitCommand {
