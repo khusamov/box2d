@@ -13,13 +13,14 @@ export class MessageEmitCommand implements IMessageEmitCommand {
 	private active: boolean = true
 
 	public constructor(
-		private readonly messageQueue: IMessage[],
 		private readonly messageEmitter: IMessageEmitter,
+		private readonly messageQueue: IMessage[],
 		private readonly commandQueue: ICommand[]
 	) {}
 
 	public execute() {
 		const message = this.messageQueue.shift()
+
 		if (message) {
 			this.messageEmitter.emit(message)
 		}
@@ -27,6 +28,10 @@ export class MessageEmitCommand implements IMessageEmitCommand {
 		if (this.active) {
 			this.commandQueue.push(this)
 		}
+	}
+
+	public start() {
+		this.active = true
 	}
 
 	public stop() {
