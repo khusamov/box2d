@@ -8,6 +8,10 @@
 	"scripts": {
 		"base-types:build": "yarn workspaces foreach --include 'base-types' run build",
 		"base-types:build:watch": "yarn workspaces foreach --include 'base-types' run build:watch",
+		"anubis-data-storage:build": "yarn workspaces foreach --include 'anubis-data-storage' run build",
+		"anubis-data-storage:build:watch": "yarn workspaces foreach --include 'anubis-data-storage' run build:watch",
+		"anubis-message-broker:build": "yarn workspaces foreach --include 'anubis-message-broker' run build",
+		"anubis-message-broker:build:watch": "yarn workspaces foreach --include 'anubis-message-broker' run build:watch",
 		"anubis-game-system:build": "yarn workspaces foreach --include 'anubis-game-system' run build",
 		"anubis-game-system:build:watch": "yarn workspaces foreach --include 'anubis-game-system' run build:watch",
 		"inversion-of-control:build": "yarn workspaces foreach --include 'inversion-of-control' run build",

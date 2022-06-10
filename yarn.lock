@@ -1591,6 +1591,39 @@ __metadata:
   languageName: node
   linkType: hard
 
+"anubis-data-storage@workspace:packages/anubis-data-storage, anubis-data-storage@workspaces:*":
+  version: 0.0.0-use.local
+  resolution: "anubis-data-storage@workspace:packages/anubis-data-storage"
+  dependencies:
+    "@parcel/packager-ts": 2.5.0
+    "@parcel/transformer-typescript-types": 2.5.0
+    anubis-message-broker: "workspaces:*"
+    base-types: "workspaces:*"
+    events: ^3.3.0
+    parcel: ^2.5.0
+    typescript: ^4.7.3
+  languageName: unknown
+  linkType: soft
+
+"anubis-game-system-2@workspace:packages/anubis-game-system-2":
+  version: 0.0.0-use.local
+  resolution: "anubis-game-system-2@workspace:packages/anubis-game-system-2"
+  dependencies:
+    "@parcel/packager-ts": 2.5.0
+    "@parcel/transformer-typescript-types": 2.5.0
+    "@types/react": ^18.0.9
+    anubis-data-storage: "workspaces:*"
+    anubis-message-broker: "workspaces:*"
+    base-types: "workspaces:*"
+    events: ^3.3.0
+    inversion-of-control: "workspaces:*"
+    mobx: ^6.6.0
+    parcel: ^2.5.0
+    react: ^18.1.0
+    typescript: ^4.7.3
+  languageName: unknown
+  linkType: soft
+
 "anubis-game-system@workspace:packages/anubis-game-system, anubis-game-system@workspaces:*":
   version: 0.0.0-use.local
   resolution: "anubis-game-system@workspace:packages/anubis-game-system"
@@ -1603,6 +1636,19 @@ __metadata:
     inversion-of-control: "workspaces:*"
     parcel: ^2.5.0
     react: ^18.1.0
+    typescript: ^4.7.3
+  languageName: unknown
+  linkType: soft
+
+"anubis-message-broker@workspace:packages/anubis-message-broker, anubis-message-broker@workspaces:*":
+  version: 0.0.0-use.local
+  resolution: "anubis-message-broker@workspace:packages/anubis-message-broker"
+  dependencies:
+    "@parcel/packager-ts": 2.5.0
+    "@parcel/transformer-typescript-types": 2.5.0
+    base-types: "workspaces:*"
+    events: ^3.3.0
+    parcel: ^2.5.0
     typescript: ^4.7.3
   languageName: unknown
   linkType: soft
@@ -1670,7 +1716,9 @@ __metadata:
     "@types/react": ^18.0.9
     "@types/react-dom": ^18.0.3
     "@types/three": ^0.140.0
+    anubis-data-storage: "workspaces:*"
     anubis-game-system: "workspaces:*"
+    anubis-message-broker: "workspaces:*"
     base-types: "workspaces:*"
     events: ^3.3.0
     inversion-of-control: "workspaces:*"
@@ -3698,6 +3746,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"mobx@npm:^6.6.0":
+  version: 6.6.0
+  resolution: "mobx@npm:6.6.0"
+  checksum: 369b8d6830ec286e9c856c80002c7a554d46bca739b7f76432cb56b3ce1fe0a7ed7e5a994b9793d30023beeff0dd16300a501e831fa97107104e4fedc7d4af8f
+  languageName: node
+  linkType: hard
+
 "ms@npm:2.0.0":
   version: 2.0.0
   resolution: "ms@npm:2.0.0"
@@ -5014,6 +5069,31 @@ __metadata:
   checksum: a04c07bb9e2d8f46776517d4618f2406fb977a74d914ad98b264fc3db0fe8224da5bec11e5f8902c5b9bcb8ace22d95fbe3c7b36b8593b7dfc8391a25898f32f
   languageName: node
   linkType: hard
+
+"temp@workspace:packages/temp":
+  version: 0.0.0-use.local
+  resolution: "temp@workspace:packages/temp"
+  dependencies:
+    "@parcel/packager-ts": 2.5.0
+    "@parcel/transformer-sass": 2.5.0
+    "@parcel/transformer-svg-react": ^2.5.0
+    "@parcel/transformer-typescript-types": 2.5.0
+    "@types/events": ^3
+    "@types/react": ^18.0.9
+    "@types/react-dom": ^18.0.3
+    "@types/three": ^0.140.0
+    events: ^3.3.0
+    mobx: ^6.6.0
+    node-sass: ^7.0.1
+    parcel: ^2.5.0
+    planck: ^1.0.0-alpha.4
+    react: ^18.1.0
+    react-dom: ^18.1.0
+    serve: ^13.0.2
+    typescript: ^4.7.3
+    use-resize-observer: ^9.0.0
+  languageName: unknown
+  linkType: soft
 
 "term-size@npm:^2.2.1":
   version: 2.2.1
