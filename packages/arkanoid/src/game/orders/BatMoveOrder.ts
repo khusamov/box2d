@@ -13,7 +13,7 @@ export class BatMoveOrder extends Order {
 		super()
 	}
 
-	public execute({entityList}: IGameEnvironment) {
+	public override execute({entityList}: IGameEnvironment) {
 		const batEntity = entityList.find(entity => {
 			const identification = entity.find(isData(Identification))
 			return identification && identification.type === 'Bat'

@@ -7,7 +7,7 @@ import {Vec2} from 'planck'
 import {IGameEnvironment} from '../base/interfaces/IGameEnvironment'
 
 export class StartGameOrder extends Order {
-	public execute(game: IGameEnvironment) {
+	public override execute(game: IGameEnvironment) {
 		const ballEntity = game.entityList.find(entity => {
 			const ballStateData = entity.find(isData(BallState))
 			const identification = entity.find(isData(Identification))
