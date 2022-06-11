@@ -1,4 +1,4 @@
-import {ICommand, IDisposable, IStartable, IStoppable} from 'base-types'
+import {ICommand, IDisposable} from 'base-types'
 import {TMessageConstructor} from '../types/TMessageConstructor'
 import {TMessageListener} from '../types/TMessageListener'
 import {IMessage} from '../interfaces/IMessage'
@@ -15,7 +15,7 @@ import {IMessageEmitCommand} from '../interfaces/IMessageEmitCommand'
  * Подписка на сообщения:
  * - MessageBroker.on() или .once() - Подписка на класс сообщений.
  */
-export class MessageBroker implements IMessageBroker, IStartable, IStoppable {
+export class MessageBroker implements IMessageBroker {
 	public constructor(
 		private readonly commandQueue: ICommand[],
 		private readonly messageQueue: IMessage[],
@@ -38,6 +38,10 @@ export class MessageBroker implements IMessageBroker, IStartable, IStoppable {
 	public start() {
 		this.messageEmitCommand.start()
 		this.commandQueue.push(this.messageEmitCommand)
+	}
+
+	public pause() {
+		this.stop()
 	}
 
 	public stop() {
