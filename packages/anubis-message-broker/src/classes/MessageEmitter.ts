@@ -28,12 +28,22 @@ export class MessageEmitter implements IMessageEmitter {
 		this.eventEmitter.emit(message.constructor.name, message)
 	}
 
-	protected addListener<M extends IMessage>(method: 'on' | 'once', MessageClass: TMessageConstructor<M>, listener: TMessageListener<M>): IDisposable {
-		this.eventEmitter[method](MessageClass.name, listener)
-		return {
-			dispose: () => {
-				this.eventEmitter.off(MessageClass.name, listener)
-			}
-		}
+	private addListener<M extends IMessage>(method: 'on' | 'once', MessageClass: TMessageConstructor<M>, listener: TMessageListener<M>): IDisposable {
+		const disposer = new MessageListenerDisposer(this.eventEmitter, MessageClass)
+		disposer.listener = (message: M) => listener(message, disposer)
+		this.eventEmitter[method](MessageClass.name, disposer.listener)
+		return disposer
+	}
+}
+
+class MessageListenerDisposer<M extends IMessage> implements IDisposable {
+	public constructor(
+		private readonly eventEmitter: IEventEmitter,
+		private readonly MessageClass: TMessageConstructor<M>,
+		public listener: (message: M) => void = () => {}
+	) {}
+
+	public dispose() {
+		this.eventEmitter.off(this.MessageClass.name, this.listener)
 	}
 }
