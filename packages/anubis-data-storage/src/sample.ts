@@ -1,5 +1,5 @@
 import {ICommand} from 'base-types'
-import {MessageBroker} from 'anubis-message-broker'
+import {MessageBrokerCreator} from 'anubis-message-broker'
 import {DataStorageFasade} from './classes/DataStorageFasade'
 import {DataStorage} from './classes/DataStorage'
 import {Entity} from './classes/entity/Entity'
@@ -8,7 +8,7 @@ import {isData} from './functions/isData'
 
 // Настройка брокера сообщений. Пример взят из anubis-message-broker.
 const commandQueue: ICommand[] = []
-const messageBroker = new MessageBroker(commandQueue)
+const messageBroker = new MessageBrokerCreator(commandQueue).create()
 messageBroker.start()
 
 // Настройка хранилища игровых сущностей и данных.
