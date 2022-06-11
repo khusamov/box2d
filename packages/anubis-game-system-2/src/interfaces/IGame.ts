@@ -1,6 +1,6 @@
-import {IDisposable} from 'base-types'
+import {IDisposable, IStartable, IStoppable} from 'base-types'
 
-export interface IGame extends IDisposable {
+export interface IGame extends IDisposable, IStartable, IStoppable {
 	/**
 	 * Отложенная инициализация игры.
 	 */
@@ -11,4 +11,6 @@ export interface IGame extends IDisposable {
 	 * В основном это удаление слушателей сообщений.
 	 */
 	dispose(): void
+
+	pause(): void
 }

@@ -2,6 +2,8 @@ import {ITimer} from 'base-types'
 import {IMessageBroker} from 'anubis-message-broker'
 import {ILevel} from '../interfaces/ILevel'
 import {IGame} from '../interfaces/IGame'
+import {IDataStorage} from 'anubis-data-storage'
+import {UpdateMessage} from '../messages/UpdateMessage'
 
 /**
  * Инициализировать брокер сообщения нужно до создания экземпляра Game.
@@ -16,8 +18,9 @@ import {IGame} from '../interfaces/IGame'
  */
 export class Game implements IGame {
 	public constructor(
-		public readonly timer: ITimer,
+		private readonly timer: ITimer,
 		private readonly messageBroker: IMessageBroker,
+		private readonly dataStorage: IDataStorage,
 		private readonly level: ILevel
 	) {}
 
@@ -28,5 +31,24 @@ export class Game implements IGame {
 
 	public dispose() {
 		this.level.dispose()
+	}
+
+	public start() {
+		this.timer.start()
+		this.messageBroker.start()
+	}
+
+	public stop() {
+		this.timer.stop()
+		this.messageBroker.stop()
+	}
+
+	public pause() {
+		this.timer.pause()
+		this.messageBroker.pause()
+	}
+
+	public update(timeInterval: number) {
+		this.messageBroker.emit(new UpdateMessage(timeInterval, this.dataStorage))
 	}
 }
