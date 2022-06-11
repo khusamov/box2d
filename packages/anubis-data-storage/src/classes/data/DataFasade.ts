@@ -35,7 +35,7 @@ export class DataFasade {
 		return this
 	}
 
-	public replaceData(data: IData) {
+	public replace(data: IData) {
 		this.dataReplacingOperation.replace(this.data, data)
 		return this
 	}
