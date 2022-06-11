@@ -1,10 +1,10 @@
-import {MacroRule} from "anubis-game-system";
-import {Box, Circle, Edge, Polygon} from "planck";
-import {BoxShapeData} from "../data/BoxShapeData";
-import {CircleShapeData} from "../data/CircleShapeData";
-import {EdgeShapeData} from "../data/EdgeShapeData";
-import {PolygonShapeData} from "../data/PolygonShapeData";
-import {AbstractShapeCreatorRule} from "./AbstractShapeCreatorRule";
+import {MacroRule} from 'anubis-rule-system'
+import {Box, Circle, Edge, Polygon} from 'planck';
+import {BoxShapeData} from '../data/BoxShapeData';
+import {CircleShapeData} from '../data/CircleShapeData';
+import {EdgeShapeData} from '../data/EdgeShapeData';
+import {PolygonShapeData} from '../data/PolygonShapeData';
+import {AbstractShapeCreatorRule} from './AbstractShapeCreatorRule';
 
 export class ShapeCreatorRule extends MacroRule {
 	public constructor() {

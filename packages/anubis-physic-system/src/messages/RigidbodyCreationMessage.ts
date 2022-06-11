@@ -1,6 +1,6 @@
-import {Message} from 'anubis-game-system'
+import {Message} from 'anubis-message-broker'
 import {RigidbodyData} from '../data/RigidbodyData'
-import {Body} from "planck";
+import {Body} from 'planck'
 
 export class RigidbodyCreationMessage extends Message {
 	public constructor(public rigidbodyData: RigidbodyData) {

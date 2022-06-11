@@ -1,5 +1,5 @@
 import {World} from 'planck'
-import {Data} from 'anubis-game-system'
+import {Data} from 'anubis-data-storage'
 import {IWorldDef} from '../interfaces/IWorldDef'
 
 export class PhysicWorldData extends Data {
@@ -9,4 +9,6 @@ export class PhysicWorldData extends Data {
 	) {
 		super()
 	}
+
+	public clone(): any {}
 }

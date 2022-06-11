@@ -1,4 +1,4 @@
-import {Message} from 'anubis-game-system'
+import {Message} from 'anubis-message-broker'
 import {Fixture} from 'planck'
 import {FixtureData} from '../data/FixtureData'
 

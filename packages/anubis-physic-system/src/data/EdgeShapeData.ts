@@ -8,4 +8,6 @@ export class EdgeShapeData extends ShapeData {
 	) {
 		super()
 	}
+
+	public clone(): any {}
 }

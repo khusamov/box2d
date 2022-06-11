@@ -1,5 +1,5 @@
-import {Message} from 'anubis-game-system'
-import {World} from "planck";
+import {Message} from 'anubis-message-broker'
+import {World} from 'planck'
 import {PhysicWorldData} from '../data/PhysicWorldData'
 
 /**

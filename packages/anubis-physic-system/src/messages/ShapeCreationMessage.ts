@@ -1,6 +1,6 @@
-import {Message} from 'anubis-game-system'
-import {ShapeData} from "../data/ShapeData";
-import {Shape} from "planck";
+import {Message} from 'anubis-message-broker'
+import {ShapeData} from '../data/ShapeData'
+import {Shape} from 'planck'
 
 export class ShapeCreationMessage extends Message {
 	public constructor(public shapeData: ShapeData) {

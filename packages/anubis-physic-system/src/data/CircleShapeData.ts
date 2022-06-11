@@ -6,4 +6,6 @@ export class CircleShapeData extends ShapeData {
 	) {
 		super()
 	}
+
+	public clone(): any {}
 }

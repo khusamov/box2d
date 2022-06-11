@@ -1,4 +1,4 @@
-import {Feature} from 'anubis-game-system'
+import {Feature} from 'anubis-rule-system'
 import {PhysicWorldCreatorRule} from './rules/PhysicWorldCreatorRule'
 import {PhysicWorldUpdateRule} from './rules/PhysicWorldUpdateRule'
 import {RigidbodyCreatorRule} from './rules/RigidbodyCreatorRule'
