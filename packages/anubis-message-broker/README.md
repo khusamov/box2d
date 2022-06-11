@@ -16,7 +16,7 @@ import {MessageBroker, IMessage} from 'message-broker'
 // Настройка брокера сообщений.
 
 const commandQueue: ICommand[] = []
-const messageBroker = new MessageBroker(commandQueue)
+const messageBroker = new MessageBrokerCreator(commandQueue).create()
 
 messageBroker.start()
 
