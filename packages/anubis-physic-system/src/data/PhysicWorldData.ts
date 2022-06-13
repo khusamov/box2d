@@ -9,6 +9,4 @@ export class PhysicWorldData extends Data {
 	) {
 		super()
 	}
-
-	public clone(): any {}
 }
