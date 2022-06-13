@@ -13,7 +13,7 @@ import {IEventEmitter} from '../interfaces/IEventEmitter'
  */
 export class MessageEmitter implements IMessageEmitter {
 	public constructor(
-		private eventEmitter: IEventEmitter
+		private readonly eventEmitter: IEventEmitter
 	) {}
 
 	public on<M extends IMessage>(MessageClass: TMessageConstructor<M>, listener: TMessageListener<M>): IDisposable {
