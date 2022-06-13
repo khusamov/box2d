@@ -4,8 +4,8 @@ import {PhysicWorldCreationMessage} from '../messages/PhysicWorldCreationMessage
 
 export class PhysicWorldUpdateRule extends Rule {
 	public init(): void {
-		this.messageBroker.once(PhysicWorldCreationMessage, ({world}) => {
-			this.messageBroker.on(UpdateMessage, ({timeInterval}) => {
+		this.messageEmitter.once(PhysicWorldCreationMessage, ({world}) => {
+			this.messageEmitter.on(UpdateMessage, ({timeInterval}) => {
 				world.step(timeInterval)
 			})
 		})

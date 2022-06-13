@@ -13,7 +13,7 @@ import {FixtureCreationMessage} from '../messages/FixtureCreationMessage'
  */
 export class FixtureCreatorRule extends Rule {
 	public init(): void {
-		this.messageBroker.on(DataAddingMessage, ({data}) => {
+		this.messageEmitter.on(DataAddingMessage, ({data}) => {
 			if (data instanceof FixtureData) {
 				const fixtureData = data
 
@@ -21,7 +21,7 @@ export class FixtureCreatorRule extends Rule {
 					throw new Error('Нельзя добавлять данные с определенным fixture')
 				}
 
-				this.messageBroker.once(UpdateMessage, ({dataStorage}) => {
+				this.messageEmitter.once(UpdateMessage, ({dataStorage}) => {
 					const dataStorageFasade = new DataStorageFasade(dataStorage)
 					const entity = dataStorageFasade.createDataFasade(fixtureData).entity
 
@@ -38,7 +38,7 @@ export class FixtureCreatorRule extends Rule {
 						}
 
 						if (!body) {
-							this.messageBroker.on(RigidbodyCreationMessage, ({rigidbodyData}, {dispose}) => {
+							this.messageEmitter.on(RigidbodyCreationMessage, ({rigidbodyData}, {dispose}) => {
 								if (dataStorageFasade.createDataFasade(rigidbodyData).entity === entity) {
 									this.createFixture(entity)
 									dispose()
@@ -64,11 +64,11 @@ export class FixtureCreatorRule extends Rule {
 		const body = rigidbodyData?.body
 
 		if (shape && body) {
-			this.messageBroker.once(UpdateMessage, ({dataStorage}) => {
+			this.messageEmitter.once(UpdateMessage, ({dataStorage}) => {
 				const nextFixtureData = fixtureData.clone()
 				nextFixtureData.fixture = body.createFixture(shape, fixtureData.fixtureDef)
 				new DataStorageFasade(dataStorage).createDataFasade(fixtureData).replace(nextFixtureData)
-				this.messageBroker.emit(new FixtureCreationMessage(nextFixtureData))
+				this.messageEmitter.emit(new FixtureCreationMessage(nextFixtureData))
 			})
 		}
 

@@ -20,7 +20,7 @@ export class AbstractShapeCreatorRule<S extends ShapeData> extends Rule {
 	}
 
 	public init(): void {
-		this.messageListenerDisposerArray.push(this.messageBroker.on(DataAddingMessage, this.onDataAddingMessage.bind(this)))
+		this.messageListenerDisposerArray.push(this.messageEmitter.on(DataAddingMessage, this.onDataAddingMessage.bind(this)))
 	}
 
 	private onDataAddingMessage({data}: DataAddingMessage) {
@@ -31,12 +31,12 @@ export class AbstractShapeCreatorRule<S extends ShapeData> extends Rule {
 				throw new Error(`Нельзя добавлять данные ${this.ShapeDataClass.name} с предопределеным shape`)
 			}
 
-			this.messageBroker.once(UpdateMessage, ({dataStorage}) => {
+			this.messageEmitter.once(UpdateMessage, ({dataStorage}) => {
 				const nextShapeData = shapeData.clone()
 				nextShapeData.shape = this.createShape(shapeData)
 				new DataStorageFasade(dataStorage).createDataFasade(shapeData).replace(nextShapeData)
 
-				this.messageBroker.emit(new ShapeCreationMessage(nextShapeData))
+				this.messageEmitter.emit(new ShapeCreationMessage(nextShapeData))
 			})
 		}
 	}

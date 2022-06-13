@@ -21,7 +21,7 @@ export class PhysicWorldCreatorRule extends Rule {
 	private messageListenerDisposerArray: DisposableArray = new DisposableArray
 
 	public init(): void {
-		this.messageListenerDisposerArray.push(this.messageBroker.on(DataAddingMessage, this.onDataAddingMessage.bind(this)))
+		this.messageListenerDisposerArray.push(this.messageEmitter.on(DataAddingMessage, this.onDataAddingMessage.bind(this)))
 	}
 
 	private onDataAddingMessage({data}: DataAddingMessage, {dispose}: IDisposable) {
@@ -32,12 +32,12 @@ export class PhysicWorldCreatorRule extends Rule {
 				throw new Error('Нельзя добавлять данные PhysicWorldData с предопределенным world')
 			}
 
-			this.messageBroker.once(UpdateMessage, ({dataStorage}) => {
+			this.messageEmitter.once(UpdateMessage, ({dataStorage}) => {
 				const worldDef = Object.assign({}, defaultWorldDef, physicWorldDataOrder.worldDef)
 				const physicWorldData = new PhysicWorldData(worldDef, new World(worldDef))
 
 				new DataStorageFasade(dataStorage).createDataFasade(physicWorldDataOrder).replace(physicWorldData)
-				this.messageBroker.emit(new PhysicWorldCreationMessage(physicWorldData))
+				this.messageEmitter.emit(new PhysicWorldCreationMessage(physicWorldData))
 			})
 
 			dispose()

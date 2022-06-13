@@ -30,20 +30,20 @@ export class RigidbodyCreatorRule extends Rule {
 				throw new Error('Нельзя добавлять данные RigidbodyData с предопределенным body')
 			}
 
-			this.messageBroker.once(UpdateMessage, ({dataStorage}) => {
+			this.messageEmitter.once(UpdateMessage, ({dataStorage}) => {
 				const createBody = (world: World) => {
 					const body = world.createBody(rigidbodyDataOrder.bodyDef)
 					const rigidbodyData = new RigidbodyData(rigidbodyDataOrder.bodyDef, body)
 					body.setUserData(rigidbodyData)
 					new DataStorageFasade(dataStorage).createDataFasade(rigidbodyDataOrder).replace(rigidbodyData)
-					this.messageBroker.emit(new RigidbodyCreationMessage(rigidbodyData))
+					this.messageEmitter.emit(new RigidbodyCreationMessage(rigidbodyData))
 				}
 
 				const world = new DataStorageFasade(dataStorage).find(isData(PhysicWorldData))?.world
 				if (world) {
 					createBody(world)
 				} else {
-					this.messageBroker.once(PhysicWorldCreationMessage, ({world}) => createBody(world))
+					this.messageEmitter.once(PhysicWorldCreationMessage, ({world}) => createBody(world))
 				}
 			})
 		}
