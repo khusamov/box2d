@@ -3,4 +3,5 @@ import {Data} from 'anubis-data-storage'
 
 export abstract class ShapeData extends Data {
 	public shape?: Shape
+	public abstract clone(): ShapeData
 }

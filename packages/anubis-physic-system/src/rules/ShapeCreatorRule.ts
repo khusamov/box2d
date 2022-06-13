@@ -19,11 +19,11 @@ export class ShapeCreatorRule extends MacroRule {
 			),
 			new AbstractShapeCreatorRule(
 				EdgeShapeData,
-				edgeShapeData => new Edge(edgeShapeData.point1, edgeShapeData.point2)
+				edgeShapeData => new Edge(edgeShapeData.point1.clone(), edgeShapeData.point2.clone())
 			),
 			new AbstractShapeCreatorRule(
 				PolygonShapeData,
-				polygonShapeShapeData => new Polygon(polygonShapeShapeData.vertices)
+				polygonShapeShapeData => new Polygon(polygonShapeShapeData.vertices.map(vertex => vertex.clone()))
 			)
 		)
 	}

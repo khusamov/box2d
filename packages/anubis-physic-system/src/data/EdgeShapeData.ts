@@ -9,5 +9,10 @@ export class EdgeShapeData extends ShapeData {
 		super()
 	}
 
-	public clone(): any {}
+	public clone(): EdgeShapeData {
+		return new EdgeShapeData(
+			this.point1.clone(),
+			this.point2.clone()
+		)
+	}
 }

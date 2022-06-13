@@ -8,5 +8,10 @@ export class BoxShapeData extends ShapeData {
 		super()
 	}
 
-	public clone(): any {}
+	public clone(): BoxShapeData {
+		return new BoxShapeData(
+			this.width,
+			this.height
+		)
+	}
 }

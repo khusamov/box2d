@@ -9,5 +9,9 @@ export class PolygonShapeData extends ShapeData {
 		this.vertices = vertices
 	}
 
-	public clone(): any {}
+	public clone(): PolygonShapeData {
+		return new PolygonShapeData(
+			...this.vertices.map(vertex => vertex.clone())
+		)
+	}
 }
