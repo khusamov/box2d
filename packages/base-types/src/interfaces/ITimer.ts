@@ -1,7 +1,6 @@
-import {IStartable} from './IStartable'
-import {IStoppable} from './IStoppable'
+import {ITimerLifecycle} from './ITimerLifecycle'
 
-export interface ITimer extends IStartable, IStoppable {
+export interface ITimer extends ITimerLifecycle {
 	/**
 	 * Количество миллисекунд с начала старта таймера.
 	 * С учетом всех пауз.
@@ -13,7 +12,4 @@ export interface ITimer extends IStartable, IStoppable {
 	 * В миллисекундах.
 	 */
 	readonly pauseInterval: number
-
-	toggle(): void
-	pause(): void
 }
