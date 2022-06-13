@@ -1,10 +1,10 @@
-import {Rule} from 'anubis-rule-system'
-import {DataAddingMessage, DataStorageFasade} from 'anubis-data-storage'
-import {ShapeData} from '../data/ShapeData';
-import {Shape as PlanckShape} from 'planck';
-import {ShapeCreationMessage} from '../messages/ShapeCreationMessage';
-import {UpdateMessage} from 'anubis-game-system-2'
 import {DisposableArray} from 'base-types'
+import {Rule} from 'anubis-rule-system'
+import {UpdateMessage} from 'anubis-game-system-2'
+import {DataAddingMessage, DataStorageFasade} from 'anubis-data-storage'
+import {ShapeData} from '../data/ShapeData'
+import {Shape as PlanckShape} from 'planck'
+import {ShapeCreationMessage} from '../messages/ShapeCreationMessage'
 
 /**
  * @event ShapeCreationMessage
