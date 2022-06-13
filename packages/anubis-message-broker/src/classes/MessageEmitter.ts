@@ -43,7 +43,9 @@ class MessageListenerDisposer<M extends IMessage> implements IDisposable {
 		public listener: (message: M) => void = () => {}
 	) {}
 
-	public dispose() {
-		this.eventEmitter.off(this.MessageClass.name, this.listener)
-	}
+	/**
+	 * Метод dispose() определен таким образом потому, что в обработчиках сообщений
+	 * этот метод будет чаще использоваться в оторванном виде, например (..., {dispose}).
+	 */
+	public dispose = () => this.eventEmitter.off(this.MessageClass.name, this.listener)
 }
