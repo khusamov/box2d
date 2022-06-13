@@ -19,7 +19,7 @@ export class RigidbodyCreatorRule extends Rule {
 	private messageListenerDisposerArray: DisposableArray = new DisposableArray
 
 	public init(): void {
-		this.messageListenerDisposerArray.push(this.messageBroker.on(DataAddingMessage, this.onDataAddingMessage.bind(this)))
+		this.messageListenerDisposerArray.push(this.messageEmitter.on(DataAddingMessage, this.onDataAddingMessage.bind(this)))
 	}
 
 	private onDataAddingMessage({data}: DataAddingMessage) {

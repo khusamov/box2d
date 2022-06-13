@@ -29,7 +29,7 @@ export class FixtureCreatorRule extends Rule {
 						const {shape, body} = this.createFixture(entity)
 
 						if (!shape) {
-							this.messageBroker.on(ShapeCreationMessage, ({shapeData}, {dispose}) => {
+							this.messageEmitter.on(ShapeCreationMessage, ({shapeData}, {dispose}) => {
 								if (dataStorageFasade.createDataFasade(shapeData).entity === entity) {
 									this.createFixture(entity)
 									dispose()
