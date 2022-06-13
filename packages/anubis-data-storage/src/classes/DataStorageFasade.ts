@@ -15,11 +15,11 @@ export class DataStorageFasade {
 
 	public constructor(private readonly dataStorage: IDataStorage) {
 		this.entityAddingOperation = new EntityAddingOperation(
-			this.dataStorage.messageBroker,
+			this.dataStorage.messageEmitter,
 			this.dataStorage.root
 		)
 		this.entityDeletingOperation = new EntityDeletingOperation(
-			this.dataStorage.messageBroker
+			this.dataStorage.messageEmitter
 		)
 	}
 
@@ -33,11 +33,11 @@ export class DataStorageFasade {
 	}
 
 	public createEntityFasade(entity: IEntity) {
-		return new EntityFasade(this.dataStorage.messageBroker, entity)
+		return new EntityFasade(this.dataStorage.messageEmitter, entity)
 	}
 
 	public createDataFasade(data: IData) {
-		return new DataFasade(this.dataStorage.messageBroker, data)
+		return new DataFasade(this.dataStorage.messageEmitter, data)
 	}
 
 	public createEntityCollection<D extends IData>(DataClass: DataConstructor<D>) {

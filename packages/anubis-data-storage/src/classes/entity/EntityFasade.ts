@@ -1,6 +1,6 @@
 import {IEntity} from '../../interfaces/IEntity'
 import {DataAddingOperation} from '../data/DataAddingOperation'
-import {IMessageBroker} from 'anubis-message-broker'
+import {IMessageEmitter} from 'anubis-message-broker'
 import {IData} from '../../interfaces/IData'
 import {DataReplacingOperation} from '../data/DataReplacingOperation'
 import {DataDeletingOperation} from '../data/DataDeletingOperation'
@@ -11,19 +11,19 @@ export class EntityFasade {
 	private readonly dataReplacingOperation: DataReplacingOperation
 
 	public constructor(
-		private readonly messageBroker: IMessageBroker,
+		private readonly messageEmitter: IMessageEmitter,
 		private readonly parentEntity: IEntity
 	) {
 		this.dataAddingOperation = new DataAddingOperation(
-			this.messageBroker,
+			this.messageEmitter,
 			this.parentEntity
 		)
 		this.dataDeletingOperation = new DataDeletingOperation(
-			this.messageBroker,
+			this.messageEmitter,
 			this.parentEntity
 		)
 		this.dataReplacingOperation = new DataReplacingOperation(
-			this.messageBroker,
+			this.messageEmitter,
 			this.parentEntity
 		)
 	}

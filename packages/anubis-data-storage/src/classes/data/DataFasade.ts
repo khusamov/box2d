@@ -1,4 +1,4 @@
-import {IMessageBroker} from 'anubis-message-broker'
+import {IMessageEmitter} from 'anubis-message-broker'
 import {IData} from '../../interfaces/IData'
 import {DataDeletingOperation} from './DataDeletingOperation'
 import {DataReplacingOperation} from './DataReplacingOperation'
@@ -10,15 +10,15 @@ export class DataFasade {
 	private readonly dataReplacingOperation: DataReplacingOperation
 
 	public constructor(
-		private readonly messageBroker: IMessageBroker,
+		private readonly messageEmitter: IMessageEmitter,
 		private readonly data: IData
 	) {
 		this.dataDeletingOperation = new DataDeletingOperation(
-			this.messageBroker,
+			this.messageEmitter,
 			this.entity
 		)
 		this.dataReplacingOperation = new DataReplacingOperation(
-			this.messageBroker,
+			this.messageEmitter,
 			this.entity
 		)
 	}

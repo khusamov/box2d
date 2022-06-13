@@ -1,4 +1,4 @@
-import {IMessageBroker} from 'anubis-message-broker'
+import {IMessageEmitter} from 'anubis-message-broker'
 import {IEntity} from '../../interfaces/IEntity'
 import {IData} from '../../interfaces/IData'
 import {DataDeletingMessage} from '../../messages/DataDeletingMessage'
@@ -7,14 +7,14 @@ import {isEntityLike} from '../../functions/isEntityLike'
 
 export class DataDeletingOperation {
 	public constructor(
-		private readonly messageBroker: IMessageBroker,
+		private readonly messageEmitter: IMessageEmitter,
 		private readonly parentEntity: IEntity
 	) {}
 
 	public delete(...datas: IData[]) {
 		for (const data of datas) {
 			this.parentEntity.splice(this.parentEntity.indexOf(data), 1)
-			this.messageBroker.emit(new DataDeletingMessage(data))
+			this.messageEmitter.emit(new DataDeletingMessage(data))
 		}
 	}
 
@@ -23,7 +23,7 @@ export class DataDeletingOperation {
 
 		if (recursive) {
 			this.parentEntity.filter(isEntityLike).forEach(entity => {
-				new DataDeletingOperation(this.messageBroker, entity).deleteAll(recursive)
+				new DataDeletingOperation(this.messageEmitter, entity).deleteAll(recursive)
 			})
 		}
 	}

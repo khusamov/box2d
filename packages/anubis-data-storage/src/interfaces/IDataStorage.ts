@@ -1,7 +1,7 @@
-import {IMessageBroker} from 'anubis-message-broker'
+import {IMessageEmitter} from 'anubis-message-broker'
 import {IRoot} from './IRoot'
 
 export interface IDataStorage {
-	readonly messageBroker: IMessageBroker
+	readonly messageEmitter: IMessageEmitter
 	readonly root: IRoot
 }

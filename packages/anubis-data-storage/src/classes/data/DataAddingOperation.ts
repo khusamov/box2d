@@ -2,7 +2,7 @@ import {IEntity} from '../../interfaces/IEntity'
 import {IData} from '../../interfaces/IData'
 import {setParent} from '../../functions/setParent'
 import {DataAddingMessage} from '../../messages/DataAddingMessage'
-import {IMessageBroker} from 'anubis-message-broker'
+import {IMessageEmitter} from 'anubis-message-broker'
 
 /**
  * Добавление данных в сущность.
@@ -10,7 +10,7 @@ import {IMessageBroker} from 'anubis-message-broker'
  */
 export class DataAddingOperation {
 	public constructor(
-		private readonly messageBroker: IMessageBroker,
+		private readonly messageEmitter: IMessageEmitter,
 		private readonly parentEntity: IEntity
 	) {}
 
@@ -20,7 +20,7 @@ export class DataAddingOperation {
 		this.parentEntity.push(...datas)
 
 		for (const data of datas) {
-			this.messageBroker.emit(new DataAddingMessage(data))
+			this.messageEmitter.emit(new DataAddingMessage(data))
 		}
 	}
 }

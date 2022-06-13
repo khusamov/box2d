@@ -4,7 +4,7 @@ import {IData} from '../../interfaces/IData'
 import {DataAddingMessage} from '../../messages/DataAddingMessage'
 import {setParent} from '../../functions/setParent'
 import {IRoot} from '../../interfaces/IRoot'
-import {IMessageBroker} from 'anubis-message-broker'
+import {IMessageEmitter} from 'anubis-message-broker'
 
 const isData = (node: INode): node is IData => !Array.isArray(node)
 
@@ -14,7 +14,7 @@ const isData = (node: INode): node is IData => !Array.isArray(node)
  */
 export class EntityAddingOperation {
 	public constructor(
-		private readonly messageBroker: IMessageBroker,
+		private readonly messageEmitter: IMessageEmitter,
 		private readonly parentNode: IRoot | IEntity
 	) {}
 
@@ -24,7 +24,7 @@ export class EntityAddingOperation {
 		this.parentNode.push(...entities)
 
 		for (const data of entities.flat(Infinity).filter(isData)) {
-			this.messageBroker.emit(new DataAddingMessage(data))
+			this.messageEmitter.emit(new DataAddingMessage(data))
 		}
 	}
 }
