@@ -12,7 +12,7 @@ import {UpdateMessage} from 'anubis-game-system-2'
 /**
  * Если создана сущность с данными RigidbodyData, то для нее создается твердое тело для физической симуляции.
  * После этого генерируется событие RigidbodyCreationMessage.
- * Внимание, в userData размещается ссылка на RigidbodyData.
+ * Внимание, в userData размещается ссылка на IEntity, содержащий RigidbodyData.
  * @event RigidbodyCreatedMessage
  */
 export class RigidbodyCreatorRule extends Rule {
@@ -34,7 +34,7 @@ export class RigidbodyCreatorRule extends Rule {
 				const createBody = (world: World) => {
 					const body = world.createBody(rigidbodyDataOrder.bodyDef)
 					const rigidbodyData = new RigidbodyData(rigidbodyDataOrder.bodyDef, body)
-					body.setUserData(rigidbodyData)
+					body.setUserData(new DataStorageFasade(dataStorage).createDataFasade(rigidbodyDataOrder).entity)
 					new DataStorageFasade(dataStorage).createDataFasade(rigidbodyDataOrder).replace(rigidbodyData)
 					this.messageEmitter.emit(new RigidbodyCreationMessage(rigidbodyData))
 				}
