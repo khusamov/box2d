@@ -2,7 +2,7 @@ import {IRule} from '../../interfaces/IRule'
 import {IMessageBroker, MessageBrokerCreator} from 'anubis-message-broker'
 
 export abstract class Rule implements IRule {
-	private _messageBroker: IMessageBroker = new MessageBrokerCreator().create()
+	#messageEmitter: IMessageEmitter = new FakeMessageEmitter
 
 	public get messageBroker(): IMessageBroker {
 		return this._messageBroker
