@@ -1,8 +1,9 @@
-import {IDisposable, IStartable, IStoppable} from 'base-types'
+import {IStartable, IStoppable} from 'base-types'
+import {IRule} from 'anubis-rule-system'
 
-export interface IGame extends IDisposable, IStartable, IStoppable {
+export interface IGame extends IRule, IStartable, IStoppable {
 	/**
-	 * Отложенная инициализация игры.
+	 * Инициализировать все правила игры.
 	 */
 	init(): void
 

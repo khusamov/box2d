@@ -19,6 +19,7 @@
 	"dependencies": {
 		"anubis-data-storage": "workspaces:*",
 		"anubis-message-broker": "workspaces:*",
+		"anubis-rule-system": "workspaces:*",
 		"base-types": "workspaces:*",
 		"events": "^3.3.0",
 		"inversion-of-control": "workspaces:*",

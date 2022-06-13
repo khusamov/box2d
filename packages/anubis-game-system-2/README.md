@@ -40,12 +40,14 @@ CommandQueue - Очередь команд
 -----------
 
 ```typescript
-import {Game, ILevel} from 'anubis-game-system'
-const level: ILevel = {
-	rules: [],
-    messages: []
-}
-Game.init(level)
-Game.timer.start()
-Game.dispose()
+import {Level} from 'anubis-rule-system'
+import {GameCreator} from 'anubis-game-system-2'
+
+const game = new GameCreator(new Level).create()
+
+game.init()
+game.start()
+game.update(0)
+game.pause()
+game.dispose()
 ```
