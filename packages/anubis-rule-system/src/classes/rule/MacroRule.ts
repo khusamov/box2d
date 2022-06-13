@@ -1,13 +1,12 @@
 import {Rule} from './Rule'
 import {RuleArray} from './RuleArray'
 import {IRule} from '../../interfaces/IRule'
-import {IMessageBroker, MessageBrokerCreator} from 'anubis-message-broker'
+import {IMessageEmitter} from 'anubis-message-broker'
 
 /**
  * Группа правил, действующих как одно правило.
  */
 export class MacroRule extends Rule {
-	#messageBroker: IMessageBroker = new MessageBrokerCreator().create()
 	private readonly rules: RuleArray = new RuleArray
 
 	public constructor(...rules: IRule[]) {
@@ -15,14 +14,14 @@ export class MacroRule extends Rule {
 		this.rules.push(...rules)
 	}
 
-	public override get messageBroker(): IMessageBroker {
-		return this.#messageBroker
+	public override get messageEmitter(): IMessageEmitter {
+		return super.messageEmitter
 	}
 
-	public override set messageBroker(messageBroker: IMessageBroker) {
-		this.#messageBroker = messageBroker
+	public override set messageEmitter(messageEmitter: IMessageEmitter) {
+		super.messageEmitter = messageEmitter
 		for (const rule of this.rules) {
-			rule.messageBroker = messageBroker
+			rule.messageEmitter = messageEmitter
 		}
 	}
 

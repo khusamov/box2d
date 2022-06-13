@@ -1,5 +1,5 @@
 import {IDisposable} from 'base-types'
-import {IMessageBroker} from 'anubis-message-broker'
+import {IMessageEmitter} from 'anubis-message-broker'
 
 /**
  * Правило игры.
@@ -10,7 +10,7 @@ export interface IRule extends IDisposable {
 	 * Например, если нужны игровые данные, то нужно создать одноразовую подписку (once)
 	 * на сообщение UpdateMessage, в котором будет ссылка на IDataStorage.
 	 */
-	messageBroker: IMessageBroker
+	messageEmitter: IMessageEmitter
 
 	/**
 	 * Вызывается один раз перед началом игры.
