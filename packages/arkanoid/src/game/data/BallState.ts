@@ -7,10 +7,10 @@ export enum BallStateType {
 
 export class BallState implements IData {
 	constructor(
-		public state:BallStateType = BallStateType.Stopped
+		public state: BallStateType = BallStateType.Stopped
 	) {}
 
 	clone() {
-		return new BallState
+		return new BallState(this.state)
 	}
 }
