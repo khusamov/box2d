@@ -4,7 +4,7 @@ import {IFixtureOpt} from '../interfaces/IFixtureOpt'
 
 export class FixtureData extends Data {
 	public constructor(
-		public fixtureDef: IFixtureOpt,
+		public fixtureDef?: IFixtureOpt,
 		public fixture?: Fixture
 	) {
 		super()
