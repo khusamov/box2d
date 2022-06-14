@@ -1,6 +1,6 @@
 import {MacroRule} from './rule/MacroRule'
 
 /**
- * Группа правил.
+ * Группа правил, объединенных в одну фичу.
  */
 export class Feature extends MacroRule {}

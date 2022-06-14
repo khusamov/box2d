@@ -1,7 +1,11 @@
+import {FakeMessageEmitter, IMessageEmitter} from 'anubis-message-broker'
 import {IRule} from '../../interfaces/IRule'
-import {IMessageEmitter} from 'anubis-message-broker'
-import {FakeMessageEmitter} from '../FakeMessageEmitter'
 
+/**
+ * Базовая реализация игрового правила.
+ * Требуется переопределить init().
+ * Метод dispose() по желанию.
+ */
 export abstract class Rule implements IRule {
 	#messageEmitter: IMessageEmitter = new FakeMessageEmitter
 
