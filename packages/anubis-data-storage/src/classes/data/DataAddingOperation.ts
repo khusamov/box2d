@@ -15,7 +15,7 @@ export class DataAddingOperation {
 	) {}
 
 	public add(...datas: IData[]) {
-		setParent(datas, this.parentEntity)
+		setParent(this.parentEntity, ...datas)
 
 		this.parentEntity.push(...datas)
 

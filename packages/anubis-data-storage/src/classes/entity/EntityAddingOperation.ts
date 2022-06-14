@@ -19,7 +19,7 @@ export class EntityAddingOperation {
 	) {}
 
 	public add(...entities: IEntity[]) {
-		setParent(entities, this.parentNode)
+		setParent(this.parentNode, ...entities)
 
 		this.parentNode.push(...entities)
 
