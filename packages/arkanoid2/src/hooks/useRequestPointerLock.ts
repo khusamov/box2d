@@ -7,7 +7,16 @@ interface IRplProps<T extends HTMLElement> {
 }
 
 type TOnClick = () => void
-type TIRplResult = [TOnClick]
+type TIRplResult = [
+	/**
+	 * Вход в режим захвата курсора мышки.
+	 */
+	TOnClick,
+	/**
+	 * Программный выход из режима захвата курсора мышки.
+	 */
+	() => void
+]
 
 /**
  * Простая реализация Pointer Lock API для React.js.
@@ -51,5 +60,5 @@ export function useRequestPointerLock<T extends HTMLElement>({ref, onMouseDown, 
 		}
 	}
 
-	return [onClick]
+	return [onClick, () => document.exitPointerLock()]
 }
