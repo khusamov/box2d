@@ -7,3 +7,5 @@ export {UpdateMessage} from './messages/UpdateMessage'
 export {StartMessage} from './messages/StartMessage'
 
 export type {IGame} from './interfaces/IGame'
+
+export {DeletedMarkData} from './data/DeletedMarkData'
