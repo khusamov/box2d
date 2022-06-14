@@ -1,5 +1,5 @@
 import {ApplicationStyle} from './Application.module.scss';
-import {useRef} from 'react'
+import {useEffect, useRef} from 'react'
 import useResizeObserver from 'use-resize-observer';
 import {useRequestAnimationFrame} from '../../hooks/useRequestAnimationFrame';
 import {Canvas} from '../svg/Canvas';
@@ -19,7 +19,20 @@ const game = new GameCreator(new Level1).create()
 game.init()
 game.start()
 
+function usePauseGame() {
+	useEffect(() => {
+		const onKeyPress = (event: KeyboardEvent) => {
+			if (event.code === 'KeyP') {
+				game.toggle()
+			}
+		}
+		document.addEventListener('keypress', onKeyPress)
+		return () => document.removeEventListener('keypress', onKeyPress)
+	}, [])
+}
+
 export function Application() {
+	usePauseGame()
 	const ref = useRef<HTMLDivElement>(null)
 	const {width = 0, height = 0} = useResizeObserver({ref})
 	useRequestAnimationFrame(game.update.bind(game))
