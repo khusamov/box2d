@@ -38,7 +38,9 @@
     "typescript": "^4.7.3"
   },
   "dependencies": {
-    "anubis-game-system": "workspaces:*",
+    "anubis-data-storage": "workspaces:*",
+    "anubis-game-system-2": "workspaces:*",
+    "anubis-message-broker": "workspaces:*",
     "base-types": "workspaces:*",
     "events": "^3.3.0",
     "inversion-of-control": "workspaces:*",
