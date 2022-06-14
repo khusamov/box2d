@@ -4,6 +4,7 @@ import {TMessageListener} from '../types/TMessageListener'
 import {IMessage} from '../interfaces/IMessage'
 import {IMessageEmitter} from '../interfaces/IMessageEmitter'
 import {IEventEmitter} from '../interfaces/IEventEmitter'
+import {MessageListenerDisposer} from './MessageListenerDisposer'
 
 /**
  * Замена штатного EventEmitter.
@@ -34,18 +35,4 @@ export class MessageEmitter implements IMessageEmitter {
 		this.eventEmitter[method](MessageClass.name, disposer.listener)
 		return disposer
 	}
-}
-
-class MessageListenerDisposer<M extends IMessage> implements IDisposable {
-	public constructor(
-		private readonly eventEmitter: IEventEmitter,
-		private readonly MessageClass: TMessageConstructor<M>,
-		public listener: (message: M) => void = () => {}
-	) {}
-
-	/**
-	 * Метод dispose() определен таким образом потому, что в обработчиках сообщений
-	 * этот метод будет чаще использоваться в оторванном виде, например (..., {dispose}).
-	 */
-	public dispose = () => this.eventEmitter.off(this.MessageClass.name, this.listener)
 }
