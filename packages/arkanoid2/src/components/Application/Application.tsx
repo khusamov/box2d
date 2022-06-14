@@ -35,8 +35,15 @@ export function Application() {
 		game.messageEmitter.emit(new BatMoveMessage(event.movementX / scale, event.movementY / scale))
 	}
 
-	const onMouseDown = () => {
-		game.messageEmitter.emit(new StartGameMessage)
+	const onMouseDown = (event: MouseEvent) => {
+		switch (event.button) {
+			case 0:
+				game.messageEmitter.emit(new StartGameMessage)
+				break
+			case 2:
+				document.exitPointerLock()
+				break
+		}
 	}
 
 	const [onClick] = useRequestPointerLock({ref, onMouseMove, onMouseDown})
