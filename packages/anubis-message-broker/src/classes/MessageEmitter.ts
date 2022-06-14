@@ -29,6 +29,10 @@ export class MessageEmitter implements IMessageEmitter {
 		this.eventEmitter.emit(message.constructor.name, message)
 	}
 
+	public dispose(): void {
+		this.eventEmitter.removeAllListeners()
+	}
+
 	private addListener<M extends IMessage>(method: 'on' | 'once', MessageClass: TMessageConstructor<M>, listener: TMessageListener<M>): IDisposable {
 		const disposer = new MessageListenerDisposer(this.eventEmitter, MessageClass)
 		disposer.listener = (message: M) => listener(message, disposer)
