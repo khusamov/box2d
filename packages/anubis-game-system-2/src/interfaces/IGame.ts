@@ -1,7 +1,7 @@
-import {IStartable, IStoppable} from 'base-types'
+import {ITimerLifecycle} from 'base-types'
 import {IRule} from 'anubis-rule-system'
 
-export interface IGame extends IRule, IStartable, IStoppable {
+export interface IGame extends IRule, ITimerLifecycle {
 	/**
 	 * Инициализировать все правила игры.
 	 */
@@ -12,6 +12,4 @@ export interface IGame extends IRule, IStartable, IStoppable {
 	 * В основном это удаление слушателей сообщений.
 	 */
 	dispose(): void
-
-	pause(): void
 }

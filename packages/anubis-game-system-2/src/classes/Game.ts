@@ -1,9 +1,9 @@
-import {ITimer} from 'base-types'
 import {IMessageEmitter} from 'anubis-message-broker'
 import {IGame} from '../interfaces/IGame'
 import {IDataStorage} from 'anubis-data-storage'
 import {UpdateMessage} from '../messages/UpdateMessage'
 import {ILevel, MacroRule} from 'anubis-rule-system'
+import {suspendMessageEmitterEmit} from '../const/suspendMessageEmitterEmit'
 
 /**
  * Инициализировать брокер сообщения нужно до создания экземпляра Game.
@@ -17,29 +17,48 @@ import {ILevel, MacroRule} from 'anubis-rule-system'
  * Отрисовка кадра анимации осуществляется через состояние игры. Состояние игры подается на вход Level.
  */
 export class Game extends MacroRule implements IGame {
+	private readonly sourceMessageEmitter: IMessageEmitter
+
 	public constructor(
 		level: ILevel,
 		messageEmitter: IMessageEmitter,
-		private readonly timer: ITimer,
 		public readonly dataStorage: IDataStorage,
 	) {
 		super(level)
-		this.messageEmitter = messageEmitter
+		this.sourceMessageEmitter = messageEmitter
+		this.messageEmitter = this.suspendedMessageEmitter // Изначально игра стоит на паузе.
 	}
 
 	public start() {
-		this.timer.start()
+		this.messageEmitter = this.sourceMessageEmitter
 	}
 
 	public stop() {
-		this.timer.stop()
+		this.messageEmitter = this.suspendedMessageEmitter
 	}
 
 	public pause() {
-		this.timer.pause()
+		this.messageEmitter = this.suspendedMessageEmitter
+	}
+
+	public toggle() {
+		this[this.state === 'pause' ? 'pause' : 'start']()
 	}
 
 	public update(timeInterval: number) {
 		this.messageEmitter.emit(new UpdateMessage(timeInterval, this.dataStorage))
+	}
+
+	public override dispose() {
+		super.dispose()
+		this.messageEmitter.dispose()
+	}
+
+	private get state() {
+		return this.messageEmitter === this.sourceMessageEmitter ? 'pause' : 'start'
+	}
+
+	private get suspendedMessageEmitter() {
+		return new Proxy(this.sourceMessageEmitter, suspendMessageEmitterEmit)
 	}
 }
