@@ -1,0 +1,30 @@
+/**
+ * Выравнивание по центру.
+ * @link https://habr.com/ru/post/189696/
+ */
+
+@mixin base {
+	position: absolute;
+	margin: auto;
+	width: fit-content;
+}
+
+@mixin absolute-bottom-center {
+	@include base;
+	left: 0;
+	bottom: 20px;
+	right: 0;
+}
+
+@mixin absolute-bottom-left {
+	@include base;
+	left: 20px;
+	bottom: 20px;
+}
+
+@mixin absolute-top-center {
+	@include base;
+	left: 0;
+	top: 20px;
+	right: 0;
+}

@@ -4,6 +4,7 @@ import {DataStorageFasade, IEntity} from 'anubis-data-storage'
 import {IdentificationData} from '../data/IdentificationData'
 import {DeletedMarkData, UpdateMessage} from 'anubis-game-system-2'
 import {Contact} from 'planck'
+import {BrickBallCollisionMessage} from '../messages/BrickBallCollisionMessage'
 
 export class BrickBallCollisionRule extends Rule {
 	public init() {
@@ -29,6 +30,7 @@ export class BrickBallCollisionRule extends Rule {
 	private deleteBrickEntity(brickEntity: IEntity) {
 		this.messageEmitter.once(UpdateMessage, ({dataStorage}) => {
 			new DataStorageFasade(dataStorage).createEntityFasade(brickEntity).addData(new DeletedMarkData)
+			this.messageEmitter.emit(new BrickBallCollisionMessage(brickEntity))
 		})
 	}
 }

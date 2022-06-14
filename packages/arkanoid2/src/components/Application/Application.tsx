@@ -11,6 +11,8 @@ import {BatMoveMessage} from '../../game/messages/BatMoveMessage'
 import {StartGameMessage} from '../../game/messages/StartGameMessage'
 import {DataStorageFasade, isData} from 'anubis-data-storage'
 import {PhysicWorldData} from 'anubis-physic-system'
+import {FloatPanel} from '../panel/FloatPanel'
+import {GameScoreData} from '../../game/data/GameScoreData'
 
 const scale = 14
 const mirrorY = (height: number) => `scale(1, -1), translate(0, -${height})`
@@ -59,6 +61,8 @@ export function Application() {
 		}
 	}
 
+	const score = new DataStorageFasade(game.dataStorage).find(isData(GameScoreData))?.score || 0
+
 	const [onClick] = useRequestPointerLock({ref, onMouseMove, onMouseDown})
 
 	return (
@@ -70,6 +74,9 @@ export function Application() {
 					<line x1={100} y1={0} x2={-100} y2={0} style={{stroke: '#9df5ff'}}/>
 				</g>
 			</Canvas>
+			<FloatPanel>
+				Счет: {score}
+			</FloatPanel>
 		</div>
 	)
 }

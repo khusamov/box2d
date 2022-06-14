@@ -8,13 +8,14 @@ import {BallPositionRule} from '../../rules/BallPositionRule'
 import {BatMovingRule} from '../../rules/BatMovingRule'
 import {StartGameRule} from '../../rules/StartGameRule'
 import {BrickBallCollisionRule} from '../../rules/BrickBallCollisionRule'
+import {GameScoreRule} from '../../rules/GameScoreRule'
 
 export class Level1 extends Level {
 	public constructor() {
 		super(
 			new PhysicFeature,
-
 			new PhysicWorldStartRule,
+
 			new GameBoardStartRule,
 			new BatStartRule,
 			new BrickWallStartRule,
@@ -22,7 +23,8 @@ export class Level1 extends Level {
 			new BallPositionRule,
 			new BatMovingRule,
 			new StartGameRule,
-			new BrickBallCollisionRule
+			new BrickBallCollisionRule,
+			new GameScoreRule
 		)
 	}
 }
