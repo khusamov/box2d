@@ -25,7 +25,7 @@ game.start()
 export function Application() {
 	usePauseGame(game)
 	const ref = useRef<HTMLDivElement>(null)
-	const [requestPointerLock, exitPointerLock, isPointerLock] = useRequestPointerLock(ref)
+	const [requestLock, cancelLock, locked] = useRequestPointerLock(ref)
 	const {width = 0, height = 0} = useResizeObserver({ref})
 	useRequestAnimationFrame(game.update.bind(game))
 
@@ -38,11 +38,11 @@ export function Application() {
 
 
 	const onClick = () => {
-		requestPointerLock()
+		requestLock()
 	}
 
 	const onMouseMove = (event: MouseEvent) => {
-		if (isPointerLock) {
+		if (locked) {
 			game.messageEmitter.emit(
 				new BatMoveMessage(
 					event.movementX / scale,
@@ -53,13 +53,13 @@ export function Application() {
 	}
 
 	const onMouseDown = (event: MouseEvent) => {
-		if (isPointerLock) {
+		if (locked) {
 			switch (event.button) {
 				case 0:
 					game.messageEmitter.emit(new StartGameMessage)
 					break
 				case 2:
-					exitPointerLock()
+					cancelLock()
 					break
 			}
 		}
