@@ -17,6 +17,10 @@ type TIRplResult = [
 
 /**
  * Простая реализация Pointer Lock API для React.js.
+ *
+ * Usage:
+ * const [requestLock, cancelLock, locked] = useRequestPointerLock(ref)
+ *
  * @link https://developer.mozilla.org/ru/docs/Web/API/Pointer_Lock_API
  * @link https://habr.com/ru/sandbox/106598/
  * @param ref
