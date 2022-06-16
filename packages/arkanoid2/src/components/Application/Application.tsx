@@ -13,6 +13,7 @@ import {DataStorageFasade, isData} from 'anubis-data-storage'
 import {PhysicWorldData} from 'anubis-physic-system'
 import {FloatPanel} from '../panel/FloatPanel'
 import {GameScoreData} from '../../game/data/GameScoreData'
+import {usePauseGame} from '../../hooks/usePauseGame'
 
 const scale = 14
 const mirrorY = (height: number) => `scale(1, -1), translate(0, -${height})`
@@ -21,20 +22,8 @@ const game = new GameCreator(new Level1).create()
 game.init()
 game.start()
 
-function usePauseGame() {
-	useEffect(() => {
-		const onKeyPress = (event: KeyboardEvent) => {
-			if (event.code === 'KeyP') {
-				game.toggle()
-			}
-		}
-		document.addEventListener('keypress', onKeyPress)
-		return () => document.removeEventListener('keypress', onKeyPress)
-	}, [])
-}
-
 export function Application() {
-	usePauseGame()
+	usePauseGame(game)
 	const ref = useRef<HTMLDivElement>(null)
 	const [requestPointerLock, exitPointerLock, isPointerLock] = useRequestPointerLock(ref)
 	const {width = 0, height = 0} = useResizeObserver({ref})
