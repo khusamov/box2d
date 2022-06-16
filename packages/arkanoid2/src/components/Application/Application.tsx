@@ -36,6 +36,7 @@ function usePauseGame() {
 export function Application() {
 	usePauseGame()
 	const ref = useRef<HTMLDivElement>(null)
+	const [requestPointerLock, exitPointerLock, isPointerLock] = useRequestPointerLock(ref)
 	const {width = 0, height = 0} = useResizeObserver({ref})
 	useRequestAnimationFrame(game.update.bind(game))
 
@@ -46,27 +47,40 @@ export function Application() {
 
 	const world = new DataStorageFasade(game.dataStorage).find(isData(PhysicWorldData))?.world
 
+
+	const onClick = () => {
+		requestPointerLock()
+	}
+
 	const onMouseMove = (event: MouseEvent) => {
-		game.messageEmitter.emit(new BatMoveMessage(event.movementX / scale, event.movementY / scale))
+		if (isPointerLock) {
+			game.messageEmitter.emit(
+				new BatMoveMessage(
+					event.movementX / scale,
+					event.movementY / scale
+				)
+			)
+		}
 	}
 
 	const onMouseDown = (event: MouseEvent) => {
-		switch (event.button) {
-			case 0:
-				game.messageEmitter.emit(new StartGameMessage)
-				break
-			case 2:
-				document.exitPointerLock()
-				break
+		if (isPointerLock) {
+			switch (event.button) {
+				case 0:
+					game.messageEmitter.emit(new StartGameMessage)
+					break
+				case 2:
+					exitPointerLock()
+					break
+			}
 		}
 	}
 
 	const score = new DataStorageFasade(game.dataStorage).find(isData(GameScoreData))?.score || 0
 
-	const [onClick] = useRequestPointerLock({ref, onMouseMove, onMouseDown})
 
 	return (
-		<div ref={ref} className={ApplicationStyle} onClick={onClick}>
+		<div ref={ref} className={ApplicationStyle} onClick={onClick} onMouseDown={onMouseDown} onMouseMove={onMouseMove}>
 			<Canvas>
 				<g transform={cameraTransform.join(', ')}>
 					{world && <PlanckRenderer world={world}/>}
