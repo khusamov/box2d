@@ -1,5 +1,5 @@
 import {ApplicationStyle} from './Application.module.scss';
-import {useEffect, useRef} from 'react'
+import {useRef, MouseEvent} from 'react'
 import useResizeObserver from 'use-resize-observer';
 import {useRequestAnimationFrame} from '../../hooks/useRequestAnimationFrame';
 import {Canvas} from '../svg/Canvas';
