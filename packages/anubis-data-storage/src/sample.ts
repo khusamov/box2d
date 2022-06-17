@@ -39,7 +39,7 @@ if (positionData) {
 	const positionDataFasade = dataStorageFasade.createDataFasade(positionData)
 	positionDataFasade.entity
 	positionDataFasade.delete()
-	positionDataFasade.replaceData(new Data)
+	positionDataFasade.replace(new Data)
 }
 
 // Поиск сущности.
