@@ -1,51 +1,50 @@
-import {Vec2, World} from 'planck'
-import {DataAddingMessage, DataStorageFasade} from 'anubis-data-storage'
+import {World} from 'planck'
+import {IDisposable} from 'base-types'
 import {Rule} from 'anubis-rule-system'
-import {IWorldDef} from '../interfaces/IWorldDef'
-import {PhysicWorldData} from '../data/PhysicWorldData'
-import {PhysicWorldCreationMessage} from '../messages/PhysicWorldCreationMessage'
-import {DisposableArray, IDisposable} from 'base-types'
 import {UpdateMessage} from 'anubis-game-system-2'
-
-const defaultWorldDef: Readonly<IWorldDef> = {
-	gravity: Vec2(0, 0),
-	blockSolve: true
-}
+import {DataStorageFasade, EntityAfterAddingMessage, isData} from 'anubis-data-storage'
+import {PhysicWorldCreationMessage} from '../messages/PhysicWorldCreationMessage'
+import {PhysicWorldData} from '../data/PhysicWorldData'
 
 /**
- * Если добавить данные PhysicWorldData в хранилище, то будет создан мир физической симуляции.
+ * Правило создания мира физической симуляции Planck.
+ *
+ * Если добавить сущность с данными PhysicWorldData в хранилище,
+ * то будет создан мир физической симуляции.
+ *
+ * Внимание, сущность с данными PhysicWorldData добавляется правилом
+ * PhysicWorldStartRule, поэтому вручную добавлять не требуется.
+ *
+ * Можно добавить только одну сущность с данными PhysicWorldData.
  * Остальные PhysicWorldData будут игнорироваться.
+ *
  * @event PhysicWorldCreationMessage
  */
 export class PhysicWorldCreatorRule extends Rule {
-	private messageListenerDisposerArray: DisposableArray = new DisposableArray
-
 	public init(): void {
-		this.messageListenerDisposerArray.push(this.messageEmitter.on(DataAddingMessage, this.onDataAddingMessage.bind(this)))
+		this.messageEmitter.on(EntityAfterAddingMessage, this.onEntityAfterAddingMessage.bind(this))
 	}
 
-	private onDataAddingMessage({data}: DataAddingMessage, {dispose}: IDisposable) {
-		if (data instanceof PhysicWorldData) {
-			const physicWorldDataOrder = data
-
+	private onEntityAfterAddingMessage({entity}: EntityAfterAddingMessage, {dispose}: IDisposable) {
+		const physicWorldDataOrder = entity.find(isData(PhysicWorldData))
+		if (physicWorldDataOrder) {
 			if (physicWorldDataOrder.world) {
 				throw new Error('Нельзя добавлять данные PhysicWorldData с предопределенным world')
 			}
 
-			this.messageEmitter.once(UpdateMessage, ({dataStorage}) => {
-				const worldDef = Object.assign({}, defaultWorldDef, physicWorldDataOrder.worldDef)
-				const physicWorldData = new PhysicWorldData(worldDef, new World(worldDef))
+			this.createWorld(physicWorldDataOrder)
 
-				new DataStorageFasade(dataStorage).createDataFasade(physicWorldDataOrder).replace(physicWorldData)
-				this.messageEmitter.emit(new PhysicWorldCreationMessage(physicWorldData))
-			})
-
+			// Остальные сущности с данными PhysicWorldData будут игнорироваться.
 			dispose()
 		}
 	}
 
-	public override dispose() {
-		super.dispose()
-		this.messageListenerDisposerArray.dispose()
+	private createWorld(physicWorldDataOrder: PhysicWorldData) {
+		this.messageEmitter.once(UpdateMessage, ({dataStorage}) => {
+			const worldDef = physicWorldDataOrder.worldDef
+			const physicWorldData = new PhysicWorldData(worldDef, new World(worldDef))
+			new DataStorageFasade(dataStorage).createDataFasade(physicWorldDataOrder).replace(physicWorldData)
+			this.messageEmitter.emit(new PhysicWorldCreationMessage(physicWorldData))
+		})
 	}
 }
