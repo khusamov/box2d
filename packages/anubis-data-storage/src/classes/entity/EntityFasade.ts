@@ -4,6 +4,8 @@ import {IMessageEmitter} from 'anubis-message-broker'
 import {IData} from '../../interfaces/IData'
 import {DataReplacingOperation} from '../data/DataReplacingOperation'
 import {DataDeletingOperation} from '../data/DataDeletingOperation'
+import {parentNodeSymbol} from '../../interfaces/INode'
+import {IRoot} from '../../interfaces/IRoot'
 
 export class EntityFasade {
 	private readonly dataAddingOperation: DataAddingOperation
@@ -12,20 +14,27 @@ export class EntityFasade {
 
 	public constructor(
 		private readonly messageEmitter: IMessageEmitter,
-		private readonly parentEntity: IEntity
+		private readonly entity: IEntity
 	) {
 		this.dataAddingOperation = new DataAddingOperation(
 			this.messageEmitter,
-			this.parentEntity
+			this.entity
 		)
 		this.dataDeletingOperation = new DataDeletingOperation(
 			this.messageEmitter,
-			this.parentEntity
+			this.entity
 		)
 		this.dataReplacingOperation = new DataReplacingOperation(
 			this.messageEmitter,
-			this.parentEntity
+			this.entity
 		)
+	}
+
+	public get parentEntity(): IEntity | IRoot {
+		if (!this.entity[parentNodeSymbol]) {
+			throw new Error('Не определена родительская сущность')
+		}
+		return this.entity[parentNodeSymbol]
 	}
 
 	public addData(...datas: IData[]) {

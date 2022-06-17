@@ -1,11 +1,13 @@
 import {IMessageEmitter} from 'anubis-message-broker'
 import {IEntity} from '../../interfaces/IEntity'
 import {IData} from '../../interfaces/IData'
-import {DataReplacingMessage} from '../../messages/DataReplacingMessage'
+import {DataAfterReplacingMessage} from '../../messages/DataAfterReplacingMessage'
 import {setParent} from '../../functions/setParent'
 
 /**
- * @event DataReplacingMessage
+ * Замена игровых данных.
+ * Данная операция требуется для обеспечения немутабельности игровых данных.
+ * @event DataAfterReplacingMessage
  */
 export class DataReplacingOperation {
 	public constructor(
@@ -20,6 +22,6 @@ export class DataReplacingOperation {
 		setParent(this.parentEntity, data)
 		this.parentEntity.push(data)
 		// Отправить сообщение о замене данных.
-		this.messageEmitter.emit(new DataReplacingMessage(previousData, data))
+		this.messageEmitter.emit(new DataAfterReplacingMessage(previousData, data))
 	}
 }

@@ -25,7 +25,7 @@ export class DataFasade {
 
 	public get entity(): IEntity {
 		if (!this.data[parentNodeSymbol]) {
-			throw new Error('Не определена сущность')
+			throw new Error('Не определена родительская сущность')
 		}
 		return this.data[parentNodeSymbol]
 	}

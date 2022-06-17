@@ -1,11 +1,13 @@
 import {IMessageEmitter} from 'anubis-message-broker'
-import {IRoot} from '../../interfaces/IRoot'
 import {IEntity} from '../../interfaces/IEntity'
 import {parentNodeSymbol} from '../../interfaces/INode'
-import {DataDeletingOperation} from '../data/DataDeletingOperation'
+import {EntityBeforeDeletingMessage} from '../../messages/EntityBeforeDeletingMessage'
+import {EntityAfterDeletingMessage} from '../../messages/EntityAfterDeletingMessage'
 
 /**
  * Удаление сущности со всеми ее данными.
+ * @event EntityBeforeDeletingMessage
+ * @event EntityAfterDeletingMessage
  */
 export class EntityDeletingOperation {
 	public constructor(
@@ -14,11 +16,18 @@ export class EntityDeletingOperation {
 
 	public delete(...entities: IEntity[]) {
 		for (const entity of entities) {
-			// Удалить все данные (в том числе и вложенные).
-			new DataDeletingOperation(this.messageEmitter, entity).deleteAll(true)
+			const parentNode = entity[parentNodeSymbol]
+
+			if (!parentNode) {
+				throw new Error('Не найден родительский узел')
+			}
+
+			this.messageEmitter.emit(new EntityBeforeDeletingMessage(entity))
+
 			// Удалить сущность.
-			const parentNode = (entity[parentNodeSymbol] as IEntity | IRoot)
 			parentNode.splice(parentNode.indexOf(entity), 1)
+
+			this.messageEmitter.emit(new EntityAfterDeletingMessage(entity))
 		}
 	}
 }

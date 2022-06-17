@@ -1,16 +1,12 @@
 import {IEntity} from '../../interfaces/IEntity'
-import {INode} from '../../interfaces/INode'
-import {IData} from '../../interfaces/IData'
-import {DataAddingMessage} from '../../messages/DataAddingMessage'
 import {setParent} from '../../functions/setParent'
 import {IRoot} from '../../interfaces/IRoot'
 import {IMessageEmitter} from 'anubis-message-broker'
-
-const isData = (node: INode): node is IData => !Array.isArray(node)
+import {EntityAfterAddingMessage} from '../../messages/EntityAfterAddingMessage'
 
 /**
  * Добавление сущностей в корень хранилища или в другую сущность.
- * @event DataAddingMessage
+ * @event EntityAfterAddingMessage
  */
 export class EntityAddingOperation {
 	public constructor(
@@ -19,12 +15,15 @@ export class EntityAddingOperation {
 	) {}
 
 	public add(...entities: IEntity[]) {
+		// Связать все вложенные узлы.
 		setParent(this.parentNode, ...entities)
 
+		// Добавить сущности в родительский узел.
 		this.parentNode.push(...entities)
 
-		for (const data of entities.flat(Infinity).filter(isData)) {
-			this.messageEmitter.emit(new DataAddingMessage(data))
+		// Передать сообщения о добавлении игровой сущности.
+		for (const entity of entities) {
+			this.messageEmitter.emit(new EntityAfterAddingMessage(entity))
 		}
 	}
 }
