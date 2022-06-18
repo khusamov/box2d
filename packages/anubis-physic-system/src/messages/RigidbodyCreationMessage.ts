@@ -9,7 +9,7 @@ export class RigidbodyCreationMessage extends Message {
 
 	public get body(): Body {
 		if (!this.rigidbodyData.body) {
-			throw new Error('Тело в этом сообщении должен быть уже определен')
+			throw new Error('Тело в этом сообщении должно быть уже определено')
 		}
 
 		return this.rigidbodyData.body

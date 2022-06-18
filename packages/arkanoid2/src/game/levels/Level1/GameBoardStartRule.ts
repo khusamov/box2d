@@ -22,14 +22,16 @@ const edge: Array<[number, number, number, number]> = [
 export class GameBoardStartRule extends StartRule {
 	protected start({dataStorage}: StartMessage): void {
 		new DataStorageFasade(dataStorage).addEntity(
-			...edge.map(([x1, y1, x2, y2]) => (
-				new Entity(
-					new IdentificationData({type: 'Edge'}),
-					new RigidbodyData({type: 'static', position: new Vec2(0, 0)}),
-					new EdgeShapeData(new Vec2(x1, y1), new Vec2(x2, y2)),
-					new FixtureData
-				)
-			))
+			new Entity(
+				new IdentificationData({type: 'GameBoard'}),
+				new RigidbodyData({type: 'static', position: new Vec2(0, 0)}),
+				...edge.map(([x1, y1, x2, y2]) => (
+					new Entity(
+						new EdgeShapeData(new Vec2(x1, y1), new Vec2(x2, y2)),
+						new FixtureData
+					)
+				))
+			)
 		)
 	}
 }

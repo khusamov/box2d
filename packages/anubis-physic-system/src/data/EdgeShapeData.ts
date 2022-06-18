@@ -1,18 +1,20 @@
-import {Vec2} from 'planck'
+import {Vec2, Edge} from 'planck'
 import {ShapeData} from './ShapeData'
 
-export class EdgeShapeData extends ShapeData {
+export class EdgeShapeData extends ShapeData<Edge> {
 	constructor(
-		public point1: Vec2 = new Vec2(0, 0),
-		public point2: Vec2 = new Vec2(0, 0)
+		public readonly point1: Vec2 = new Vec2(0, 0),
+		public readonly point2: Vec2 = new Vec2(0, 0),
+		shape?: Edge
 	) {
-		super()
+		super(shape)
 	}
 
-	public clone(): EdgeShapeData {
+	public clone(shape?: Edge): EdgeShapeData {
 		return new EdgeShapeData(
 			this.point1.clone(),
-			this.point2.clone()
+			this.point2.clone(),
+			shape
 		)
 	}
 }

@@ -1,17 +1,20 @@
+import {Box} from 'planck'
 import {ShapeData} from './ShapeData'
 
-export class BoxShapeData extends ShapeData {
+export class BoxShapeData extends ShapeData<Box> {
 	public constructor(
-		public width: number = 0,
-		public height: number = 0
+		public readonly width: number = 0,
+		public readonly height: number = 0,
+		shape?: Box
 	) {
-		super()
+		super(shape)
 	}
 
-	public clone(): BoxShapeData {
+	public clone(shape?: Box): BoxShapeData {
 		return new BoxShapeData(
 			this.width,
-			this.height
+			this.height,
+			shape
 		)
 	}
 }

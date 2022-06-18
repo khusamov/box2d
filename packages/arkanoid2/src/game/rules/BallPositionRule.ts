@@ -49,7 +49,6 @@ export class BallPositionRule extends Rule {
 						)
 					)
 				}
-
 			}
 		})
 	}

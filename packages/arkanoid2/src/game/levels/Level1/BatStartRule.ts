@@ -19,6 +19,7 @@ export class BatStartRule extends StartRule {
 				new RigidbodyData({type: 'kinematic', position: new Vec2(0, batOffsetY), fixedRotation: true}),
 				new FixtureData({density: 1, friction: 0}),
 				new PolygonShapeData(
+					undefined,
 					new Vec2(-width / 2, -(height + height2) / 2),
 					new Vec2(-width / 2, (height + height2) / 2 - height2),
 					new Vec2(-width2 / 2, (height + height2) / 2),

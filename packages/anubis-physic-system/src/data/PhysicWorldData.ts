@@ -11,21 +11,13 @@ const defaultWorldDef: Readonly<IWorldDef> = {
  * Данные для создания мира физической симуляции Planck.
  */
 export class PhysicWorldData extends Data {
-	#worldDef: IWorldDef | undefined
+	public readonly worldDef: IWorldDef
 
 	public constructor(
 		worldDef?: IWorldDef,
 		public readonly world?: World
 	) {
 		super()
-		this.#worldDef = worldDef
-	}
-
-	public get worldDef(): IWorldDef | undefined {
-		return this.#worldDef
-	}
-
-	public set worldDef(worldDef: IWorldDef | undefined) {
-		this.#worldDef = Object.assign({}, defaultWorldDef, worldDef)
+		this.worldDef = Object.assign({}, defaultWorldDef, worldDef)
 	}
 }

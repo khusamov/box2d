@@ -1,13 +1,15 @@
+import {Circle} from 'planck'
 import {ShapeData} from './ShapeData'
 
-export class CircleShapeData extends ShapeData {
+export class CircleShapeData extends ShapeData<Circle> {
 	constructor(
-		public radius: number = 0
+		public readonly radius: number = 0,
+		shape?: Circle
 	) {
-		super()
+		super(shape)
 	}
 
-	public clone(): CircleShapeData {
-		return new CircleShapeData(this.radius)
+	public clone(shape?: Circle): CircleShapeData {
+		return new CircleShapeData(this.radius, shape)
 	}
 }
