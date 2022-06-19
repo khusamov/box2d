@@ -4,11 +4,15 @@ import {SuperMarioParticleEffect} from './SuperMarioParticleEffect'
 
 const effect = new SuperMarioParticleEffect
 
+interface ISuperMarioProps {
+	onStart: () => void
+}
+
 /**
  * @link https://codepen.io/franksLaboratory/pen/WNdPPVz
  * @link https://parceljs.org/languages/javascript/#url-dependencies
  */
-export function SuperMario() {
+export function SuperMario({onStart}: ISuperMarioProps) {
 	const canvasRef = useRef<HTMLCanvasElement>(null)
 	const imageRef = useRef<HTMLImageElement>(null)
 	useEffect(() => {
@@ -19,8 +23,9 @@ export function SuperMario() {
 			effect.init(canvasRef.current, imageRef.current)
 		}
 	}
+	const onClick = () => onStart()
 	return (
-		<div className={SuperMarioStyle}>
+		<div className={SuperMarioStyle} onClick={onClick}>
 			<canvas ref={canvasRef}/>
 			<img ref={imageRef} alt='SuperMario' onLoad={onImageLoad} src={new URL('./arkanoid.png', import.meta.url).href}/>
 		</div>

@@ -1,23 +1,23 @@
-import {ApplicationStyle} from './Application.module.scss';
-import {useRef, MouseEvent} from 'react'
-import useResizeObserver from 'use-resize-observer';
-import {useRequestAnimationFrame} from '../../hooks/useRequestAnimationFrame';
-import {Canvas} from '../svg/Canvas';
-import {PlanckRenderer} from '../renderer/PlanckRenderer';
-import {useRequestPointerLock} from '../../hooks/useRequestPointerLock'
 import {GameCreator} from 'anubis-game-system-2'
 import {PilotLevel} from '../../game/levels/PilotLevel'
-import {BatMoveMessage} from '../../game/messages/BatMoveMessage'
-import {StartGameMessage} from '../../game/messages/StartGameMessage'
 import {DataStorageFasade, isData} from 'anubis-data-storage'
-import {PhysicWorldData} from 'anubis-physic-system'
-import {FloatPanel} from '../panel/FloatPanel'
-import {GameScoreData} from '../../game/data/GameScoreData'
 import {usePauseGame} from '../../hooks/usePauseGame'
+import {useRequestAnimationFrame} from '../../hooks/useRequestAnimationFrame'
+import {MouseEvent, useRef} from 'react'
+import useResizeObserver from 'use-resize-observer'
+import {useRequestPointerLock} from '../../hooks/useRequestPointerLock'
 import {useScale} from '../../hooks/useScale'
 import {useCameraCorrection} from '../../hooks/useCameraCorrection'
-import {DebugCenterLines} from './DebugCenterLines'
-import {ScaleAnimatedGroup} from './ScaleAnimatedGroup'
+import {StartGameMessage} from '../../game/messages/StartGameMessage'
+import {BatMoveMessage} from '../../game/messages/BatMoveMessage'
+import {PhysicWorldData} from 'anubis-physic-system'
+import {GameScoreData} from '../../game/data/GameScoreData'
+import {ApplicationStyle} from '../Application/Application.module.scss'
+import {Canvas} from '../svg/Canvas'
+import {ScaleAnimatedGroup} from '../animate/ScaleAnimatedGroup'
+import {PlanckRenderer} from '../renderer/PlanckRenderer'
+import {DebugCenterLines} from '../debug/DebugCenterLines'
+import {FloatPanel} from '../panel/FloatPanel'
 
 const debug = false
 
@@ -26,7 +26,7 @@ game.init()
 game.start()
 const dataStorageFasade = new DataStorageFasade(game.dataStorage)
 
-export function Application() {
+export function GameScene() {
 	usePauseGame(game)
 	useRequestAnimationFrame(game.update.bind(game))
 	const ref = useRef<HTMLDivElement>(null)
