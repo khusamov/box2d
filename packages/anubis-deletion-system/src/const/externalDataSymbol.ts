@@ -1,0 +1,1 @@
+export const externalDataSymbol = Symbol.for('ExternalDataSymbol')
