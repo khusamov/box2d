@@ -18,6 +18,7 @@
 	},
 	"dependencies": {
 		"anubis-data-storage": "workspaces:*",
+		"anubis-deletion-system": "workspaces:*",
 		"anubis-game-system-2": "workspaces:*",
 		"anubis-message-broker": "workspaces:*",
 		"anubis-rule-system": "workspaces:*",
