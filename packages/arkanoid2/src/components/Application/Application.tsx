@@ -62,11 +62,17 @@ export function Application() {
 		}
 	}
 
+	const onContextMenu = (mouseEvent: MouseEvent) => {
+		if (process.env['NODE_ENV'] === 'production') {
+			mouseEvent.preventDefault()
+		}
+	}
+
 	const world = dataStorageFasade.find(isData(PhysicWorldData))?.world
 	const score = dataStorageFasade.find(isData(GameScoreData))?.score || 0
 
 	return (
-		<div ref={ref} className={ApplicationStyle} onMouseDown={onMouseDown} onMouseMove={onMouseMove}>
+		<div ref={ref} className={ApplicationStyle} onMouseDown={onMouseDown} onMouseMove={onMouseMove} onContextMenu={onContextMenu}>
 			<Canvas>
 				<g transform={cameraTransform}>
 					<ScaleAnimatedGroup scale={scale}>
