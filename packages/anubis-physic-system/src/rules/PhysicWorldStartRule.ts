@@ -1,5 +1,5 @@
-import {StartMessage, StartRule} from 'anubis-game-system-2'
-import {DataStorageFasade, Entity} from 'anubis-data-storage'
+import {StartRule} from 'anubis-game-system-2'
+import {DataStorageFasade, Entity, IDataStorage} from 'anubis-data-storage'
 import {PhysicWorldData} from '../data/PhysicWorldData'
 import {IWorldDef} from '../interfaces/IWorldDef'
 
@@ -11,7 +11,7 @@ export class PhysicWorldStartRule extends StartRule {
 		super()
 	}
 
-	protected start({dataStorage}: StartMessage): void {
+	protected start(dataStorage: IDataStorage): void {
 		new DataStorageFasade(dataStorage).addEntity(
 			new Entity(new PhysicWorldData(this.worldDef))
 		)
