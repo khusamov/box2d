@@ -7,6 +7,7 @@ import {IMessageEmitter} from '../interfaces/IMessageEmitter'
 import {IMessageEmitCommand} from '../interfaces/IMessageEmitCommand'
 
 /**
+ * @deprecated
  * Порядок работы с брокером сообщений.
  * Отправка сообщения:
  * - MessageBroker.emit() - Размещение сообщения в очереди сообщений.
@@ -32,6 +33,7 @@ export class MessageBroker implements IMessageBroker {
 	}
 
 	public emit(...message: IMessage[]): void {
+		// Идея с очередью сообщений оказалась провальной - все сильно тормозит. Правда причина тормозов не известна еще.
 		this.messageQueue.push(...message)
 	}
 
@@ -46,5 +48,8 @@ export class MessageBroker implements IMessageBroker {
 
 	public stop() {
 		this.messageEmitCommand.stop()
+	}
+
+	dispose(): void {
 	}
 }
