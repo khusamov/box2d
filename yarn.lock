@@ -1420,6 +1420,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/node@npm:^18.0.0":
+  version: 18.0.0
+  resolution: "@types/node@npm:18.0.0"
+  checksum: aab2b325727a2599f6d25ebe0dedf58c40fb66a51ce4ca9c0226ceb70fcda2d3afccdca29db5942eb48b158ee8585a274a1e3750c718bbd5399d7f41d62dfdcc
+  languageName: node
+  linkType: hard
+
 "@types/normalize-package-data@npm:^2.4.0":
   version: 2.4.1
   resolution: "@types/normalize-package-data@npm:2.4.1"
@@ -1605,6 +1612,22 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"anubis-deletion-system@workspace:packages/anubis-deletion-system, anubis-deletion-system@workspaces:*":
+  version: 0.0.0-use.local
+  resolution: "anubis-deletion-system@workspace:packages/anubis-deletion-system"
+  dependencies:
+    "@parcel/packager-ts": 2.5.0
+    "@parcel/transformer-typescript-types": 2.5.0
+    anubis-data-storage: "workspaces:*"
+    anubis-game-system-2: "workspaces:*"
+    anubis-message-broker: "workspaces:*"
+    anubis-rule-system: "workspaces:*"
+    base-types: "workspaces:*"
+    parcel: ^2.5.0
+    typescript: ^4.7.3
+  languageName: unknown
+  linkType: soft
+
 "anubis-game-system-2@workspace:packages/anubis-game-system-2, anubis-game-system-2@workspaces:*":
   version: 0.0.0-use.local
   resolution: "anubis-game-system-2@workspace:packages/anubis-game-system-2"
@@ -1614,7 +1637,6 @@ __metadata:
     "@types/react": ^18.0.9
     anubis-data-storage: "workspaces:*"
     anubis-message-broker: "workspaces:*"
-    anubis-physic-system: "workspaces:*"
     anubis-rule-system: "workspaces:*"
     base-types: "workspaces:*"
     events: ^3.3.0
@@ -1655,13 +1677,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"anubis-physic-system@workspace:packages/anubis-physic-system, anubis-physic-system@workspaces:*":
+"anubis-physic-system@workspace:packages/anubis-physic-system":
   version: 0.0.0-use.local
   resolution: "anubis-physic-system@workspace:packages/anubis-physic-system"
   dependencies:
     "@parcel/packager-ts": 2.5.0
     "@parcel/transformer-typescript-types": 2.5.0
     anubis-data-storage: "workspaces:*"
+    anubis-deletion-system: "workspaces:*"
     anubis-game-system-2: "workspaces:*"
     anubis-message-broker: "workspaces:*"
     anubis-rule-system: "workspaces:*"
@@ -4148,6 +4171,18 @@ __metadata:
   checksum: f8a8e9a7693659383f06aec604ad5ead237c7a261c18048a6e1b5b85a5f8a067e469aa24f5bc009b991ea3b058a87f5065ef4176793a200d4917349881216cae
   languageName: node
   linkType: hard
+
+"parcel-transformer-package-json@workspace:packages/parcel-transformer-package-json":
+  version: 0.0.0-use.local
+  resolution: "parcel-transformer-package-json@workspace:packages/parcel-transformer-package-json"
+  dependencies:
+    "@parcel/packager-ts": 2.5.0
+    "@parcel/transformer-typescript-types": 2.5.0
+    "@types/node": ^18.0.0
+    parcel: ^2.5.0
+    typescript: ^4.7.3
+  languageName: unknown
+  linkType: soft
 
 "parcel@npm:^2.5.0":
   version: 2.5.0
