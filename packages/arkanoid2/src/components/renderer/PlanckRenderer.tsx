@@ -62,15 +62,9 @@ function FixtureRenderer({fixtureList}: IFixtureRendererProps) {
 						case 'edge':
 							const vertex1 = (fixture.getShape() as Edge).m_vertex1
 							const vertex2 = (fixture.getShape() as Edge).m_vertex2
-							const pointSize = 1
 							return (
 								<g key={index}>
-									<g transform={`translate(-${pointSize / 2}, -${pointSize / 2})`}>
-										<rect width={pointSize} height={pointSize} transform={`translate(${vertex1.x}, ${vertex1.y})`}/>
-										<rect width={pointSize} height={pointSize} transform={`translate(${vertex2.x}, ${vertex2.y})`}/>
-									</g>
-									<path d={pathData([vertex1, vertex2], false)}
-									/>
+									<path d={pathData([vertex1, vertex2], false)}/>
 								</g>
 							)
 					}

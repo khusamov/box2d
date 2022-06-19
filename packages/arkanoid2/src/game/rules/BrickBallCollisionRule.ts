@@ -2,9 +2,10 @@ import {Rule} from 'anubis-rule-system'
 import {ContactFasade, PhysicWorldCreationMessage} from 'anubis-physic-system'
 import {DataStorageFasade, IEntity} from 'anubis-data-storage'
 import {IdentificationData} from '../data/IdentificationData'
-import {DeletedMarkData, UpdateMessage} from 'anubis-game-system-2'
+import {UpdateMessage} from 'anubis-game-system-2'
 import {Contact} from 'planck'
 import {BrickBallCollisionMessage} from '../messages/BrickBallCollisionMessage'
+import {DeletedMarkData} from 'anubis-deletion-system'
 
 export class BrickBallCollisionRule extends Rule {
 	public init() {
