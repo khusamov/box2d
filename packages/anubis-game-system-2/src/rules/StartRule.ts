@@ -1,6 +1,6 @@
 import {Rule} from 'anubis-rule-system'
 import {UpdateMessage} from '../messages/UpdateMessage'
-import {StartMessage} from '../messages/StartMessage'
+import {IDataStorage} from 'anubis-data-storage'
 
 /**
  * Правило, которое срабатывает один раз в начале игры.
@@ -9,14 +9,14 @@ import {StartMessage} from '../messages/StartMessage'
 export abstract class StartRule extends Rule {
 	public override init() {
 		this.messageEmitter.once(UpdateMessage, ({dataStorage}) => {
-			this.start(new StartMessage(dataStorage))
+			this.start(dataStorage)
 		})
 	}
 
 	/**
 	 * Вызывается один раз в начале игры.
-	 * @param message
+	 * @param dataStorage
 	 * @protected
 	 */
-	protected abstract start(message: StartMessage): void
+	protected abstract start(dataStorage: IDataStorage): void
 }
