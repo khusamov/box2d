@@ -8,7 +8,6 @@
 	"scripts": {
 		"arkanoid2": "yarn workspaces foreach --include 'arkanoid2' run start",
 		"arkanoid2:build": "yarn workspaces foreach --include 'arkanoid2' run build",
-		"arkanoid1": "yarn workspaces foreach --include 'arkanoid' run start",
 		"sample1": "yarn workspaces foreach --include 'sample1' run start",
 		"base-types:build": "yarn workspaces foreach --include 'base-types' run build",
 		"base-types:build:watch": "yarn workspaces foreach --include 'base-types' run build:watch",
@@ -20,8 +19,6 @@
 		"anubis-data-storage:build:watch": "yarn workspaces foreach --include 'anubis-data-storage' run build:watch",
 		"anubis-deletion-system:build": "yarn workspaces foreach --include 'anubis-deletion-system' run build",
 		"anubis-deletion-system:build:watch": "yarn workspaces foreach --include 'anubis-deletion-system' run build:watch",
-		"anubis-game-system:build": "yarn workspaces foreach --include 'anubis-game-system' run build",
-		"anubis-game-system:build:watch": "yarn workspaces foreach --include 'anubis-game-system' run build:watch",
 		"anubis-game-system-2:build": "yarn workspaces foreach --include 'anubis-game-system-2' run build",
 		"anubis-game-system-2:build:watch": "yarn workspaces foreach --include 'anubis-game-system-2' run build:watch",
 		"anubis-message-broker:build": "yarn workspaces foreach --include 'anubis-message-broker' run build",
