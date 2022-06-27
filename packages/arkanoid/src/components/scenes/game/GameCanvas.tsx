@@ -10,7 +10,6 @@ import {useRequestPointerLock} from '../../../hooks/useRequestPointerLock'
 import {useScale} from '../../../hooks/useScale'
 import {useCameraCorrection} from '../../../hooks/useCameraCorrection'
 import {usePauseGame} from '../../../hooks/usePauseGame'
-import {useRequestAnimationFrame} from '../../../hooks/useRequestAnimationFrame'
 import {StartGameMessage} from '../../../game/messages/StartGameMessage'
 import {BatMoveMessage} from '../../../game/messages/BatMoveMessage'
 import {DataStorageFasade, isData} from 'anubis-data-storage'
@@ -27,7 +26,6 @@ export function GameCanvas({game}: IGameCanvasProps) {
 	const scale = useScale({width, height}, {width: 70, height: 40})
 	const cameraTransform = useCameraCorrection({width, height})
 	usePauseGame(game)
-	useRequestAnimationFrame(game.update.bind(game))
 	const dataStorageFasade = new DataStorageFasade(game.dataStorage)
 	const world = dataStorageFasade.find(isData(PhysicWorldData))?.world
 
