@@ -1,5 +1,4 @@
 import {useState} from 'react'
-import {GameCreator} from 'anubis-game-system'
 import {GameScene} from '../scenes/game/GameScene'
 import {SuperMario} from '../scenes/intro/SuperMario'
 import {PilotLevel} from '../../game/levels/PilotLevel'
@@ -13,14 +12,8 @@ export function Application() {
 	const [scene, setScene] = useState(Scene.Intro)
 
 	switch (scene) {
-		case Scene.Intro:
-			const onStart = () => setScene(Scene.Game)
-			return <SuperMario onStart={onStart}/>
-		case Scene.Game:
-			const game = new GameCreator(new PilotLevel).create()
-			game.init()
-			game.start()
-			return <GameScene game={game}/>
+		case Scene.Intro: return <SuperMario onStart={() => setScene(Scene.Game)}/>
+		case Scene.Game: return <GameScene level={new PilotLevel}/>
 		default: return null
 	}
 }
