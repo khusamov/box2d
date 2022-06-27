@@ -1619,7 +1619,7 @@ __metadata:
     "@parcel/packager-ts": 2.5.0
     "@parcel/transformer-typescript-types": 2.5.0
     anubis-data-storage: "workspaces:*"
-    anubis-game-system-2: "workspaces:*"
+    anubis-game-system: "workspaces:*"
     anubis-message-broker: "workspaces:*"
     anubis-rule-system: "workspaces:*"
     base-types: "workspaces:*"
@@ -1628,9 +1628,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"anubis-game-system-2@workspace:packages/anubis-game-system-2, anubis-game-system-2@workspaces:*":
+"anubis-game-system@workspace:packages/anubis-game-system, anubis-game-system@workspaces:*":
   version: 0.0.0-use.local
-  resolution: "anubis-game-system-2@workspace:packages/anubis-game-system-2"
+  resolution: "anubis-game-system@workspace:packages/anubis-game-system"
   dependencies:
     "@parcel/packager-ts": 2.5.0
     "@parcel/transformer-typescript-types": 2.5.0
@@ -1642,22 +1642,6 @@ __metadata:
     events: ^3.3.0
     inversion-of-control: "workspaces:*"
     mobx: ^6.6.0
-    parcel: ^2.5.0
-    react: ^18.1.0
-    typescript: ^4.7.3
-  languageName: unknown
-  linkType: soft
-
-"anubis-game-system@workspace:packages/anubis-game-system":
-  version: 0.0.0-use.local
-  resolution: "anubis-game-system@workspace:packages/anubis-game-system"
-  dependencies:
-    "@parcel/packager-ts": 2.5.0
-    "@parcel/transformer-typescript-types": 2.5.0
-    "@types/react": ^18.0.9
-    base-types: "workspaces:*"
-    events: ^3.3.0
-    inversion-of-control: "workspaces:*"
     parcel: ^2.5.0
     react: ^18.1.0
     typescript: ^4.7.3
@@ -1685,7 +1669,7 @@ __metadata:
     "@parcel/transformer-typescript-types": 2.5.0
     anubis-data-storage: "workspaces:*"
     anubis-deletion-system: "workspaces:*"
-    anubis-game-system-2: "workspaces:*"
+    anubis-game-system: "workspaces:*"
     anubis-message-broker: "workspaces:*"
     anubis-rule-system: "workspaces:*"
     base-types: "workspaces:*"
@@ -1766,35 +1750,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"arkanoid2@workspace:packages/arkanoid2":
-  version: 0.0.0-use.local
-  resolution: "arkanoid2@workspace:packages/arkanoid2"
-  dependencies:
-    "@parcel/packager-ts": 2.5.0
-    "@parcel/transformer-sass": 2.5.0
-    "@parcel/transformer-svg-react": ^2.5.0
-    "@parcel/transformer-typescript-types": 2.5.0
-    "@types/events": ^3
-    "@types/react": ^18.0.9
-    "@types/react-dom": ^18.0.3
-    "@types/three": ^0.140.0
-    anubis-data-storage: "workspaces:*"
-    anubis-game-system-2: "workspaces:*"
-    anubis-message-broker: "workspaces:*"
-    base-types: "workspaces:*"
-    events: ^3.3.0
-    inversion-of-control: "workspaces:*"
-    node-sass: ^7.0.1
-    parcel: ^2.5.0
-    planck: ^1.0.0-alpha.4
-    react: ^18.1.0
-    react-dom: ^18.1.0
-    serve: ^13.0.2
-    typescript: ^4.7.3
-    use-resize-observer: ^9.0.0
-  languageName: unknown
-  linkType: soft
-
 "arkanoid@workspace:packages/arkanoid":
   version: 0.0.0-use.local
   resolution: "arkanoid@workspace:packages/arkanoid"
@@ -1807,7 +1762,12 @@ __metadata:
     "@types/react": ^18.0.9
     "@types/react-dom": ^18.0.3
     "@types/three": ^0.140.0
+    anubis-data-storage: "workspaces:*"
+    anubis-game-system: "workspaces:*"
+    anubis-message-broker: "workspaces:*"
+    base-types: "workspaces:*"
     events: ^3.3.0
+    inversion-of-control: "workspaces:*"
     node-sass: ^7.0.1
     parcel: ^2.5.0
     planck: ^1.0.0-alpha.4
