@@ -17,11 +17,13 @@ export class BallPositionRule extends Rule {
 			const batEntity = entityCollection.find(byType('Bat'))
 			const ballEntity = entityCollection.find(byType('Ball'))
 
-			if (batEntity && ballEntity) {
-				if (ballEntity.find(isData(BallStateData))?.state === BallStateType.Moving) {
-					return
-				}
+			const ballIsStopped = (
+				batEntity &&
+				ballEntity &&
+				ballEntity.find(isData(BallStateData))?.state === BallStateType.Stopped
+			)
 
+			if (ballIsStopped) {
 				const ballRigidbodyData = ballEntity.find(isData(RigidbodyData))
 				const ballCircleShapeData = ballEntity.find(isData(CircleShapeData))
 				const batRigidbodyData = batEntity.find(isData(RigidbodyData))
