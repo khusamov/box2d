@@ -7,9 +7,9 @@ import {DataStorageFasade, isData} from 'anubis-data-storage'
 import {RigidbodyData} from 'anubis-physic-system'
 
 /**
- * Бита должна всегда следовать за положением курсора мышки.
+ * Правило движения биты: жесткое следование за курсором мышки.
  */
-export class BatMovingRule extends Rule {
+export class BatHardMovingRule extends Rule {
 	public init(): void {
 		this.messageEmitter.on(BatMoveMessage, ({movementX}) => {
 			this.messageEmitter.once(UpdateMessage, ({dataStorage}) => {

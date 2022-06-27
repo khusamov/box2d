@@ -4,7 +4,7 @@ import {GameBoardStartRule} from '../rules/start/GameBoardStartRule'
 import {BrickWallStartRule} from '../rules/start/BrickWallStartRule'
 import {BatStartRule} from '../rules/start/BatStartRule'
 import {BallPositionRule} from '../rules/BallPositionRule'
-import {BatMovingRule} from '../rules/BatMovingRule'
+import {BatHardMovingRule} from '../rules/BatHardMovingRule'
 import {StartGameRule} from '../rules/StartGameRule'
 import {BrickBallCollisionRule} from '../rules/BrickBallCollisionRule'
 import {GameScoreRule} from '../rules/GameScoreRule'
@@ -31,7 +31,7 @@ export class PilotLevel extends Level {
 			new StartGameRule,
 			new GameScoreRule,
 			new BallPositionRule,
-			new BatMovingRule,
+			new BatHardMovingRule,
 			new BrickBallCollisionRule
 		)
 	}
