@@ -2,6 +2,7 @@ import {Fragment} from 'react'
 import {World, Fixture, Edge, Polygon, Circle, Vec2} from 'planck';
 import {convertPlanckListToArray} from '../../functions/convertPlanckListToArray';
 import {toDegree} from '../../functions/toDegree';
+import {PlanckRendererStyle, EdgeStyle, CircleStyle, PolygonStyle} from './PlanckRenderer.module.scss'
 
 interface IPlanckRendererProps {
 	world: World
@@ -9,7 +10,7 @@ interface IPlanckRendererProps {
 
 export function PlanckRenderer({world}: IPlanckRendererProps) {
 	return (
-		<g>
+		<g className={PlanckRendererStyle}>
 			{convertPlanckListToArray(world.getBodyList()).map(
 				(body, index) => {
 					const x = body.getTransform().p.x
@@ -48,6 +49,7 @@ function FixtureRenderer({fixtureList}: IFixtureRendererProps) {
 							return (
 								<circle
 									key={index}
+									className={CircleStyle}
 									r={circle.getRadius()}
 									transform={`translate(${circle.getCenter().x}, ${circle.getCenter().y})`}
 								/>
@@ -56,6 +58,7 @@ function FixtureRenderer({fixtureList}: IFixtureRendererProps) {
 							return (
 								<path
 									key={index}
+									className={PolygonStyle}
 									d={pathData((fixture.getShape() as Polygon).m_vertices)}
 								/>
 							)
@@ -63,7 +66,7 @@ function FixtureRenderer({fixtureList}: IFixtureRendererProps) {
 							const vertex1 = (fixture.getShape() as Edge).m_vertex1
 							const vertex2 = (fixture.getShape() as Edge).m_vertex2
 							return (
-								<g key={index}>
+								<g key={index} className={EdgeStyle}>
 									<path d={pathData([vertex1, vertex2], false)}/>
 								</g>
 							)
