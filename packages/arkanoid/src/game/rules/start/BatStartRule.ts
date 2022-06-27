@@ -1,15 +1,17 @@
 import {StartRule} from 'anubis-game-system'
-import {DataStorageFasade, IDataStorage} from 'anubis-data-storage'
+import {DataStorageFasade, Entity, IDataStorage} from 'anubis-data-storage'
 import {BatCreationMessage} from '../../messages/BatCreationMessage'
-import {TrapezoidalBatEntity} from '../../../entities/TrapezoidalBatEntity'
 
 /**
  * @event BatCreationMessage
  */
 export class BatStartRule extends StartRule {
+	public constructor(private batEntity: Entity) {
+		super()
+	}
+
 	protected start(dataStorage: IDataStorage): void {
-		const batEntity = new TrapezoidalBatEntity
-		new DataStorageFasade(dataStorage).addEntity(batEntity)
-		this.messageEmitter.emit(new BatCreationMessage(batEntity))
+		new DataStorageFasade(dataStorage).addEntity(this.batEntity)
+		this.messageEmitter.emit(new BatCreationMessage(this.batEntity))
 	}
 }

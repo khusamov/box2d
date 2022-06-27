@@ -11,6 +11,7 @@ import {GameScoreRule} from '../rules/GameScoreRule'
 import {BallStartRule} from '../rules/start/BallStartRule'
 import {EntityDeletionRule} from 'anubis-deletion-system'
 import {BrickBallCollisionSoundRule} from '../rules/BrickBallCollisionSoundRule'
+import {TrapezoidalBatEntity} from '../../entities/TrapezoidalBatEntity'
 
 /**
  * Пилотный уровень арканоида.
@@ -22,7 +23,7 @@ export class PilotLevel extends Level {
 			new PhysicFeature,
 
 			new GameBoardStartRule,
-			new BatStartRule,
+			new BatStartRule(new TrapezoidalBatEntity),
 			new BallStartRule,
 			new BrickWallStartRule,
 
