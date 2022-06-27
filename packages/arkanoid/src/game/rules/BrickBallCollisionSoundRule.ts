@@ -7,7 +7,6 @@ export class BrickBallCollisionSoundRule extends Rule {
 		const response = await fetch(clickSoundUrl)
 		const clickSoundArrayBuffer = await response.arrayBuffer()
 
-		// TODO Сделать вызов new AudioContext после получения разрешения на звук (после первого клика).
 		const context = new AudioContext
 		const soundGainNode = context.createGain()
 		soundGainNode.gain.value = 0.25

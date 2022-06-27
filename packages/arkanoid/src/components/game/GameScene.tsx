@@ -1,5 +1,4 @@
-import {GameCreator} from 'anubis-game-system'
-import {PilotLevel} from '../../game/levels/PilotLevel'
+import {Game} from 'anubis-game-system'
 import {DataStorageFasade, isData} from 'anubis-data-storage'
 import {usePauseGame} from '../../hooks/usePauseGame'
 import {useRequestAnimationFrame} from '../../hooks/useRequestAnimationFrame'
@@ -21,12 +20,12 @@ import {FloatPanel} from '../panel/FloatPanel'
 
 const debug = false
 
-const game = new GameCreator(new PilotLevel).create()
-game.init()
-game.start()
-const dataStorageFasade = new DataStorageFasade(game.dataStorage)
+interface IGameSceneProps {
+	game: Game
+}
 
-export function GameScene() {
+export function GameScene({game}: IGameSceneProps) {
+	const dataStorageFasade = new DataStorageFasade(game.dataStorage)
 	usePauseGame(game)
 	useRequestAnimationFrame(game.update.bind(game))
 	const ref = useRef<HTMLDivElement>(null)
