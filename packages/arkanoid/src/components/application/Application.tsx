@@ -1,7 +1,7 @@
 import {useState} from 'react'
 import {GameCreator} from 'anubis-game-system'
-import {GameScene} from '../game/GameScene'
-import {SuperMario} from '../intro/SuperMario'
+import {GameScene} from '../scenes/game/GameScene'
+import {SuperMario} from '../scenes/intro/SuperMario'
 import {PilotLevel} from '../../game/levels/PilotLevel'
 
 enum Scene {
