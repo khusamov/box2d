@@ -2,7 +2,7 @@ import {Rule} from 'anubis-rule-system'
 import {StartGameMessage} from '../messages/StartGameMessage'
 import {UpdateMessage} from 'anubis-game-system'
 import {DataStorageFasade, isData} from 'anubis-data-storage'
-import {IdentificationData} from '../data/IdentificationData'
+import {byType, IdentificationData} from '../data/IdentificationData'
 import {BallStateData, BallStateType} from '../data/BallStateData'
 import {RigidbodyData} from 'anubis-physic-system'
 import {Vec2} from 'planck'
@@ -18,7 +18,7 @@ export class StartGameRule extends Rule {
 				const ballEntity = (
 					dataStorageFasade
 						.createEntityCollection(IdentificationData)
-						.find(({type}) => type === 'Ball')
+						.find(byType('Ball'))
 				)
 				if (ballEntity) {
 					const ballStateData = ballEntity.find(isData(BallStateData))

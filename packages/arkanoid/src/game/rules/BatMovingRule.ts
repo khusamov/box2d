@@ -1,5 +1,5 @@
 import {BatMoveMessage} from '../messages/BatMoveMessage'
-import {IdentificationData} from '../data/IdentificationData'
+import {byType, IdentificationData} from '../data/IdentificationData'
 import {Vec2} from 'planck'
 import {Rule} from 'anubis-rule-system'
 import {UpdateMessage} from 'anubis-game-system'
@@ -16,7 +16,7 @@ export class BatMovingRule extends Rule {
 				const batEntity = (
 					new DataStorageFasade(dataStorage)
 						.createEntityCollection(IdentificationData)
-						.find(({type}) => type === 'Bat')
+						.find(byType('Bat'))
 				)
 				if (batEntity) {
 					const body = batEntity.find(isData(RigidbodyData))?.body

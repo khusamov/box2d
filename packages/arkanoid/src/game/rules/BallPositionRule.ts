@@ -1,7 +1,7 @@
 import {Rule} from 'anubis-rule-system'
 import {UpdateMessage} from 'anubis-game-system'
 import {DataStorageFasade, isData} from 'anubis-data-storage'
-import {IdentificationData} from '../data/IdentificationData'
+import {byType, IdentificationData} from '../data/IdentificationData'
 import {BallStateData, BallStateType} from '../data/BallStateData'
 import {CircleShapeData, PolygonShapeData, RigidbodyData} from 'anubis-physic-system'
 import {Vec2} from 'planck'
@@ -14,8 +14,8 @@ export class BallPositionRule extends Rule {
 	public init(): void {
 		this.messageEmitter.on(UpdateMessage, ({dataStorage}) => {
 			const entityCollection = new DataStorageFasade(dataStorage).createEntityCollection(IdentificationData)
-			const batEntity = entityCollection.find(({type}) => type === 'Bat')
-			const ballEntity = entityCollection.find(({type}) => type === 'Ball')
+			const batEntity = entityCollection.find(byType('Bat'))
+			const ballEntity = entityCollection.find(byType('Ball'))
 
 			if (batEntity && ballEntity) {
 				if (ballEntity.find(isData(BallStateData))?.state === BallStateType.Moving) {
