@@ -26,24 +26,7 @@ type TIRplResult = [
  * @param ref
  */
 export function useRequestPointerLock<T extends HTMLElement>(ref: RefObject<T>): TIRplResult {
-	const [isLock, setIsLock] = useState(false)
-	const onPointerLockChange = () => {
-		if (ref.current) {
-			if (document.pointerLockElement === ref.current) {
-				setIsLock(true)
-			} else {
-				setIsLock(false)
-			}
-		}
-	}
-
-	useEffect(() => {
-		document.addEventListener('pointerlockchange', onPointerLockChange)
-		return () => {
-			document.removeEventListener('pointerlockchange', onPointerLockChange)
-			document.exitPointerLock()
-		}
-	}, [])
+	const [isPointerLock, setIsPointerLock] = useState(false)
 
 	const requestPointerLock = () => {
 		if (ref.current) {
@@ -51,5 +34,18 @@ export function useRequestPointerLock<T extends HTMLElement>(ref: RefObject<T>):
 		}
 	}
 
-	return [requestPointerLock, () => document.exitPointerLock(), isLock]
+	const cancelPointerLock = () => {
+		document.exitPointerLock()
+	}
+
+	useEffect(() => {
+		const onPointerLockChange = () => setIsPointerLock(document.pointerLockElement === ref.current)
+		document.addEventListener('pointerlockchange', onPointerLockChange)
+		return () => {
+			document.removeEventListener('pointerlockchange', onPointerLockChange)
+			cancelPointerLock()
+		}
+	}, [])
+
+	return [requestPointerLock, cancelPointerLock, isPointerLock]
 }
