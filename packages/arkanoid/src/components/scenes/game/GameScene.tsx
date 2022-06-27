@@ -17,6 +17,7 @@ import {ScaleAnimatedGroup} from '../../animate/ScaleAnimatedGroup'
 import {PlanckRenderer} from '../../renderer/PlanckRenderer'
 import {DebugCenterLines} from '../../debug/DebugCenterLines'
 import {FloatPanel} from '../../panel/FloatPanel'
+import {useDisableContextMenu} from '../../../hooks/useDisableContextMenu'
 
 const debug = false
 
@@ -25,6 +26,7 @@ interface IGameSceneProps {
 }
 
 export function GameScene({game}: IGameSceneProps) {
+	const onContextMenu = useDisableContextMenu()
 	const dataStorageFasade = new DataStorageFasade(game.dataStorage)
 	usePauseGame(game)
 	useRequestAnimationFrame(game.update.bind(game))
@@ -58,12 +60,6 @@ export function GameScene({game}: IGameSceneProps) {
 					movementY / scale
 				)
 			)
-		}
-	}
-
-	const onContextMenu = (mouseEvent: MouseEvent) => {
-		if (process.env['NODE_ENV'] === 'production') {
-			mouseEvent.preventDefault()
 		}
 	}
 
