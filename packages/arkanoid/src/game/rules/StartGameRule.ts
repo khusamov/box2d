@@ -1,6 +1,6 @@
 import {Rule} from 'anubis-rule-system'
 import {StartGameMessage} from '../messages/StartGameMessage'
-import {UpdateMessage} from 'anubis-game-system-2'
+import {UpdateMessage} from 'anubis-game-system'
 import {DataStorageFasade, isData} from 'anubis-data-storage'
 import {IdentificationData} from '../data/IdentificationData'
 import {BallStateData, BallStateType} from '../data/BallStateData'

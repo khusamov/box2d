@@ -1,7 +1,7 @@
 import {Rule} from 'anubis-rule-system'
 import {DataAfterAddingMessage, DataStorageFasade, IDataStorage, IEntity} from 'anubis-data-storage'
 import {DeletedMarkData} from '../data/DeletedMarkData'
-import {UpdateMessage} from 'anubis-game-system-2'
+import {UpdateMessage} from 'anubis-game-system'
 
 /**
  * Базовое правило удаления игровых данных.

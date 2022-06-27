@@ -19,7 +19,7 @@
 	"dependencies": {
 		"anubis-data-storage": "workspaces:*",
 		"anubis-deletion-system": "workspaces:*",
-		"anubis-game-system-2": "workspaces:*",
+		"anubis-game-system": "workspaces:*",
 		"anubis-message-broker": "workspaces:*",
 		"anubis-rule-system": "workspaces:*",
 		"base-types": "workspaces:*",

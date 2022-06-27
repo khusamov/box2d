@@ -1,4 +1,4 @@
-import {StartRule} from 'anubis-game-system-2'
+import {StartRule} from 'anubis-game-system'
 import {DataStorageFasade, Entity, IDataStorage} from 'anubis-data-storage'
 import {IdentificationData} from '../../data/IdentificationData'
 import {EdgeShapeData, FixtureData, RigidbodyData} from 'anubis-physic-system'

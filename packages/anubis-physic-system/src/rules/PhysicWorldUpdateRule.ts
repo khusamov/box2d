@@ -1,5 +1,5 @@
 import {Rule} from 'anubis-rule-system'
-import {UpdateMessage} from 'anubis-game-system-2'
+import {UpdateMessage} from 'anubis-game-system'
 import {PhysicWorldCreationMessage} from '../messages/PhysicWorldCreationMessage'
 
 /**

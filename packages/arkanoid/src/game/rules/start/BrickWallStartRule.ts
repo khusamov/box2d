@@ -1,5 +1,5 @@
 import {Vec2} from 'planck'
-import {StartRule} from 'anubis-game-system-2'
+import {StartRule} from 'anubis-game-system'
 import {DataStorageFasade, Entity, IDataStorage} from 'anubis-data-storage'
 import {BoxShapeData, FixtureData, RigidbodyData} from 'anubis-physic-system'
 import {IdentificationData} from '../../data/IdentificationData'

@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "anubis-data-storage": "workspaces:*",
-    "anubis-game-system-2": "workspaces:*",
+    "anubis-game-system": "workspaces:*",
     "anubis-message-broker": "workspaces:*",
     "base-types": "workspaces:*",
     "events": "^3.3.0",

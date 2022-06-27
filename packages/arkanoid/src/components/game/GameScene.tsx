@@ -1,4 +1,4 @@
-import {GameCreator} from 'anubis-game-system-2'
+import {GameCreator} from 'anubis-game-system'
 import {PilotLevel} from '../../game/levels/PilotLevel'
 import {DataStorageFasade, isData} from 'anubis-data-storage'
 import {usePauseGame} from '../../hooks/usePauseGame'

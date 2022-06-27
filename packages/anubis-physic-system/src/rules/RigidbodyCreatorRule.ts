@@ -1,7 +1,7 @@
 import {World} from 'planck'
 import {Rule} from 'anubis-rule-system'
 import {DataStorageFasade, EntityAfterAddingMessage, isData} from 'anubis-data-storage'
-import {UpdateMessage} from 'anubis-game-system-2'
+import {UpdateMessage} from 'anubis-game-system'
 import {RigidbodyData} from '../data/RigidbodyData'
 import {PhysicWorldData} from '../data/PhysicWorldData'
 import {PhysicWorldCreationMessage} from '../messages/PhysicWorldCreationMessage'

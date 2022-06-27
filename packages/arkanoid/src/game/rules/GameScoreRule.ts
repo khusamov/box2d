@@ -1,5 +1,5 @@
 import {Rule} from 'anubis-rule-system'
-import {UpdateMessage} from 'anubis-game-system-2'
+import {UpdateMessage} from 'anubis-game-system'
 import {DataStorageFasade, Entity} from 'anubis-data-storage'
 import {IdentificationData} from '../data/IdentificationData'
 import {GameScoreData} from '../data/GameScoreData'

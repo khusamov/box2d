@@ -1,4 +1,4 @@
-import {StartRule} from 'anubis-game-system-2'
+import {StartRule} from 'anubis-game-system'
 import {DataStorageFasade, Entity, IDataStorage} from 'anubis-data-storage'
 import {PhysicWorldData} from '../data/PhysicWorldData'
 import {IWorldDef} from '../interfaces/IWorldDef'

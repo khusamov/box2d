@@ -2,7 +2,7 @@ import {BatMoveMessage} from '../messages/BatMoveMessage'
 import {IdentificationData} from '../data/IdentificationData'
 import {Vec2} from 'planck'
 import {Rule} from 'anubis-rule-system'
-import {UpdateMessage} from 'anubis-game-system-2'
+import {UpdateMessage} from 'anubis-game-system'
 import {DataStorageFasade, isData} from 'anubis-data-storage'
 import {RigidbodyData} from 'anubis-physic-system'
 
