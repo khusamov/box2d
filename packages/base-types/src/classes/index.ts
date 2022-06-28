@@ -14,3 +14,4 @@ export type {TKeyboardListener, IKeyboardListeners} from './Shortcut'
 
 export {KeyUpDownProcessor} from './KeyUpDownProcessor'
 export {DisposableArray} from './DisposableArray'
+export {SimpleArray} from './SimpleArray'
