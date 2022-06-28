@@ -1,6 +1,8 @@
 import {ShapeData} from './ShapeData'
 import {Vec2, Polygon} from 'planck'
 
+export const createPolygon = (polygonShapeShapeData: PolygonShapeData) => new Polygon(polygonShapeShapeData.vertices.map(vertex => vertex.clone()))
+
 export class PolygonShapeData extends ShapeData<Polygon> {
 	public readonly vertices: Readonly<Vec2[]>
 

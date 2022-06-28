@@ -1,6 +1,8 @@
 import {Circle} from 'planck'
 import {ShapeData} from './ShapeData'
 
+export const createCircle = (circleShapeData: CircleShapeData) => new Circle(circleShapeData.radius)
+
 export class CircleShapeData extends ShapeData<Circle> {
 	constructor(
 		public readonly radius: number = 0,

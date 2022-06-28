@@ -1,6 +1,8 @@
 import {Vec2, Edge} from 'planck'
 import {ShapeData} from './ShapeData'
 
+export const createEdge = (edgeShapeData: EdgeShapeData) => new Edge(edgeShapeData.point1.clone(), edgeShapeData.point2.clone())
+
 export class EdgeShapeData extends ShapeData<Edge> {
 	constructor(
 		public readonly point1: Vec2 = new Vec2(0, 0),

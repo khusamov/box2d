@@ -1,30 +1,17 @@
 import {MacroRule} from 'anubis-rule-system'
-import {Box, Circle, Edge, Polygon} from 'planck';
-import {BoxShapeData} from '../data/BoxShapeData';
-import {CircleShapeData} from '../data/CircleShapeData';
-import {EdgeShapeData} from '../data/EdgeShapeData';
-import {PolygonShapeData} from '../data/PolygonShapeData';
-import {AbstractShapeCreatorRule} from './AbstractShapeCreatorRule';
+import {BoxShapeData, createBox} from '../data/BoxShapeData'
+import {CircleShapeData, createCircle} from '../data/CircleShapeData'
+import {createEdge, EdgeShapeData} from '../data/EdgeShapeData'
+import {createPolygon, PolygonShapeData} from '../data/PolygonShapeData'
+import {AbstractShapeCreatorRule} from './AbstractShapeCreatorRule'
 
 export class ShapeCreatorRule extends MacroRule {
 	public constructor() {
 		super(
-			new AbstractShapeCreatorRule(
-				BoxShapeData,
-				boxShapeData => new Box(boxShapeData.width / 2, boxShapeData.height / 2)
-			),
-			new AbstractShapeCreatorRule(
-				CircleShapeData,
-				circleShapeData => new Circle(circleShapeData.radius)
-			),
-			new AbstractShapeCreatorRule(
-				EdgeShapeData,
-				edgeShapeData => new Edge(edgeShapeData.point1.clone(), edgeShapeData.point2.clone())
-			),
-			new AbstractShapeCreatorRule(
-				PolygonShapeData,
-				polygonShapeShapeData => new Polygon(polygonShapeShapeData.vertices.map(vertex => vertex.clone()))
-			)
+			new AbstractShapeCreatorRule(BoxShapeData, createBox),
+			new AbstractShapeCreatorRule(CircleShapeData, createCircle),
+			new AbstractShapeCreatorRule(EdgeShapeData, createEdge),
+			new AbstractShapeCreatorRule(PolygonShapeData, createPolygon)
 		)
 	}
 }
