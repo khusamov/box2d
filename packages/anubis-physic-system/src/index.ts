@@ -23,7 +23,6 @@ export {FixtureCreatorRule} from './rules/FixtureCreatorRule'
 export {PhysicWorldCreatorRule} from './rules/PhysicWorldCreatorRule'
 export {ShapeCreatorRule} from './rules/ShapeCreatorRule'
 export {PhysicWorldUpdateRule} from './rules/PhysicWorldUpdateRule'
-export {AbstractShapeCreatorRule} from './rules/AbstractShapeCreatorRule'
 
 export {getEntityFromContact} from './functions/getEntityFromContact'
 export {ContactFasade} from './classes/ContactFasade'
