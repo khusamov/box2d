@@ -7,10 +7,10 @@ import {RigidbodyDeletionRule} from './rules/RigidbodyDeletionRule'
 import {PhysicWorldStartRule} from './rules/PhysicWorldStartRule'
 import {IWorldDef} from './interfaces/IWorldDef'
 import {ShapeCreatorRule} from './rules/ShapeCreatorRule'
-import {BoxShapeData, createBox} from './data/BoxShapeData'
-import {CircleShapeData, createCircle} from './data/CircleShapeData'
-import {EdgeShapeData, createEdge} from './data/EdgeShapeData'
-import {PolygonShapeData, createPolygon} from './data/PolygonShapeData'
+import {BoxShapeData, createBox} from './data/shape/BoxShapeData'
+import {CircleShapeData, createCircle} from './data/shape/CircleShapeData'
+import {EdgeShapeData, createEdge} from './data/shape/EdgeShapeData'
+import {PolygonShapeData, createPolygon} from './data/shape/PolygonShapeData'
 
 interface IPhysicFeatureParameters {
 	worldDef?: IWorldDef

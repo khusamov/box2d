@@ -5,7 +5,7 @@ import {Body, Shape} from 'planck'
 import {FixtureData} from '../data/FixtureData'
 import {RigidbodyData} from '../data/RigidbodyData'
 import {RigidbodyCreationMessage} from '../messages/RigidbodyCreationMessage'
-import {ShapeData} from '../data/ShapeData'
+import {ShapeData} from '../data/shape/ShapeData'
 import {FixtureCreationMessage} from '../messages/FixtureCreationMessage'
 import {ShapeCreationMessage} from '../messages/ShapeCreationMessage'
 

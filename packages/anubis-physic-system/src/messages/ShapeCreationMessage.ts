@@ -1,5 +1,5 @@
 import {Message} from 'anubis-message-broker'
-import {ShapeData} from '../data/ShapeData'
+import {ShapeData} from '../data/shape/ShapeData'
 import {Shape} from 'planck'
 
 export class ShapeCreationMessage extends Message {
