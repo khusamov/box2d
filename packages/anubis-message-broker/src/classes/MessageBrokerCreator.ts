@@ -15,6 +15,9 @@ export interface IMessageBrokerParameters {
 	messageEmitCommand?: IMessageEmitCommand
 }
 
+/**
+ * @deprecated
+ */
 export class MessageBrokerCreator implements ICreator<IMessageBroker> {
 	private readonly commandQueue: ICommand[]
 	private readonly messageQueue: IMessage[]
