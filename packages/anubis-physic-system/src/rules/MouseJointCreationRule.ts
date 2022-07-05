@@ -7,6 +7,7 @@ import {PhysicWorldData} from '../data/PhysicWorldData'
 import {PhysicWorldCreationMessage} from '../messages/PhysicWorldCreationMessage'
 import {IJointFindBody} from '../interfaces/IJointFindBody'
 import {MouseJointCreationMessage} from '../messages/MouseJointCreationMessage'
+import {TPartialPicked} from '../types/TPartialPicked'
 
 /**
  * @event MouseJointCreationMessage
@@ -60,10 +61,7 @@ export class MouseJointCreationRule extends Rule {
 		this.messageEmitter.emit(new MouseJointCreationMessage(mouseJointData))
 	}
 
-	private async findBodyB({findBodyB}: IJointFindBody): Promise<Body> {
-    	if (!findBodyB) {
-    		throw new Error('Не определена функция findBodyB')
-		}
+	private async findBodyB({findBodyB}: TPartialPicked<IJointFindBody, 'findBodyA'>): Promise<Body> {
 		const bodyB = findBodyB(await this.getDataStorage())
 		if (bodyB) {
 			return bodyB

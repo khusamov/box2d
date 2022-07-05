@@ -5,9 +5,9 @@ export interface IJointDef extends IJointOpt {
 	/**
 	 * The first attached body.
 	 */
-	bodyA: Body;
+	bodyA?: Body;
 	/**
 	 * The second attached body.
 	 */
-	bodyB: Body;
+	bodyB?: Body;
 }
