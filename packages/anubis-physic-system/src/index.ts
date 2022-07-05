@@ -17,6 +17,7 @@ export {CircleShapeData} from './data/shape/CircleShapeData'
 export {BoxShapeData} from './data/shape/BoxShapeData'
 export {PhysicWorldData} from './data/PhysicWorldData'
 export {RigidbodyData} from './data/RigidbodyData'
+export {MouseJointData} from './data/joint/MouseJointData'
 
 export {RigidbodyCreationRule} from './rules/RigidbodyCreationRule'
 export {FixtureCreationRule} from './rules/FixtureCreationRule'
