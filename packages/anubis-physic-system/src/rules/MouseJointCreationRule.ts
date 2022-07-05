@@ -1,6 +1,6 @@
 import {Rule} from 'anubis-rule-system'
 import {UpdateMessage} from 'anubis-game-system'
-import {DataStorageFasade, EntityAfterAddingMessage, IDataStorage, isData} from 'anubis-data-storage'
+import {DataAfterAddingMessage, DataStorageFasade, EntityAfterAddingMessage, IDataStorage, isData} from 'anubis-data-storage'
 import {MouseJointData} from '../data/joint/MouseJointData'
 import {Body, World, MouseJoint} from 'planck'
 import {PhysicWorldData} from '../data/PhysicWorldData'
@@ -14,6 +14,12 @@ import {TPartialPicked} from '../types/TPartialPicked'
  */
 export class MouseJointCreationRule extends Rule {
     public init(): void {
+    	this.messageEmitter.on(DataAfterAddingMessage, async ({data}) => {
+    		if (data instanceof MouseJointData) {
+				await this.createAndAddMouseJoint(data)
+			}
+		})
+
         this.messageEmitter.on(EntityAfterAddingMessage, async ({entity}) => {
         	const mouseJointDataList = entity.flat(Infinity).filter(isData(MouseJointData))
 
@@ -25,14 +31,16 @@ export class MouseJointCreationRule extends Rule {
 
 			await Promise.all(
 				mouseJointDataList.map(
-					async mouseJointDataOrder => {
-						const mouseJoint = await this.createMouseJoint(mouseJointDataOrder)
-						await this.addMouseJoint(mouseJoint, mouseJointDataOrder)
-					}
+					mouseJointDataOrder => this.createAndAddMouseJoint(mouseJointDataOrder)
 				)
 			)
 		})
     }
+
+    private async createAndAddMouseJoint(mouseJointDataOrder: MouseJointData) {
+		const mouseJoint = await this.createMouseJoint(mouseJointDataOrder)
+		await this.addMouseJoint(mouseJoint, mouseJointDataOrder)
+	}
 
     private async createMouseJoint(mouseJointDataOrder: MouseJointData): Promise<MouseJoint | null> {
 		const world = await this.getWorld()
