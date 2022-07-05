@@ -2,6 +2,8 @@ import {DeletionRule} from './DeletionRule'
 import {DataStorageFasade, IDataStorage, IEntity, isDataLike} from 'anubis-data-storage'
 import {externalDataSymbol} from '../const/externalDataSymbol'
 
+// TODO Добавить удаление сущности, после того, как из нее удалены все данные с внешними ссылками.
+
 /**
  * Правило удаления игровых сущностей.
  * Предназначено для удаления сущностей, когда в них не осталось внешних ссылок.
