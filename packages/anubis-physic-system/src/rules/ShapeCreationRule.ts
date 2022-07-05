@@ -9,7 +9,7 @@ import {ShapeCreationMessage} from '../messages/ShapeCreationMessage'
  * Правила создания форм для твердого тела.
  * @event ShapeCreationMessage
  */
-export class ShapeCreatorRule<S extends ShapeData> extends Rule {
+export class ShapeCreationRule<S extends ShapeData> extends Rule {
 	public constructor(
 		private ShapeDataClass: new(...params: any[]) => S,
 		private createShape: (shapeData: S) => Shape

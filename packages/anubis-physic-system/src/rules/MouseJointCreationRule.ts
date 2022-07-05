@@ -11,7 +11,7 @@ import {MouseJointCreationMessage} from '../messages/MouseJointCreationMessage'
 /**
  * @event MouseJointCreationMessage
  */
-export class MouseJointCreatorRule extends Rule {
+export class MouseJointCreationRule extends Rule {
     public init(): void {
         this.messageEmitter.on(EntityAfterAddingMessage, async ({entity}) => {
         	const mouseJointDataList = entity.flat(Infinity).filter(isData(MouseJointData))

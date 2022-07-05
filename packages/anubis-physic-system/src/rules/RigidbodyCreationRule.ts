@@ -13,7 +13,7 @@ import {RigidbodyCreationMessage} from '../messages/RigidbodyCreationMessage'
  * Внимание, в userData размещается ссылка на IEntity, содержащий RigidbodyData.
  * @event RigidbodyCreatedMessage
  */
-export class RigidbodyCreatorRule extends Rule {
+export class RigidbodyCreationRule extends Rule {
 	public init(): void {
 		this.messageEmitter.on(EntityAfterAddingMessage, this.onEntityAfterAddingMessage.bind(this))
 	}

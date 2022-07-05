@@ -20,7 +20,7 @@ import {PhysicWorldData} from '../data/PhysicWorldData'
  *
  * @event PhysicWorldCreationMessage
  */
-export class PhysicWorldCreatorRule extends Rule {
+export class PhysicWorldCreationRule extends Rule {
 	public init(): void {
 		this.messageEmitter.on(EntityAfterAddingMessage, this.onEntityAfterAddingMessage.bind(this))
 	}

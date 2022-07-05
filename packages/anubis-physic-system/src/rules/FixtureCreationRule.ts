@@ -13,7 +13,7 @@ import {ShapeCreationMessage} from '../messages/ShapeCreationMessage'
  * Правило создания креплений форм к твердому телу.
  * @event FixtureCreationMessage
  */
-export class FixtureCreatorRule extends Rule {
+export class FixtureCreationRule extends Rule {
 	public init(): void {
 		this.messageEmitter.on(EntityAfterAddingMessage, async ({entity}) => {
 			const fixtureDataList = entity.flat(Infinity).filter(isData(FixtureData))
