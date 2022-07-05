@@ -1,5 +1,5 @@
-import {FakeMessageEmitter, IMessageEmitter} from 'anubis-message-broker'
 import {IRule} from '../../interfaces/IRule'
+import {IMessageEmitter, ProhibitedMessageEmitter} from 'anubis-message-broker'
 
 /**
  * Базовая реализация игрового правила.
@@ -7,7 +7,7 @@ import {IRule} from '../../interfaces/IRule'
  * Метод dispose() по желанию.
  */
 export abstract class Rule implements IRule {
-	#messageEmitter: IMessageEmitter = new FakeMessageEmitter
+	#messageEmitter: IMessageEmitter = new ProhibitedMessageEmitter
 
 	public get messageEmitter(): IMessageEmitter {
 		return this.#messageEmitter
@@ -16,6 +16,11 @@ export abstract class Rule implements IRule {
 	public set messageEmitter(messageEmitter: IMessageEmitter) {
 		this.#messageEmitter = messageEmitter
 	}
+
+	// public readonly context: IRuleContext = {
+	// 	messageEmitter: new ProhibitedMessageEmitter,
+	// 	dataStorage: new DataStorage(new ProhibitedMessageEmitter)
+	// }
 
 	public dispose(): void {}
 

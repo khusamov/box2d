@@ -13,6 +13,11 @@ export interface IRule extends IDisposable {
 	messageEmitter: IMessageEmitter
 
 	/**
+	 * Контекст игры со ссылками на объекты IDataStorage и IMessageEmitter.
+	 */
+	//readonly context: IRuleContext
+
+	/**
 	 * Вызывается один раз перед началом игры.
 	 */
 	init(): void
