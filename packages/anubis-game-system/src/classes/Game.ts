@@ -42,7 +42,7 @@ export class Game extends MacroRule implements IGame {
 	}
 
 	public toggle() {
-		this[this.state === 'pause' ? 'pause' : 'start']()
+		this[this.state === 'pause' ? 'start' : 'pause']()
 	}
 
 	public update(timeInterval: number) {
@@ -55,7 +55,7 @@ export class Game extends MacroRule implements IGame {
 	}
 
 	private get state() {
-		return this.messageEmitter === this.sourceMessageEmitter ? 'pause' : 'start'
+		return this.messageEmitter === this.sourceMessageEmitter ? 'start' : 'pause'
 	}
 
 	private get suspendedMessageEmitter() {
