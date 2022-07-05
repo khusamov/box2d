@@ -1,9 +1,12 @@
 import {IDisposable} from 'base-types'
 import {IMessageEmitter} from '../interfaces/IMessageEmitter'
 
-const replaceMessageError = new Error('Замените FakeMessageEmitter на MessageEmitter')
+const replaceMessageError = new Error('Замените ProhibitedMessageEmitter на MessageEmitter')
 
-export class FakeMessageEmitter implements IMessageEmitter {
+/**
+ * Запрещенный к использованию IMessageEmitter.
+ */
+export class ProhibitedMessageEmitter implements IMessageEmitter {
     dispose(): void {
         throw replaceMessageError
     }

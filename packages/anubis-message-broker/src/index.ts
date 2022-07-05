@@ -7,6 +7,8 @@ export {MessageEmitter} from './classes/MessageEmitter'
 export {FakeMessageEmitter} from './classes/FakeMessageEmitter'
 export {MessageEmitCommand} from './classes/MessageEmitCommand'
 export {Message} from './classes/Message'
+export {ProhibitedMessageEmitter} from './classes/ProhibitedMessageEmitter'
+export {DummyMessageEmitter} from './classes/DummyMessageEmitter'
 
 export {MessageBroker} from './classes/MessageBroker'
 export {MessageBrokerCreator} from './classes/MessageBrokerCreator'
