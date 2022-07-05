@@ -7,6 +7,7 @@ import {IMessageEmitCommand} from '../interfaces/IMessageEmitCommand'
  * Команда передачи сообщений из очереди IMessage[] в передатчик сообщений IMessageEmitter.
  * После передачи команда заново размещает себя в очереди команд ICommand[].
  * Этот процесс можно заверишть вызовом метода stop().
+ * @deprecated
  */
 export class MessageEmitCommand implements IMessageEmitCommand {
 	private active: boolean = true
