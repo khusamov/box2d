@@ -22,10 +22,15 @@ export class StartGameRule extends Rule {
 				)
 				if (ballEntity) {
 					const ballStateData = ballEntity.find(isData(BallStateData))
-					const rigidbodyData = ballEntity.find(isData(RigidbodyData))
-					if (ballStateData && rigidbodyData && rigidbodyData.body) {
+					const ballBody = ballEntity.find(isData(RigidbodyData))?.body
+					if (ballStateData && ballBody) {
 						dataStorageFasade.createDataFasade(ballStateData).replace(new BallStateData(BallStateType.Moving))
-						rigidbodyData.body.applyForceToCenter(new Vec2(0, 4000))
+						ballBody.applyForceToCenter(
+							new Vec2(
+								0,
+								2500 * ballBody.getMass()
+							)
+						)
 					}
 				}
 			})
