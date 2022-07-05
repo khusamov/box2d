@@ -6,15 +6,7 @@ import {ILevel, MacroRule} from 'anubis-rule-system'
 import {suspendMessageEmitterEmit} from '../const/suspendMessageEmitterEmit'
 
 /**
- * Инициализировать брокер сообщения нужно до создания экземпляра Game.
- * Запуск, пауза и останов игры следует производить при помощи таймера:
- * Game.timer.start(), Game.timer.pause(), Game.timer.stop() и Game.timer.toggle().
- *
- * Управление игрой осуществляется через брокер сообщения. Например:
- * - Сообщение UpdateMessage для вычисления следующего кадра анимации.
- * - Сообщения вида *OrderMessage для управления персонажами игры.
- *
- * Отрисовка кадра анимации осуществляется через состояние игры. Состояние игры подается на вход Level.
+ * Главный объект игры.
  */
 export class Game extends MacroRule implements IGame {
 	private readonly sourceMessageEmitter: IMessageEmitter
