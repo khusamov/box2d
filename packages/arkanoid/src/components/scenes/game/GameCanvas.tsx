@@ -50,7 +50,7 @@ export function GameCanvas({game}: IGameCanvasProps) {
 			game.messageEmitter.emit(
 				new BatMoveMessage(
 					movementX / scale,
-					movementY / scale
+					movementY / -scale
 				)
 			)
 		}
