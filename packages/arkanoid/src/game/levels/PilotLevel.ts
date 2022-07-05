@@ -12,18 +12,38 @@ import {BallStartRule} from '../rules/start/BallStartRule'
 import {EntityDeletionRule} from 'anubis-deletion-system'
 import {BrickBallCollisionSoundRule} from '../rules/BrickBallCollisionSoundRule'
 import {TrapezoidAndRectangleBatEntity} from '../../entities/TrapezoidAndRectangleBatEntity'
+import {BatMouseJointMovingRule} from '../rules/BatMouseJointMovingRule'
+
+export enum BatMovingType {
+	Hard,
+	MouseJoint
+}
+
+export interface IPilotLevelParameters {
+	movingType: BatMovingType
+}
+
+const BatMovingRuleByType = {
+	[BatMovingType.Hard]: BatHardMovingRule,
+	[BatMovingType.MouseJoint]: BatMouseJointMovingRule
+}
 
 /**
  * Пилотный уровень арканоида.
  */
 export class PilotLevel extends Level {
-	public constructor() {
+	public constructor({movingType}: IPilotLevelParameters) {
+		const batEntity = new TrapezoidAndRectangleBatEntity(
+			movingType === BatMovingType.MouseJoint
+				? {bodyDef: {type: 'dynamic'}}
+				: {}
+		)
 		super(
 			new EntityDeletionRule,
 			new PhysicFeature,
 
 			new GameBoardStartRule,
-			new BatStartRule(new TrapezoidAndRectangleBatEntity),
+			new BatStartRule(batEntity),
 			new BallStartRule,
 			new BrickWallStartRule,
 
@@ -32,7 +52,7 @@ export class PilotLevel extends Level {
 			new StartGameRule,
 			new GameScoreRule,
 			new BallPositionRule,
-			new BatHardMovingRule,
+			new BatMovingRuleByType[movingType],
 			new BrickBallCollisionRule
 		)
 	}
