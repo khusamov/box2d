@@ -49,7 +49,6 @@ export class FixtureCreatorRule extends Rule {
 				resolve(null)
 			})
 		})
-
 	}
 
 	private getShapeData(fixtureData: FixtureData): Promise<ShapeData> {
