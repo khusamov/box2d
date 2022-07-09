@@ -1,8 +1,9 @@
 interface IAnimateScaleProps {
 	scale: number
+	onAnimationEnd?: () => void
 }
 
-export function AnimateScale({scale}: IAnimateScaleProps) {
+export function AnimateScale({scale, onAnimationEnd = () => {}}: IAnimateScaleProps) {
 	return (
 		scale === 1 ? null : (
 			<animateTransform
@@ -12,6 +13,7 @@ export function AnimateScale({scale}: IAnimateScaleProps) {
 				dur={0.5}
 				from={1}
 				to={scale}
+				onAnimationEnd={onAnimationEnd}
 			/>
 		)
 	)

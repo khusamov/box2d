@@ -4,7 +4,7 @@ import {DebugCenterLines} from '../../debug/DebugCenterLines'
 import {Canvas} from '../../svg/Canvas'
 import {GameCanvasStyle} from './GameCanvas.module.scss'
 import {Game} from 'anubis-game-system'
-import {useRef} from 'react'
+import {useRef, useState} from 'react'
 import useResizeObserver from 'use-resize-observer'
 import {useRequestPointerLock} from '../../../hooks/useRequestPointerLock'
 import {useScale} from '../../../hooks/useScale'
@@ -30,8 +30,9 @@ export function GameCanvas({game}: IGameCanvasProps) {
 	const {requestPointerLock, cancelPointerLock, isPointerLock} = useRequestPointerLock(ref)
 	const scale = useScale({width, height}, {width: 70, height: 40})
 	const cameraTransform = useCameraCorrection({width, height})
-	const dataStorageFasade = new DataStorageFasade(game.dataStorage)
-	const world = dataStorageFasade.find(isData(PhysicWorldData))?.world
+
+	const [isIntroAnimateEnd, setIsIntroAnimateEnd] = useState(false)
+	const onAnimationEnd = () => setIsIntroAnimateEnd(true)
 
 	useEventListener(ref, 'pointerdown', {passive: false}, event => {
 		const {pointerType, button} = event
@@ -115,7 +116,7 @@ export function GameCanvas({game}: IGameCanvasProps) {
 		<div ref={ref} className={GameCanvasStyle}>
 			<Canvas>
 				<g transform={cameraTransform}>
-					<ScaleAnimatedGroup scale={scale}>
+					<ScaleAnimatedGroup scale={scale} onAnimationEnd={onAnimationEnd}>
 						{world && <PlanckRenderer world={world}/>}
 						{process.env['DEBUG'] === 'true' && <DebugCenterLines/>}
 					</ScaleAnimatedGroup>
