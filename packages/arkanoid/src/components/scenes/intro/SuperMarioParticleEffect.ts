@@ -1,7 +1,10 @@
 import {Effect} from './Effect'
 
 export class SuperMarioParticleEffect {
-	init(canvas: HTMLCanvasElement, image: HTMLImageElement) {
+	private frame: number = 0
+	private effect: Effect | undefined
+
+	public init(canvas: HTMLCanvasElement, image: HTMLImageElement) {
 		const ctx = canvas.getContext('2d');
 		if (ctx) {
 			canvas.width = window.innerWidth;
@@ -13,11 +16,18 @@ export class SuperMarioParticleEffect {
 			const animate = () => {
 				effect.update();
 				effect.render(ctx);
-				requestAnimationFrame(animate);
+				this.frame = requestAnimationFrame(animate);
 			}
 			animate();
+
+			this.effect = effect
 		}
 	}
 
-	destroy() {}
+	public destroy() {
+		if (this.effect) {
+			this.effect.destroy()
+		}
+		cancelAnimationFrame(this.frame)
+	}
 }
