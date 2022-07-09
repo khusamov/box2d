@@ -6,6 +6,7 @@
 		"packages/*"
 	],
 	"scripts": {
+		"start": "yarn arkanoid",
 		"arkanoid": "yarn workspaces foreach --include 'arkanoid' run start",
 		"arkanoid:build": "yarn workspaces foreach --include 'arkanoid' run build",
 		"sample1": "yarn workspaces foreach --include 'sample1' run start",
