@@ -3,7 +3,7 @@ import {DebugCenterLines} from '../../debug/DebugCenterLines'
 import {Canvas} from '../../svg/Canvas'
 import {GameCanvasStyle} from './GameCanvas.module.scss'
 import {Game} from 'anubis-game-system'
-import {useRef, useState} from 'react'
+import {useRef} from 'react'
 import useResizeObserver from 'use-resize-observer'
 import {useRequestPointerLock} from '../../../hooks/useRequestPointerLock'
 import {useScale} from '../../../hooks/useScale'
@@ -13,6 +13,7 @@ import {StartGameMessage} from '../../../game/messages/StartGameMessage'
 import {BatMoveMessage} from '../../../game/messages/BatMoveMessage'
 import {useEventListener} from '../../../hooks/useEventListener'
 import {GameRenderer} from './GameRenderer'
+import useBooleanState from 'use-boolean-state'
 
 const MAIN_BUTTON = 0
 const RIGHT_BUTTON = 2
@@ -29,8 +30,8 @@ export function GameCanvas({game}: IGameCanvasProps) {
 	const scale = useScale({width, height}, {width: 70, height: 40})
 	const cameraTransform = useCameraCorrection({width, height})
 
-	const [isIntroAnimateEnd, setIsIntroAnimateEnd] = useState(false)
-	const onAnimationEnd = () => setIsIntroAnimateEnd(true)
+	const [isIntroEnd, setIntroEnd] = useBooleanState(false)
+	const onAnimationEnd = () => setIntroEnd()
 
 	useEventListener(ref, 'pointerdown', {passive: false}, event => {
 		const {pointerType, button} = event
@@ -108,7 +109,7 @@ export function GameCanvas({game}: IGameCanvasProps) {
 			case 'touch':
 				event.preventDefault()
 				if (isPrimary) {
-					if (isIntroAnimateEnd) {
+					if (isIntroEnd) {
 						game.pause()
 					}
 				}

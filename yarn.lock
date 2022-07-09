@@ -1820,6 +1820,7 @@ __metadata:
     react-dom: ^18.1.0
     serve: ^13.0.2
     typescript: ^4.7.3
+    use-boolean-state: ^1.0.2
     use-resize-observer: ^9.0.0
   languageName: unknown
   linkType: soft
@@ -3457,7 +3458,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "khusamov-box2d@workspace:."
   dependencies:
-    "@parcel/transformer-sass": ^2.6.2
     process: ^0.11.10
   languageName: unknown
   linkType: soft
@@ -5414,6 +5414,15 @@ __metadata:
   dependencies:
     punycode: ^2.1.0
   checksum: 7167432de6817fe8e9e0c9684f1d2de2bb688c94388f7569f7dbdb1587c9f4ca2a77962f134ec90be0cc4d004c939ff0d05acc9f34a0db39a3c797dada262633
+  languageName: node
+  linkType: hard
+
+"use-boolean-state@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "use-boolean-state@npm:1.0.2"
+  peerDependencies:
+    react: ^16.9.0
+  checksum: 79467fd965a9b9c79d08f97eaf617d786aaea51402e7ac85cb76abfca1682f06d833e07ac25d36e89624eda2acd1ec7071874ece84c6e0315ccc0f6154ab548f
   languageName: node
   linkType: hard
 
