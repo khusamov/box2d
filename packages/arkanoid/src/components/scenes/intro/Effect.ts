@@ -49,6 +49,10 @@ export class Effect {
 		}, false);
 	}
 
+	destroy() {
+		// TODO Добавить удаление обработчиков событий что выше.
+	}
+
 	init(context: CanvasRenderingContext2D, image: HTMLImageElement) {
 		this.x = this.centerX - image.width / 2;
 		this.y = this.centerY - image.height / 2;
