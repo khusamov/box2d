@@ -1,5 +1,4 @@
 import {ScaleAnimatedGroup} from '../../animate/ScaleAnimatedGroup'
-import {PlanckRenderer} from '../../renderer/PlanckRenderer'
 import {DebugCenterLines} from '../../debug/DebugCenterLines'
 import {Canvas} from '../../svg/Canvas'
 import {GameCanvasStyle} from './GameCanvas.module.scss'
@@ -12,9 +11,8 @@ import {useCameraCorrection} from '../../../hooks/useCameraCorrection'
 import {usePauseGame} from '../../../hooks/usePauseGame'
 import {StartGameMessage} from '../../../game/messages/StartGameMessage'
 import {BatMoveMessage} from '../../../game/messages/BatMoveMessage'
-import {DataStorageFasade, isData} from 'anubis-data-storage'
-import {PhysicWorldData} from 'anubis-physic-system'
 import {useEventListener} from '../../../hooks/useEventListener'
+import {GameRenderer} from './GameRenderer'
 
 const MAIN_BUTTON = 0
 const RIGHT_BUTTON = 2
@@ -118,15 +116,12 @@ export function GameCanvas({game}: IGameCanvasProps) {
 		}
 	})
 
-	const dataStorageFasade = new DataStorageFasade(game.dataStorage)
-	const world = dataStorageFasade.find(isData(PhysicWorldData))?.world
-
 	return (
 		<div ref={ref} className={GameCanvasStyle}>
 			<Canvas>
 				<g transform={cameraTransform}>
 					<ScaleAnimatedGroup scale={scale} onAnimationEnd={onAnimationEnd}>
-						{world && <PlanckRenderer world={world}/>}
+						<GameRenderer game={game}/>
 						{process.env['DEBUG'] === 'true' && <DebugCenterLines/>}
 					</ScaleAnimatedGroup>
 				</g>
