@@ -91,26 +91,35 @@ export function GameCanvas({game}: IGameCanvasProps) {
 
 	useEventListener(ref, 'pointerenter', {passive: false}, event => {
 		const {isPrimary, pointerType} = event
-		if (isPrimary) {
-			game.start()
-		}
-		if (!isPrimary) {
-			game.messageEmitter.emit(new StartGameMessage)
-		}
-		if (pointerType === 'touch') {
-			event.preventDefault()
+		switch (pointerType) {
+			case 'touch':
+				event.preventDefault()
+				if (isPrimary) {
+					game.start()
+				}
+				if (!isPrimary) {
+					game.messageEmitter.emit(new StartGameMessage)
+				}
+				break
 		}
 	})
 
 	useEventListener(ref, 'pointerleave', {passive: false}, event => {
 		const {isPrimary, pointerType} = event
-		if (isPrimary) {
-			game.pause()
-		}
-		if (pointerType === 'touch') {
-			event.preventDefault()
+		switch (pointerType) {
+			case 'touch':
+				event.preventDefault()
+				if (isPrimary) {
+					if (isIntroAnimateEnd) {
+						game.pause()
+					}
+				}
+				break
 		}
 	})
+
+	const dataStorageFasade = new DataStorageFasade(game.dataStorage)
+	const world = dataStorageFasade.find(isData(PhysicWorldData))?.world
 
 	return (
 		<div ref={ref} className={GameCanvasStyle}>
