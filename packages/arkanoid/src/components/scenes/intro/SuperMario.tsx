@@ -23,11 +23,11 @@ export function SuperMario({onStart}: ISuperMarioProps) {
 			effect.init(canvasRef.current, imageRef.current)
 		}
 	}
-	const onClick = () => onStart()
+	const onPointerDown = () => onStart()
 	return (
-		<div className={SuperMarioStyle} onClick={onClick}>
+		<div className={SuperMarioStyle} onPointerDown={onPointerDown}>
 			<canvas ref={canvasRef}/>
-			<img ref={imageRef} alt='SuperMario' onLoad={onImageLoad} src={new URL('./arkanoid.png', import.meta.url).href}/>
+			<img ref={imageRef} alt='SuperMario' onLoad={onImageLoad} src={new URL('./mario.png', import.meta.url).href}/>
 		</div>
 	)
 }
