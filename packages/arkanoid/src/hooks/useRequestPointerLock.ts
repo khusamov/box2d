@@ -1,31 +1,33 @@
 import {RefObject, useEffect, useState} from 'react'
 
-type TIRplResult = [
+interface IRequestPointerLockResult {
 	/**
 	 * Вход в режим захвата курсора мышки.
 	 */
-	() => void,
+	requestPointerLock: () => void
+
 	/**
 	 * Программный выход из режима захвата курсора мышки.
 	 */
-	() => void,
+	cancelPointerLock: () => void
+
 	/**
 	 * Состояние захвата курсора мышки.
 	 */
-	boolean
-]
+	isPointerLock: boolean
+}
 
 /**
  * Простая реализация Pointer Lock API для React.js.
  *
  * Usage:
- * const [requestLock, cancelLock, locked] = useRequestPointerLock(ref)
+ * const {requestPointerLock, cancelPointerLock, isPointerLock} = useRequestPointerLock(ref)
  *
  * @link https://developer.mozilla.org/ru/docs/Web/API/Pointer_Lock_API
  * @link https://habr.com/ru/sandbox/106598/
  * @param ref
  */
-export function useRequestPointerLock<T extends HTMLElement>(ref: RefObject<T>): TIRplResult {
+export function useRequestPointerLock<T extends HTMLElement>(ref: RefObject<T>): IRequestPointerLockResult {
 	const [isPointerLock, setIsPointerLock] = useState(false)
 
 	const requestPointerLock = () => {
@@ -47,5 +49,5 @@ export function useRequestPointerLock<T extends HTMLElement>(ref: RefObject<T>):
 		}
 	}, [])
 
-	return [requestPointerLock, cancelPointerLock, isPointerLock]
+	return {requestPointerLock, cancelPointerLock, isPointerLock}
 }
