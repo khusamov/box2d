@@ -14,6 +14,7 @@ import {BatMoveMessage} from '../../../game/messages/BatMoveMessage'
 import {useEventListener} from '../../../hooks/useEventListener'
 import {GameRenderer} from './GameRenderer'
 import useBooleanState from 'use-boolean-state'
+import {usePointerMovement} from '../../../hooks/usePointerMovement'
 
 const MAIN_BUTTON = 0
 const RIGHT_BUTTON = 2
@@ -25,6 +26,7 @@ interface IGameCanvasProps {
 export function GameCanvas({game}: IGameCanvasProps) {
 	usePauseGame(game)
 	const ref = useRef<HTMLDivElement>(null)
+	const {getMovement} = usePointerMovement(ref)
 	const {width = 0, height = 0} = useResizeObserver({ref})
 	const {requestPointerLock, cancelPointerLock, isPointerLock} = useRequestPointerLock(ref)
 	const scale = useScale({width, height}, {width: 70, height: 40})
@@ -70,7 +72,8 @@ export function GameCanvas({game}: IGameCanvasProps) {
 	})
 
 	useEventListener(ref, 'pointermove', {passive: false}, event => {
-		const {pointerType, movementX, movementY} = event
+		const {pointerType} = event
+		const {movementX, movementY} = getMovement(event)
 		switch (pointerType) {
 			case 'touch':
 				event.preventDefault()
