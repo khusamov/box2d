@@ -1,56 +1,58 @@
-import {IMessageEmitter} from 'anubis-message-broker'
 import {IGame} from '../interfaces/IGame'
-import {IDataStorage} from 'anubis-data-storage'
 import {UpdateMessage} from '../messages/UpdateMessage'
-import {ILevel, MacroRule} from 'anubis-rule-system'
-import {suspendMessageEmitterEmit} from '../const/suspendMessageEmitterEmit'
+import {ILevel, IRule, IRuleContext, TRuleInit} from 'anubis-rule-system'
+import {createSuspendedRuleContext} from '../functions/createSuspendedRuleContext'
+
+export enum GameState {
+	Executed,
+	Paused
+}
 
 /**
  * Главный объект игры.
  */
-export class Game extends MacroRule implements IGame {
-	private readonly sourceMessageEmitter: IMessageEmitter
+export class Game extends RootRule implements IGame {
+	private readonly sourceRuleContext: IRuleContext
+	private readonly suspendedRuleContext: IRuleContext
+	private suspendContext = () => this.context[updateRuleContextSymbol](this.suspendedRuleContext)
+	private resumeContext = () => this.context[updateRuleContextSymbol](this.sourceRuleContext)
 
-	public constructor(
-		level: ILevel,
-		messageEmitter: IMessageEmitter,
-		public readonly dataStorage: IDataStorage,
-	) {
-		super(level)
-		this.sourceMessageEmitter = messageEmitter
-		this.messageEmitter = this.suspendedMessageEmitter // Изначально игра стоит на паузе.
+	/**
+	 * Конструктор игры.
+	 * Игра после создания стоит на паузе.
+	 * После создания игры необходимо вызывать init() для инициализации всех правил игры и затем start() для запуска игры.
+	 * @param context
+	 * @param level
+	 * @param rules
+	 */
+	public constructor(private readonly context: IRuleContext, level: TRuleInit, ...rules: TRuleInit[]) {
+		super(context, level, ...rules)
+		this.sourceRuleContext = context
+		this.suspendedRuleContext = createSuspendedRuleContext(context)
+		this.pause() // Изначально игра стоит на паузе.
 	}
 
-	public start() {
-		this.messageEmitter = this.sourceMessageEmitter
-	}
+	public start = () => this.resumeContext
+	public stop = () => this.suspendContext
+	public pause = this.stop
+	public toggle = () => this[this.state === GameState.Paused ? 'start' : 'pause']()
 
-	public stop() {
-		this.messageEmitter = this.suspendedMessageEmitter
-	}
-
-	public pause() {
-		this.messageEmitter = this.suspendedMessageEmitter
-	}
-
-	public toggle() {
-		this[this.state === 'pause' ? 'start' : 'pause']()
-	}
-
-	public update(timeInterval: number) {
-		this.messageEmitter.emit(new UpdateMessage(timeInterval, this.dataStorage))
-	}
+	/**
+	 * Отправка сообщения UpdateMessage для слушателей, которые определены правилами игры.
+	 * @param timeInterval
+	 */
+	public update = (timeInterval: number) => this.context.messageEmitter.emit(new UpdateMessage(timeInterval))
 
 	public override dispose() {
 		super.dispose()
-		this.messageEmitter.dispose()
+		this.context.messageEmitter.dispose()
 	}
 
-	private get state() {
-		return this.messageEmitter === this.sourceMessageEmitter ? 'start' : 'pause'
-	}
-
-	private get suspendedMessageEmitter() {
-		return new Proxy(this.sourceMessageEmitter, suspendMessageEmitterEmit)
+	private get state(): GameState {
+		return (
+			this.context.messageEmitter === this.sourceRuleContext.messageEmitter
+				? GameState.Executed
+				: GameState.Paused
+		)
 	}
 }

@@ -1,4 +1,6 @@
-import {IMessageEmitter} from 'anubis-message-broker'
+import {IMessageEmitter, Message} from 'anubis-message-broker'
+
+const emptyFunction = () => {}
 
 /**
  * Заморозка метода IMessageEmitter.emit().
@@ -6,7 +8,22 @@ import {IMessageEmitter} from 'anubis-message-broker'
  */
 export const suspendMessageEmitterEmit: ProxyHandler<IMessageEmitter> = {
 	get(target, property, receiver) {
-		if (property === 'emit') return () => {}
-		return Reflect.get(target, property, receiver)
+		return (
+			property === 'emit'
+				? emptyFunction
+				: Reflect.get(target, property, receiver)
+		)
 	}
+}
+
+/**
+ * Проверка заморозки метода IMessageEmitter.emit().
+ * @param messageEmitter
+ */
+export function isSuspendedMessageEmitter(messageEmitter: IMessageEmitter): boolean {
+	class TestMessage extends Message {}
+	let result = true
+	messageEmitter.once(TestMessage, () => {result = false})
+	messageEmitter.emit(TestMessage)
+	return result
 }
