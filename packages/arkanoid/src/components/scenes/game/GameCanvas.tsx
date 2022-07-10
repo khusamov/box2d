@@ -33,6 +33,16 @@ export function GameCanvas({game}: IGameCanvasProps) {
 	const [isIntroEnd, setIntroEnd] = useBooleanState(false)
 	const onAnimationEnd = () => setIntroEnd()
 
+	const emitStartGameMessage = () => game.messageEmitter.emit(new StartGameMessage)
+	const emitBatMoveMessage = (movementX: number, movementY: number) => {
+		game.messageEmitter.emit(
+			new BatMoveMessage(
+				movementX / scale,
+				movementY / -scale
+			)
+		)
+	}
+
 	useEventListener(ref, 'pointerdown', {passive: false}, event => {
 		const {pointerType, button} = event
 		switch (pointerType) {
@@ -47,7 +57,7 @@ export function GameCanvas({game}: IGameCanvasProps) {
 				if (isPointerLock) {
 					switch (button) {
 						case MAIN_BUTTON:
-							game.messageEmitter.emit(new StartGameMessage)
+							emitStartGameMessage()
 							break
 						case RIGHT_BUTTON:
 							cancelPointerLock()
@@ -64,21 +74,11 @@ export function GameCanvas({game}: IGameCanvasProps) {
 		switch (pointerType) {
 			case 'touch':
 				event.preventDefault()
-				game.messageEmitter.emit(
-					new BatMoveMessage(
-						movementX / scale,
-						movementY / -scale
-					)
-				)
+				emitBatMoveMessage(movementX, movementY)
 				break
 			case 'mouse':
 				if (isPointerLock) {
-					game.messageEmitter.emit(
-						new BatMoveMessage(
-							movementX / scale,
-							movementY / -scale
-						)
-					)
+					emitBatMoveMessage(movementX, movementY)
 				}
 				break
 		}
@@ -97,7 +97,7 @@ export function GameCanvas({game}: IGameCanvasProps) {
 					game.start()
 				}
 				if (!isPrimary) {
-					game.messageEmitter.emit(new StartGameMessage)
+					emitStartGameMessage()
 				}
 				break
 		}
