@@ -1653,7 +1653,7 @@ __metadata:
     base-types: "workspaces:*"
     events: ^3.3.0
     parcel: ^2.6.2
-    typescript: ^4.7.3
+    typescript: ^4.7.4
   languageName: unknown
   linkType: soft
 
@@ -1669,7 +1669,7 @@ __metadata:
     anubis-rule-system: "workspaces:*"
     base-types: "workspaces:*"
     parcel: ^2.6.2
-    typescript: ^4.7.3
+    typescript: ^4.7.4
   languageName: unknown
   linkType: soft
 
@@ -1689,7 +1689,7 @@ __metadata:
     mobx: ^6.6.0
     parcel: ^2.6.2
     react: ^18.1.0
-    typescript: ^4.7.3
+    typescript: ^4.7.4
   languageName: unknown
   linkType: soft
 
@@ -1702,7 +1702,7 @@ __metadata:
     base-types: "workspaces:*"
     events: ^3.3.0
     parcel: ^2.6.2
-    typescript: ^4.7.3
+    typescript: ^4.7.4
   languageName: unknown
   linkType: soft
 
@@ -1721,7 +1721,7 @@ __metadata:
     events: ^3.3.0
     parcel: ^2.6.2
     planck: ^1.0.0-alpha.4
-    typescript: ^4.7.3
+    typescript: ^4.7.4
   languageName: unknown
   linkType: soft
 
@@ -1740,7 +1740,7 @@ __metadata:
     mobx: ^6.6.0
     parcel: ^2.6.2
     react: ^18.1.0
-    typescript: ^4.7.3
+    typescript: ^4.7.4
   languageName: unknown
   linkType: soft
 
@@ -1819,7 +1819,7 @@ __metadata:
     react: ^18.1.0
     react-dom: ^18.1.0
     serve: ^13.0.2
-    typescript: ^4.7.3
+    typescript: ^4.7.4
     use-boolean-state: ^1.0.2
     use-resize-observer: ^9.0.0
   languageName: unknown
@@ -1893,7 +1893,7 @@ __metadata:
     events: ^3.3.0
     parcel: ^2.6.2
     react: ^18.1.0
-    typescript: ^4.7.3
+    typescript: ^4.7.4
   languageName: unknown
   linkType: soft
 
@@ -3235,7 +3235,7 @@ __metadata:
     events: ^3.3.0
     parcel: ^2.6.2
     react: ^18.1.0
-    typescript: ^4.7.3
+    typescript: ^4.7.4
   languageName: unknown
   linkType: soft
 
@@ -4227,7 +4227,7 @@ __metadata:
     "@parcel/transformer-typescript-types": ^2.6.2
     "@types/node": ^18.0.0
     parcel: ^2.6.2
-    typescript: ^4.7.3
+    typescript: ^4.7.4
   languageName: unknown
   linkType: soft
 
@@ -4756,7 +4756,7 @@ __metadata:
     planck: ^1.0.0-alpha.4
     react: ^18.1.0
     react-dom: ^18.1.0
-    typescript: ^4.7.3
+    typescript: ^4.7.4
     use-resize-observer: ^9.0.0
   languageName: unknown
   linkType: soft
@@ -5225,7 +5225,7 @@ __metadata:
     react: ^18.1.0
     react-dom: ^18.1.0
     serve: ^13.0.2
-    typescript: ^4.7.3
+    typescript: ^4.7.4
     use-resize-observer: ^9.0.0
   languageName: unknown
   linkType: soft
@@ -5360,23 +5360,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^4.7.3":
-  version: 4.7.3
-  resolution: "typescript@npm:4.7.3"
+"typescript@npm:^4.7.4":
+  version: 4.7.4
+  resolution: "typescript@npm:4.7.4"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: fd13a1ce53790a36bb8350e1f5e5e384b5f6cb9b0635114a6d01d49cb99916abdcfbc13c7521cdae2f2d3f6d8bc4a8ae7625edf645a04ee940588cd5e7597b2f
+  checksum: 5750181b1cd7e6482c4195825547e70f944114fb47e58e4aa7553e62f11b3f3173766aef9c281783edfd881f7b8299cf35e3ca8caebe73d8464528c907a164df
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^4.7.3#~builtin<compat/typescript>":
-  version: 4.7.3
-  resolution: "typescript@patch:typescript@npm%3A4.7.3#~builtin<compat/typescript>::version=4.7.3&hash=bda367"
+"typescript@patch:typescript@^4.7.4#~builtin<compat/typescript>":
+  version: 4.7.4
+  resolution: "typescript@patch:typescript@npm%3A4.7.4#~builtin<compat/typescript>::version=4.7.4&hash=bda367"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 8257ce7ecbbf9416da60045a76a99d473698ca9e973fa0ddab7137cacb1587255431176cbbcc801a650938c4dc8109ab88355774829a714fabe56a53a2fe4524
+  checksum: 96d3030cb01143570567cb4f3a616b10df65f658f0e74e853e77a089a6a954e35c800be7db8b9bfe9a1ae05d9c2897e281359f65e4caa1caf266368e1c4febd3
   languageName: node
   linkType: hard
 
