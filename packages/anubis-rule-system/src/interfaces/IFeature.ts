@@ -1,12 +1,9 @@
 import {IRule} from './IRule'
 import {IRuleContext} from './IRuleContext'
 
-/**
- * Группа правил, объединенных в уровень игры.
- */
-export interface ILevel extends IRule {
+export interface IFeature extends IRule {
 	/**
-	 * Инициализировать все правила данного уровня игры.
+	 * Инициализировать все правила данной фичи.
 	 * @param context Контекст игры со ссылками на объекты IDataStorage и IMessageEmitter.
 	 */
 	init(context: IRuleContext): void

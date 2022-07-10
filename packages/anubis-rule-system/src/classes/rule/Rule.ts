@@ -1,5 +1,5 @@
 import {IRule} from '../../interfaces/IRule'
-import {IMessageEmitter, ProhibitedMessageEmitter} from 'anubis-message-broker'
+import {IRuleContext} from '../../interfaces/IRuleContext'
 
 /**
  * Базовая реализация игрового правила.
@@ -7,22 +7,11 @@ import {IMessageEmitter, ProhibitedMessageEmitter} from 'anubis-message-broker'
  * Метод dispose() по желанию.
  */
 export abstract class Rule implements IRule {
-	#messageEmitter: IMessageEmitter = new ProhibitedMessageEmitter
-
-	public get messageEmitter(): IMessageEmitter {
-		return this.#messageEmitter
-	}
-
-	public set messageEmitter(messageEmitter: IMessageEmitter) {
-		this.#messageEmitter = messageEmitter
-	}
-
-	// public readonly context: IRuleContext = {
-	// 	messageEmitter: new ProhibitedMessageEmitter,
-	// 	dataStorage: new DataStorage(new ProhibitedMessageEmitter)
-	// }
-
 	public dispose(): void {}
 
-	public abstract init(): void
+	/**
+	 * Вызывается один раз перед началом игры.
+	 * @param context Контекст игры со ссылками на объекты IDataStorage и IMessageEmitter.
+	 */
+	public abstract init(context: IRuleContext): void
 }
