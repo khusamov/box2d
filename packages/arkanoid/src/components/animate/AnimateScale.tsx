@@ -13,6 +13,7 @@ export function AnimateScale({scale, onAnimationEnd = () => {}}: IAnimateScalePr
 				dur={0.5}
 				from={1}
 				to={scale}
+				// В браузере Safari обработчик устанавливается (вроде), но событие не вызывается. Из-за этого пауза в игре не работает.
 				onAnimationEnd={onAnimationEnd}
 			/>
 		)
