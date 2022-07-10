@@ -6,3 +6,8 @@ export {MacroRule} from './classes/rule/MacroRule'
 
 export type {IRule} from './interfaces/IRule'
 export type {ILevel} from './interfaces/ILevel'
+export type {IRuleContext} from './interfaces/IRuleContext'
+export type {TRule} from './types/TRule'
+export type {TRuleInit} from './types/TRuleInit'
+export type {TRuleListener} from './types/TRuleListener'
+export type {TRuleListenerContext} from './types/TRuleListenerContext'
