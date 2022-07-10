@@ -16,19 +16,19 @@ import {IMessageEmitCommand} from '../interfaces/IMessageEmitCommand'
  * Подписка на сообщения:
  * - MessageBroker.on() или .once() - Подписка на класс сообщений.
  */
-export class MessageBroker implements IMessageBroker {
+export class MessageBroker<C extends object = {}> implements IMessageBroker {
 	public constructor(
 		private readonly commandQueue: ICommand[],
 		private readonly messageQueue: IMessage[],
-		private readonly messageEmitter: IMessageEmitter,
+		private readonly messageEmitter: IMessageEmitter<C>,
 		private readonly messageEmitCommand: IMessageEmitCommand
 	) {}
 
-	public on<M extends IMessage>(MessageClass: TMessageConstructor<M>, listener: TMessageListener<M>): IDisposable {
+	public on<M extends IMessage>(MessageClass: TMessageConstructor<M>, listener: TMessageListener<M, C>): IDisposable {
 		return this.messageEmitter.on(MessageClass, listener)
 	}
 
-	public once<M extends IMessage>(MessageClass: TMessageConstructor<M>, listener: TMessageListener<M>): IDisposable {
+	public once<M extends IMessage>(MessageClass: TMessageConstructor<M>, listener: TMessageListener<M, C>): IDisposable {
 		return this.messageEmitter.once(MessageClass, listener)
 	}
 

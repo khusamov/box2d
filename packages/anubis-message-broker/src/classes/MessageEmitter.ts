@@ -1,6 +1,6 @@
 import {IDisposable} from 'base-types'
 import {TMessageConstructor} from '../types/TMessageConstructor'
-import {TMessageListener} from '../types/TMessageListener'
+import {TMessageListenerContext, TMessageListener} from '../types/TMessageListener'
 import {IMessage} from '../interfaces/IMessage'
 import {IMessageEmitter} from '../interfaces/IMessageEmitter'
 import {IEventEmitter} from '../interfaces/IEventEmitter'
@@ -12,16 +12,17 @@ import {MessageListenerDisposer} from './MessageListenerDisposer'
  * Позволяет создать классы сообщений.
  * Для группировки сообщений используйте наследование классов сообщений.
  */
-export class MessageEmitter implements IMessageEmitter {
+export class MessageEmitter<C extends object = {}> implements IMessageEmitter<C> {
 	public constructor(
-		private readonly eventEmitter: IEventEmitter
+		private readonly eventEmitter: IEventEmitter,
+		private readonly context: C = Object()
 	) {}
 
-	public on<M extends IMessage>(MessageClass: TMessageConstructor<M>, listener: TMessageListener<M>): IDisposable {
+	public on<M extends IMessage>(MessageClass: TMessageConstructor<M>, listener: TMessageListener<M, C>): IDisposable {
 		return this.addListener('on', MessageClass, listener)
 	}
 
-	public once<M extends IMessage>(MessageClass: TMessageConstructor<M>, listener: TMessageListener<M>): IDisposable {
+	public once<M extends IMessage>(MessageClass: TMessageConstructor<M>, listener: TMessageListener<M, C>): IDisposable {
 		return this.addListener('once', MessageClass, listener)
 	}
 
@@ -33,10 +34,18 @@ export class MessageEmitter implements IMessageEmitter {
 		this.eventEmitter.removeAllListeners()
 	}
 
-	private addListener<M extends IMessage>(method: 'on' | 'once', MessageClass: TMessageConstructor<M>, listener: TMessageListener<M>): IDisposable {
+	private addListener<M extends IMessage>(method: 'on' | 'once', MessageClass: TMessageConstructor<M>, listener: TMessageListener<M, C>): IDisposable {
 		const disposer = new MessageListenerDisposer(this.eventEmitter, MessageClass)
-		disposer.listener = (message: M) => listener(message, disposer)
+		disposer.listener = (message: M) => listener(message, this.createMessageListenerContextContext(disposer))
 		this.eventEmitter[method](MessageClass.name, disposer.listener)
 		return disposer
+	}
+
+	private createMessageListenerContextContext<M extends IMessage>(disposer: MessageListenerDisposer<M>): TMessageListenerContext<C> {
+		return Object.assign(
+			() => disposer.dispose(),
+			{dispose: disposer.dispose},
+			this.context
+		)
 	}
 }
