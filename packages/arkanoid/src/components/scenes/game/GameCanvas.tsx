@@ -3,7 +3,7 @@ import {DebugCenterLines} from '../../debug/DebugCenterLines'
 import {Canvas} from '../../svg/Canvas'
 import {GameCanvasStyle} from './GameCanvas.module.scss'
 import {Game} from 'anubis-game-system'
-import {useRef} from 'react'
+import {useRef, useState} from 'react'
 import useResizeObserver from 'use-resize-observer'
 import {useRequestPointerLock} from '../../../hooks/useRequestPointerLock'
 import {useScale} from '../../../hooks/useScale'
@@ -15,6 +15,8 @@ import {useEventListener} from '../../../hooks/useEventListener'
 import {GameRenderer} from './GameRenderer'
 import useBooleanState from 'use-boolean-state'
 import {usePointerMovement} from '../../../hooks/usePointerMovement'
+import {ISize} from 'base-types'
+import {ResizeMessage} from '../../../game/messages/ResizeMessage'
 
 const MAIN_BUTTON = 0
 const RIGHT_BUTTON = 2
@@ -27,7 +29,19 @@ export function GameCanvas({game}: IGameCanvasProps) {
 	usePauseGame(game)
 	const ref = useRef<HTMLDivElement>(null)
 	const {getMovement} = usePointerMovement(ref)
-	const {width = 0, height = 0} = useResizeObserver({ref})
+
+	const [size, setSize] = useState<ISize>({width: 0, height: 0})
+	const {width = 0, height = 0} = size
+	useResizeObserver({
+		ref,
+		onResize: ({width = 0, height = 0}) => {
+			setSize({width, height})
+			game.messageEmitter.emit(new ResizeMessage({width, height}))
+			// TODO После отправки ResizeMessage должно сгенерироваться сообщение с новыми размерами игрового мира.
+			//  Это нужно для пересчета scale.
+		}
+	})
+
 	const {requestPointerLock, cancelPointerLock, isPointerLock} = useRequestPointerLock(ref)
 	const scale = useScale({width, height}, {width: 70, height: 40})
 	const cameraTransform = useCameraCorrection({width, height})

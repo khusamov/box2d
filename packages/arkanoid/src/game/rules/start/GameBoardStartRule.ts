@@ -24,6 +24,8 @@ const edge: Array<[number, number, number, number]> = [
  * @event GameBoardCreation
  */
 export class GameBoardStartRule extends StartRule {
+	// TODO Сделать вызов start во время init(), а не как сейчас во время UpdateMessage.
+	//  Это позволит отлавливать сообщение ResizeMessage.
 	protected start(dataStorage: IDataStorage): void {
 		const gameBoardEntity = new Entity(
 			new IdentificationData({type: 'GameBoard'}),
