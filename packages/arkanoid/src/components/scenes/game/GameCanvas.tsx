@@ -30,6 +30,8 @@ export function GameCanvas({game}: IGameCanvasProps) {
 	const ref = useRef<HTMLDivElement>(null)
 	const {getMovement} = usePointerMovement(ref)
 
+	const [isContextMenuBlockedOnce, setContextMenuBlockedOnce, cancelContextMenuBlockedOnce] = useBooleanState(false)
+
 	const [size, setSize] = useState<ISize>({width: 0, height: 0})
 	const {width = 0, height = 0} = size
 	useResizeObserver({
@@ -76,6 +78,7 @@ export function GameCanvas({game}: IGameCanvasProps) {
 							emitStartGameMessage()
 							break
 						case RIGHT_BUTTON:
+							setContextMenuBlockedOnce()
 							cancelPointerLock()
 							game.stop()
 							break
@@ -103,6 +106,13 @@ export function GameCanvas({game}: IGameCanvasProps) {
 
 	useEventListener(ref, 'touchmove', {passive: false}, event => {
 		event.preventDefault()
+	})
+
+	useEventListener(ref, 'contextmenu', {passive: false}, event => {
+		if (isContextMenuBlockedOnce) {
+			cancelContextMenuBlockedOnce()
+			event.preventDefault()
+		}
 	})
 
 	useEventListener(ref, 'pointerenter', {passive: false}, event => {
