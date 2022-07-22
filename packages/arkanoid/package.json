@@ -33,6 +33,7 @@
     "node-sass": "^7.0.1",
     "parcel": "^2.6.2",
     "planck": "^1.0.0-alpha.4",
+    "process": "^0.11.10",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "serve": "^13.0.2",
