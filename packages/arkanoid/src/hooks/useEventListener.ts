@@ -9,7 +9,7 @@ import {RefObject, useEffect, useRef} from 'react'
  * @param sourceListener
  */
 export function useEventListener<K extends keyof HTMLElementEventMap>(
-	ref: RefObject<HTMLElement>,
+	ref: RefObject<HTMLElement>, // TODO Заменить на type Ref<T> = RefCallback<T> | RefObject<T> | null.
 	type: K,
 	options: boolean | AddEventListenerOptions,
 	sourceListener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any
