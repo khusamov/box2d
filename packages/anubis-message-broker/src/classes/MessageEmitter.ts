@@ -4,39 +4,89 @@ import {TMessageListener} from '../types/TMessageListener'
 import {IMessage} from '../interfaces/IMessage'
 import {IMessageEmitter} from '../interfaces/IMessageEmitter'
 import {IEventEmitter} from '../interfaces/IEventEmitter'
-import {MessageListenerDisposer} from './MessageListenerDisposer'
+import {TUserContext} from '../types/TUserContext'
+import {createMessageListenerContext} from '../functions/createMessageListenerContext'
+
+type TListener = (...args: any[]) => void
+interface IListenerRef {
+	listener: TListener
+}
+const forbiddenListener = () => {
+	throw new Error('Не определен слушатель')
+}
 
 /**
  * Замена штатного EventEmitter.
  * В качестве ключа используется не строка, а имя класса экземпляра сообщения.
  * Позволяет создать классы сообщений.
  * Для группировки сообщений используйте наследование классов сообщений.
+ * Есть возможность задать пользовательский контекст для всех слушателей.
  */
-export class MessageEmitter implements IMessageEmitter {
+export class MessageEmitter<C extends TUserContext> implements IMessageEmitter<C> {
 	public constructor(
-		private readonly eventEmitter: IEventEmitter
+		/**
+		 * Базовый IEventEmitter.
+		 */
+		private readonly eventEmitter: IEventEmitter,
+		/**
+		 * Пользовательский контекст для всех слушателей.
+		 */
+		private readonly context: C = Object()
 	) {}
 
-	public on<M extends IMessage>(MessageClass: TMessageConstructor<M>, listener: TMessageListener<M>): IDisposable {
+	/**
+	 * Подписка на сообщение.
+	 * @param MessageClass Ссылка на класс сообщения.
+	 * @param listener Обработчик сообщения.
+	 */
+	public on<M extends IMessage>(MessageClass: TMessageConstructor<M>, listener: TMessageListener<M, C>): IDisposable {
 		return this.addListener('on', MessageClass, listener)
 	}
 
-	public once<M extends IMessage>(MessageClass: TMessageConstructor<M>, listener: TMessageListener<M>): IDisposable {
+	/**
+	 * Одноразовая подписка на сообщение.
+	 * @param MessageClass Ссылка на класс сообщения.
+	 * @param listener Обработчик сообщения.
+	 */
+	public once<M extends IMessage>(MessageClass: TMessageConstructor<M>, listener: TMessageListener<M, C>): IDisposable {
 		return this.addListener('once', MessageClass, listener)
 	}
 
+	/**
+	 * Передача сообщения всем слушателям.
+	 * @param message Экземпляр сообщения.
+	 */
 	public emit(message: IMessage) {
 		this.eventEmitter.emit(message.constructor.name, message)
 	}
 
+	/**
+	 * Освобождение ресурсов MessageEmitter.
+	 * Удаляются все слушатели.
+	 */
 	public dispose(): void {
 		this.eventEmitter.removeAllListeners()
 	}
 
-	private addListener<M extends IMessage>(method: 'on' | 'once', MessageClass: TMessageConstructor<M>, listener: TMessageListener<M>): IDisposable {
-		const disposer = new MessageListenerDisposer(this.eventEmitter, MessageClass)
-		disposer.listener = (message: M) => listener(message, disposer)
-		this.eventEmitter[method](MessageClass.name, disposer.listener)
-		return disposer
+	/**
+	 * Добавить слушателя.
+	 * @param method Метод добавления: on - обычная подписка, once - одноразовая подписка.
+	 * @param MessageClass Ссылка на класс сообщения.
+	 * @param messageListener Обработчик сообщения.
+	 * @private
+	 */
+	private addListener<M extends IMessage>(method: 'on' | 'once', MessageClass: TMessageConstructor<M>, messageListener: TMessageListener<M, C>): IDisposable {
+		const listenerRef: IListenerRef = {
+			listener: forbiddenListener
+		}
+
+		const dispose = () => this.eventEmitter.off(method, listenerRef.listener)
+
+		const messageListenerContext = createMessageListenerContext({dispose}, this.context)
+		listenerRef.listener = (message: M) => messageListener(message, messageListenerContext)
+
+		this.eventEmitter[method](MessageClass.name, listenerRef.listener)
+
+		return {dispose}
 	}
 }
