@@ -1,6 +1,6 @@
-import {EventEmitter} from 'events';
-import {IEventEmitter} from '../interfaces';
-import {Queue} from './Queue';
+import {EventEmitter} from 'events'
+import {IEventEmitter} from '../interfaces/IEventEmitter'
+import {Queue} from './Queue'
 
 export class QueueWithEventEmitter<T> extends Queue<T> implements IEventEmitter {
 	private eventEmitter = new EventEmitter
@@ -17,7 +17,7 @@ export class QueueWithEventEmitter<T> extends Queue<T> implements IEventEmitter 
 		return removed
 	}
 
-	public on(eventName: string | number, listener: (...args: any[]) => void): this {
+	public on(eventName: string | symbol, listener: (...args: any[]) => void): this {
 		this.eventEmitter.on(eventName, listener)
 		return this
 	}

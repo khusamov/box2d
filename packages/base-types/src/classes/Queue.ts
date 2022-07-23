@@ -1,4 +1,4 @@
-import {IQueue} from '../interfaces';
+import {IQueue} from '../interfaces/IQueue'
 
 /**
  * Простая реализация очереди.

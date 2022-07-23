@@ -1,4 +1,4 @@
-import {ICreator} from '../interfaces';
+import {ICreator} from '../interfaces/ICreator'
 
 type TCreateFunction<T> = () => T
 

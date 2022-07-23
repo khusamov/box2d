@@ -1,6 +1,6 @@
-import {IKeyboardListeners, TKeyboardListener} from './IKeyboardListeners';
-import {IDisposable} from '../../interfaces';
-import {Lazy} from '../Lazy';
+import {IDisposable} from '../../interfaces/IDisposable'
+import {Lazy} from '../Lazy'
+import {IKeyboardListeners, TKeyboardListener} from './IKeyboardListeners'
 
 const codeOf = (key: string) => 'Key' + key.toUpperCase()
 

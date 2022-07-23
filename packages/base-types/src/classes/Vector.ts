@@ -1,5 +1,5 @@
-import {IPoint} from '../interfaces';
-import {Vector3} from './Vector3';
+import {IPoint} from '../interfaces/IPoint'
+import {Vector3} from './Vector3'
 
 /*
  * Увеличить длину вектора можно так:

@@ -1,4 +1,4 @@
-import {IKeyValueObject} from '../interfaces';
+import {IKeyValueObject} from '../interfaces/IKeyValueObject'
 
 type TMapConvertResult<K, V> = IKeyValueObject<K, V | undefined>[]
 type TPlainObjectConvertResult<K, V> = IKeyValueObject<K, V>[]

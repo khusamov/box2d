@@ -1,5 +1,6 @@
-import {EventEmitter} from 'events';
-import {IStartable, IStoppable} from '../interfaces';
+import {EventEmitter} from 'events'
+import {IStoppable} from '../interfaces/IStoppable'
+import {IStartable} from '../interfaces/IStartable'
 
 /**
  * http://gs-studio.com/news-about-it/30703----javascript
@@ -40,7 +41,7 @@ export class GameLoop implements IStartable, IStoppable {
 
 	on(eventName: 'update', update: (step: number) => void): this
 	on(eventName: 'render', render: (timeInterval: number) => void): this
-	on(eventName: string | number, listener: (...args: any[]) => void): this {
+	on(eventName: string | symbol, listener: (...args: any[]) => void): this {
 		this.eventEmitter.on(eventName, listener)
 		return this
 	}

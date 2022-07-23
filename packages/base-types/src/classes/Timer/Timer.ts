@@ -1,6 +1,6 @@
-import {ITimer} from '../../interfaces'
-import {ETimerState, TTimerAction} from './timerTypes';
-import {handleByState} from './handleByState';
+import {ITimer} from '../../interfaces/ITimer'
+import {ETimerState, TTimerAction} from './timerTypes'
+import {handleByState} from './handleByState'
 
 /**
  * Простая реализация таймера.
