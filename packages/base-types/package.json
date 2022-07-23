@@ -13,6 +13,7 @@
 	"scripts": {
 		"build": "parcel build",
 		"build:watch": "parcel watch",
+		"check": "tsc --noEmit",
 		"prepublishOnly": "yarn build"
 	},
 	"dependencies": {
