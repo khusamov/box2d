@@ -5,9 +5,9 @@ import {IRuleContext} from './IRuleContext'
 /**
  * Группа правил, объединенных в уровень игры.
  */
-export interface ILevel<C extends TUserContext = {}> extends IRule<C> {
+export interface IFeature<C extends TUserContext = {}> extends IRule<C> {
 	/**
-    * Инициализировать все правила данного уровня игры.
+	 * Инициализировать все правила данной фичи.
 	 * Вызывается один раз перед началом игры.
 	 * @param {IRuleContext<C>} context Контекст правила игры.
 	 */

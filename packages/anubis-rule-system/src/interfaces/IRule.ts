@@ -1,24 +1,16 @@
+import {TUserContext} from 'anubis-message-broker/src'
 import {IDisposable} from 'base-types'
-import {IMessageEmitter} from 'anubis-message-broker'
+import {IRuleContext} from './IRuleContext'
 
 /**
  * Правило игры.
+ * Это объект с методом init(), который инициализирует правило игры.
+ * На вход метода подается контекст правила (ссылка на менеджер сообщений, ссылка на хранилище игровых данных).
  */
-export interface IRule extends IDisposable {
-	/**
-	 * Правило игры связывается с внешним миром только через брокер сообщений.
-	 * Например, если нужны игровые данные, то нужно создать одноразовую подписку (once)
-	 * на сообщение UpdateMessage, в котором будет ссылка на IDataStorage.
-	 */
-	messageEmitter: IMessageEmitter
-
-	/**
-	 * Контекст игры со ссылками на объекты IDataStorage и IMessageEmitter.
-	 */
-	//readonly context: IRuleContext
-
+export interface IRule<C extends TUserContext = {}> extends IDisposable {
 	/**
 	 * Вызывается один раз перед началом игры.
+	 * @param {IRuleContext<C>} context Контекст правила игры.
 	 */
-	init(): void
+	init(context: IRuleContext<C>): void
 }

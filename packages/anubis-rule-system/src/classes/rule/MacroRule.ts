@@ -1,7 +1,7 @@
+import {IRuleContext} from '../../interfaces/IRuleContext'
 import {Rule} from './Rule'
 import {RuleArray} from './RuleArray'
 import {IRule} from '../../interfaces/IRule'
-import {IMessageEmitter} from 'anubis-message-broker'
 
 /**
  * Группа правил, действующих как одно правило.
@@ -14,19 +14,8 @@ export class MacroRule extends Rule {
 		this.rules.push(...rules)
 	}
 
-	public override get messageEmitter(): IMessageEmitter {
-		return super.messageEmitter
-	}
-
-	public override set messageEmitter(messageEmitter: IMessageEmitter) {
-		super.messageEmitter = messageEmitter
-		for (const rule of this.rules) {
-			rule.messageEmitter = messageEmitter
-		}
-	}
-
-	public override init(): void {
-		this.rules.init()
+	public override init(context: IRuleContext): void {
+		this.rules.init(context)
 	}
 
 	public override dispose() {
