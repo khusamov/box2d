@@ -5,7 +5,7 @@ import {DataReplacingOperation} from './DataReplacingOperation'
 import {parentNodeSymbol} from '../../interfaces/INode'
 import {IEntity} from '../../interfaces/IEntity'
 
-export class DataFasade {
+export class DataFacade {
 	private readonly dataDeletingOperation: DataDeletingOperation
 	private readonly dataReplacingOperation: DataReplacingOperation
 

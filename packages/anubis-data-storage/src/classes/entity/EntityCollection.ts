@@ -1,12 +1,12 @@
 import {DataConstructor} from '../../types/DataConstructor'
 import {IData} from '../../interfaces/IData'
-import {DataStorageFasade} from '../DataStorageFasade'
+import {DataStorageFacade} from '../DataStorageFacade'
 import {isData} from '../../functions/isData'
 import {IEntity} from '../../interfaces/IEntity'
 
 export class EntityCollection<D extends IData> {
 	public constructor(
-		private readonly dataStorageFasade: DataStorageFasade,
+		private readonly dataStorageFasade: DataStorageFacade,
 		private readonly DataClass: DataConstructor<D>
 	) {}
 

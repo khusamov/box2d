@@ -2,14 +2,14 @@ import {IEntity} from '../interfaces/IEntity'
 import {IDataStorage} from '../interfaces/IDataStorage'
 import {EntityAddingOperation} from './entity/EntityAddingOperation'
 import {EntityDeletingOperation} from './entity/EntityDeletingOperation'
-import {EntityFasade} from './entity/EntityFasade'
+import {EntityFacade} from './entity/EntityFacade'
 import {INode} from '../interfaces/INode'
 import {IData} from '../interfaces/IData'
-import {DataFasade} from './data/DataFasade'
+import {DataFacade} from './data/DataFacade'
 import {EntityCollection} from './entity/EntityCollection'
 import {DataConstructor} from '../types/DataConstructor'
 
-export class DataStorageFasade {
+export class DataStorageFacade {
 	private readonly entityAddingOperation: EntityAddingOperation
 	private readonly entityDeletingOperation: EntityDeletingOperation
 
@@ -33,11 +33,11 @@ export class DataStorageFasade {
 	}
 
 	public createEntityFasade(entity: IEntity) {
-		return new EntityFasade(this.dataStorage.messageEmitter, entity)
+		return new EntityFacade(this.dataStorage.messageEmitter, entity)
 	}
 
 	public createDataFasade(data: IData) {
-		return new DataFasade(this.dataStorage.messageEmitter, data)
+		return new DataFacade(this.dataStorage.messageEmitter, data)
 	}
 
 	public createEntityCollection<D extends IData>(DataClass: DataConstructor<D>) {

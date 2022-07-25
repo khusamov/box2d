@@ -7,7 +7,7 @@ import {DataDeletingOperation} from '../data/DataDeletingOperation'
 import {parentNodeSymbol} from '../../interfaces/INode'
 import {IRoot} from '../../interfaces/IRoot'
 
-export class EntityFasade {
+export class EntityFacade {
 	private readonly dataAddingOperation: DataAddingOperation
 	private readonly dataDeletingOperation: DataDeletingOperation
 	private readonly dataReplacingOperation: DataReplacingOperation
