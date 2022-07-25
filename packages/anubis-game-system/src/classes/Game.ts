@@ -1,56 +1,41 @@
-import {IMessageEmitter} from 'anubis-message-broker'
+import {MacroRule} from 'anubis-rule-system'
+import {IRuleContext} from 'anubis-rule-system'
 import {IGame} from '../interfaces/IGame'
-import {IDataStorage} from 'anubis-data-storage'
 import {UpdateMessage} from '../messages/UpdateMessage'
-import {ILevel, MacroRule} from 'anubis-rule-system'
-import {suspendMessageEmitterEmit} from '../const/suspendMessageEmitterEmit'
+import {MessageEmitterController} from './MessageEmitterController'
+import {NotInitializedGameError} from './NotInitializedGameError'
 
 /**
  * Главный объект игры.
  */
 export class Game extends MacroRule implements IGame {
-	private readonly sourceMessageEmitter: IMessageEmitter
+	private _messageEmitterController: MessageEmitterController | undefined
 
-	public constructor(
-		level: ILevel,
-		messageEmitter: IMessageEmitter,
-		public readonly dataStorage: IDataStorage,
-	) {
-		super(level)
-		this.sourceMessageEmitter = messageEmitter
-		this.messageEmitter = this.suspendedMessageEmitter // Изначально игра стоит на паузе.
+	public start = () => this.messageEmitterController.emitOn()
+	public stop = () => this.messageEmitterController.emitOff()
+	public pause = () => this.stop()
+	public toggle = () => this[this.started ? 'pause' : 'start']()
+	public update = (timeInterval: number) => this.messageEmitterController.messageEmitter.emit(new UpdateMessage(timeInterval))
+
+	private get messageEmitterController(): MessageEmitterController {
+		if (!this._messageEmitterController) {
+			throw new NotInitializedGameError
+		}
+		return this._messageEmitterController
 	}
 
-	public start() {
-		this.messageEmitter = this.sourceMessageEmitter
-	}
-
-	public stop() {
-		this.messageEmitter = this.suspendedMessageEmitter
-	}
-
-	public pause() {
-		this.messageEmitter = this.suspendedMessageEmitter
-	}
-
-	public toggle() {
-		this[this.state === 'pause' ? 'start' : 'pause']()
-	}
-
-	public update(timeInterval: number) {
-		this.messageEmitter.emit(new UpdateMessage(timeInterval, this.dataStorage))
+	public override init(context: IRuleContext) {
+		this._messageEmitterController = new MessageEmitterController(context.messageEmitter)
+		super.init(context)
 	}
 
 	public override dispose() {
 		super.dispose()
-		this.messageEmitter.dispose()
+		this.messageEmitterController.messageEmitter.dispose()
+		this._messageEmitterController = undefined
 	}
 
-	private get state() {
-		return this.messageEmitter === this.sourceMessageEmitter ? 'start' : 'pause'
-	}
-
-	private get suspendedMessageEmitter() {
-		return new Proxy(this.sourceMessageEmitter, suspendMessageEmitterEmit)
+	private get started() {
+		return this.messageEmitterController.emitEnabled
 	}
 }

@@ -3,8 +3,9 @@ import {GameCreator} from './classes/GameCreator'
 
 const game = new GameCreator(new Level).create()
 
-game.init()
 game.start()
-game.update(0)
+const timeInterval = 0
+game.update(timeInterval)
 game.pause()
+game.toggle()
 game.dispose()
