@@ -6,3 +6,5 @@ export {MacroRule} from './classes/rule/MacroRule'
 
 export type {IRule} from './interfaces/IRule'
 export type {ILevel} from './interfaces/ILevel'
+export type {IFeature} from './interfaces/IFeature'
+export type {IRuleContext} from './interfaces/IRuleContext'
