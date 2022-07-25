@@ -26,7 +26,7 @@ export {ShapeCreationRule} from './rules/ShapeCreationRule'
 export {PhysicWorldUpdateRule} from './rules/PhysicWorldUpdateRule'
 
 export {getEntityFromContact} from './functions/getEntityFromContact'
-export {ContactFasade} from './classes/ContactFasade'
+export {ContactFacade} from './classes/ContactFacade'
 
 export {PhysicFeature} from './features/PhysicFeature'
 export {PhysicWorldFeature} from './features/PhysicWorldFeature'

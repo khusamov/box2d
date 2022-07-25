@@ -7,7 +7,7 @@ import {getContactObjectPair} from '../functions/getContactObjectPair'
  * Удобная работа с контактом из симулятора физики Planck.
  * Внимание, предполагается что поле Body.userData из пакета planck содержит ссылку на сущность IEntity.
  */
-export class ContactFasade<D extends IData> {
+export class ContactFacade<D extends IData> {
 	private readonly contactObjectPair: TContactObjectPair<D> | undefined
 
 	public constructor(
