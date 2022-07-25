@@ -22,13 +22,13 @@ export interface IBodyDef {
 	linearVelocity?: Vec2;
 	angularVelocity?: number;
 	/**
-	 * Linear damping is use to reduce the linear velocity. The
+	 * Linear damping is used to reduce the linear velocity. The
 	 * damping parameter can be larger than 1.0 but the damping effect becomes
 	 * sensitive to the time step when the damping parameter is large.
 	 */
 	linearDamping?: number;
 	/**
-	 * Angular damping is use to reduce the angular velocity.
+	 * Angular damping is used to reduce the angular velocity.
 	 * The damping parameter can be larger than 1.0 but the damping effect
 	 * becomes sensitive to the time step when the damping parameter is large.
 	 */

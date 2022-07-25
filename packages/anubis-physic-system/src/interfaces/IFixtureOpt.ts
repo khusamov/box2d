@@ -27,7 +27,7 @@ export interface IFixtureOpt {
 	 */
 	filterCategoryBits?: number;
 	/**
-	 * Collision category bit or bits that this fixture accept for collision.
+	 * Collision category bit or bits that this fixture accepts for collision.
 	 */
 	filterMaskBits?: number;
 }
