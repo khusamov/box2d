@@ -3,6 +3,7 @@ export {Feature} from './classes/Feature'
 export {Rule} from './classes/rule/Rule'
 export {RuleArray} from './classes/rule/RuleArray'
 export {MacroRule} from './classes/rule/MacroRule'
+export {RuleHelper} from './classes/rule/RuleHelper'
 
 export type {IRule} from './interfaces/IRule'
 export type {ILevel} from './interfaces/ILevel'
