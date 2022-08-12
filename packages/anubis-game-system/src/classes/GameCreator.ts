@@ -1,7 +1,7 @@
 import {ILevel, IRuleContext} from 'anubis-rule-system'
 import {IRule} from 'anubis-rule-system'
 import {ICreator} from 'base-types'
-import {createRuleContext} from '../functions/createRuleContext'
+import {createDefaultRuleContext} from '../functions/createDefaultRuleContext'
 import {Game} from './Game'
 
 /**
@@ -23,7 +23,7 @@ export class GameCreator implements ICreator<Game> {
 	}
 
 	public create(): Game {
-		const context = createRuleContext()
+		const context = createDefaultRuleContext()
 		const game = new Game(this.level, ...this.rules)
 		game.init(context)
 		this._context = context

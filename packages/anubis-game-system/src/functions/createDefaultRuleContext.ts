@@ -4,9 +4,9 @@ import {IRuleContext} from 'anubis-rule-system'
 import {EventEmitter} from 'events'
 
 /**
- * Создать игровой контекст.
+ * Создать игровой контекст по умолчанию.
  */
-export function createRuleContext(): IRuleContext {
+export function createDefaultRuleContext(): IRuleContext {
 	const eventEmitter = new EventEmitter
 	// TODO Что-то тут не так... слишком много обработчиков навешиваются на UpdateMessage.
 	eventEmitter.setMaxListeners(200)
