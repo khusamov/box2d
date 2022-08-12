@@ -8,6 +8,7 @@ export class BrickBallCollisionSoundRule extends Rule {
 		const clickSoundArrayBuffer = await response.arrayBuffer()
 
 		const context = new AudioContext
+
 		const soundGainNode = context.createGain()
 		soundGainNode.gain.value = 0.25
 		soundGainNode.connect(context.destination)
