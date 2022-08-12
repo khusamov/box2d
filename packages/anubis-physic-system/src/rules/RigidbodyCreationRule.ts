@@ -1,9 +1,8 @@
-import {World} from 'planck'
+import {DataStorageFacade, EntityAfterAddingMessage, isData} from 'anubis-data-storage'
 import {Rule} from 'anubis-rule-system'
-import {DataStorageFasade, EntityAfterAddingMessage, isData} from 'anubis-data-storage'
-import {UpdateMessage} from 'anubis-game-system'
-import {RigidbodyData} from '../data/RigidbodyData'
+import {World} from 'planck'
 import {PhysicWorldData} from '../data/PhysicWorldData'
+import {RigidbodyData} from '../data/RigidbodyData'
 import {PhysicWorldCreationMessage} from '../messages/PhysicWorldCreationMessage'
 import {RigidbodyCreationMessage} from '../messages/RigidbodyCreationMessage'
 
@@ -14,8 +13,8 @@ import {RigidbodyCreationMessage} from '../messages/RigidbodyCreationMessage'
  * @event RigidbodyCreatedMessage
  */
 export class RigidbodyCreationRule extends Rule {
-	public init(): void {
-		this.messageEmitter.on(EntityAfterAddingMessage, this.onEntityAfterAddingMessage.bind(this))
+	protected execute(): void {
+		this.context.messageEmitter.on(EntityAfterAddingMessage, this.onEntityAfterAddingMessage.bind(this))
 	}
 
 	private onEntityAfterAddingMessage({entity}: EntityAfterAddingMessage) {
@@ -30,21 +29,23 @@ export class RigidbodyCreationRule extends Rule {
 	}
 
 	private createBody(rigidbodyDataOrder: RigidbodyData) {
-		this.messageEmitter.once(UpdateMessage, ({dataStorage}) => {
-			const createBody = (world: World) => {
+		const dataStorageFacade = new DataStorageFacade(this.context.dataStorage)
+		const world = dataStorageFacade.find(isData(PhysicWorldData))?.world
+
+		const createBody = (
+			(world: World) => {
 				const body = world.createBody(rigidbodyDataOrder.bodyDef)
 				const rigidbodyData = new RigidbodyData(rigidbodyDataOrder.bodyDef, body)
-				body.setUserData(new DataStorageFasade(dataStorage).createDataFasade(rigidbodyDataOrder).entity)
-				new DataStorageFasade(dataStorage).createDataFasade(rigidbodyDataOrder).replace(rigidbodyData)
-				this.messageEmitter.emit(new RigidbodyCreationMessage(rigidbodyData))
+				body.setUserData(dataStorageFacade.createDataFasade(rigidbodyDataOrder).entity)
+				dataStorageFacade.createDataFasade(rigidbodyDataOrder).replace(rigidbodyData)
+				this.context.messageEmitter.emit(new RigidbodyCreationMessage(rigidbodyData))
 			}
+		)
 
-			const world = new DataStorageFasade(dataStorage).find(isData(PhysicWorldData))?.world
-			if (world) {
-				createBody(world)
-			} else {
-				this.messageEmitter.once(PhysicWorldCreationMessage, ({world}) => createBody(world))
-			}
-		})
+		if (world) {
+			createBody(world)
+		} else {
+			this.context.messageEmitter.once(PhysicWorldCreationMessage, ({world}) => createBody(world))
+		}
 	}
 }

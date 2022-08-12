@@ -1,10 +1,9 @@
-import {World} from 'planck'
-import {IDisposable} from 'base-types'
+import {DataStorageFacade, EntityAfterAddingMessage, isData} from 'anubis-data-storage'
 import {Rule} from 'anubis-rule-system'
-import {UpdateMessage} from 'anubis-game-system'
-import {DataStorageFasade, EntityAfterAddingMessage, isData} from 'anubis-data-storage'
-import {PhysicWorldCreationMessage} from '../messages/PhysicWorldCreationMessage'
+import {IDisposable} from 'base-types'
+import {World} from 'planck'
 import {PhysicWorldData} from '../data/PhysicWorldData'
+import {PhysicWorldCreationMessage} from '../messages/PhysicWorldCreationMessage'
 
 /**
  * Правило создания мира физической симуляции Planck.
@@ -21,8 +20,8 @@ import {PhysicWorldData} from '../data/PhysicWorldData'
  * @event PhysicWorldCreationMessage
  */
 export class PhysicWorldCreationRule extends Rule {
-	public init(): void {
-		this.messageEmitter.on(EntityAfterAddingMessage, this.onEntityAfterAddingMessage.bind(this))
+	protected execute(): void {
+		this.context.messageEmitter.on(EntityAfterAddingMessage, this.onEntityAfterAddingMessage.bind(this))
 	}
 
 	private onEntityAfterAddingMessage({entity}: EntityAfterAddingMessage, {dispose}: IDisposable) {
@@ -40,11 +39,9 @@ export class PhysicWorldCreationRule extends Rule {
 	}
 
 	private createWorld(physicWorldDataOrder: PhysicWorldData) {
-		this.messageEmitter.once(UpdateMessage, ({dataStorage}) => {
-			const worldDef = physicWorldDataOrder.worldDef
-			const physicWorldData = new PhysicWorldData(worldDef, new World(worldDef))
-			new DataStorageFasade(dataStorage).createDataFasade(physicWorldDataOrder).replace(physicWorldData)
-			this.messageEmitter.emit(new PhysicWorldCreationMessage(physicWorldData))
-		})
+		const worldDef = physicWorldDataOrder.worldDef
+		const physicWorldData = new PhysicWorldData(worldDef, new World(worldDef))
+		new DataStorageFacade(this.context.dataStorage).createDataFasade(physicWorldDataOrder).replace(physicWorldData)
+		this.context.messageEmitter.emit(new PhysicWorldCreationMessage(physicWorldData))
 	}
 }

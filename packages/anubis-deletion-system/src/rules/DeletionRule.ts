@@ -1,22 +1,16 @@
 import {Rule} from 'anubis-rule-system'
-import {DataAfterAddingMessage, DataStorageFasade, IDataStorage, IEntity} from 'anubis-data-storage'
+import {DataAfterAddingMessage, DataStorageFacade, IEntity} from 'anubis-data-storage'
 import {DeletedMarkData} from '../data/DeletedMarkData'
-import {UpdateMessage} from 'anubis-game-system'
 
 /**
  * Базовое правило удаления игровых данных.
  * Предназначено для упрощения создания своих правил удаления игровых данных.
  */
 export abstract class DeletionRule extends Rule {
-	public init(): void {
-		this.messageEmitter.on(DataAfterAddingMessage, ({data}) => {
+	public execute(): void {
+		this.context.messageEmitter.on(DataAfterAddingMessage, ({data}) => {
 			if (data instanceof DeletedMarkData) {
-				this.messageEmitter.once(UpdateMessage, ({dataStorage}) => {
-					this.deletion(
-						new DataStorageFasade(dataStorage).createDataFasade(data).entity,
-						dataStorage
-					)
-				})
+				this.deletion(new DataStorageFacade(this.context.dataStorage).createDataFasade(data).entity)
 			}
 		})
 	}
@@ -24,8 +18,7 @@ export abstract class DeletionRule extends Rule {
 	/**
 	 * Обработчик удаления игровых данных сущности.
 	 * @param deletedEntity Удаляемая сущность.
-	 * @param dataStorage Хранилище игровых сущностей.
 	 * @protected
 	 */
-	protected abstract deletion(deletedEntity: IEntity, dataStorage: IDataStorage): void
+	protected abstract deletion(deletedEntity: IEntity): void
 }

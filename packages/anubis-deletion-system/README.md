@@ -43,9 +43,9 @@ import {RigidbodyData} from '../data/RigidbodyData'
 import {PhysicWorldData} from '../data/PhysicWorldData'
 
 export class RigidbodyDeletionRule extends DeletionRule {
-	protected deletion(deletedEntity: IEntity, dataStorage: DataStorage) {
+	protected deletion(deletedEntity: IEntity) {
 		const body = deletedEntity.find(isData(RigidbodyData))?.body
-		const world = new DataStorageFasade(dataStorage).find(isData(PhysicWorldData))?.world
+		const world = new DataStorageFasade(this.context.dataStorage).find(isData(PhysicWorldData))?.world
 		if (body && world) {
 			world.destroyBody(body)
 		}

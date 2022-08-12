@@ -15,7 +15,11 @@ export class Game extends MacroRule implements IGame {
 	public stop = () => this.messageEmitterController.emitOff()
 	public pause = () => this.stop()
 	public toggle = () => this[this.started ? 'pause' : 'start']()
-	public update = (timeInterval: number) => this.messageEmitterController.messageEmitter.emit(new UpdateMessage(timeInterval))
+	public update = (timeInterval: number) => this.context.messageEmitter.emit(new UpdateMessage(timeInterval))
+
+	public override get context(): IRuleContext {
+		return super.context
+	}
 
 	private get messageEmitterController(): MessageEmitterController {
 		if (!this._messageEmitterController) {
@@ -31,11 +35,11 @@ export class Game extends MacroRule implements IGame {
 
 	public override dispose() {
 		super.dispose()
-		this.messageEmitterController.messageEmitter.dispose()
+		this.context.messageEmitter.dispose()
 		this._messageEmitterController = undefined
 	}
 
-	private get started() {
+	public get started() {
 		return this.messageEmitterController.emitEnabled
 	}
 }

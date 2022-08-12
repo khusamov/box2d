@@ -1,7 +1,6 @@
-import {Shape} from 'planck'
+import {DataStorageFacade, EntityAfterAddingMessage, isData} from 'anubis-data-storage'
 import {Rule} from 'anubis-rule-system'
-import {UpdateMessage} from 'anubis-game-system'
-import {DataStorageFasade, EntityAfterAddingMessage, isData} from 'anubis-data-storage'
+import {Shape} from 'planck'
 import {ShapeData} from '../data/shape/ShapeData'
 import {ShapeCreationMessage} from '../messages/ShapeCreationMessage'
 
@@ -17,8 +16,8 @@ export class ShapeCreationRule<S extends ShapeData> extends Rule {
 		super()
 	}
 
-	public init(): void {
-		this.messageEmitter.on(EntityAfterAddingMessage, this.onEntityAfterAddingMessage.bind(this))
+	protected execute(): void {
+		this.context.messageEmitter.on(EntityAfterAddingMessage, this.onEntityAfterAddingMessage.bind(this))
 	}
 
 	private onEntityAfterAddingMessage({entity}: EntityAfterAddingMessage) {
@@ -32,14 +31,12 @@ export class ShapeCreationRule<S extends ShapeData> extends Rule {
 		if (shapeDataOrder.shape) {
 			throw new Error(`Нельзя добавлять данные ${this.ShapeDataClass.name} с предопределеным shape`)
 		}
-		this.messageEmitter.once(UpdateMessage, ({dataStorage}) => {
-			const shapeData = (
-				shapeDataOrder.clone(
-					this.createShape(shapeDataOrder)
-				)
+		const shapeData = (
+			shapeDataOrder.clone(
+				this.createShape(shapeDataOrder)
 			)
-			new DataStorageFasade(dataStorage).createDataFasade(shapeDataOrder).replace(shapeData)
-			this.messageEmitter.emit(new ShapeCreationMessage(shapeData))
-		})
+		)
+		new DataStorageFacade(this.context.dataStorage).createDataFasade(shapeDataOrder).replace(shapeData)
+		this.context.messageEmitter.emit(new ShapeCreationMessage(shapeData))
 	}
 }

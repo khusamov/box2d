@@ -1,5 +1,6 @@
-import {StartRule} from 'anubis-game-system'
-import {DataStorageFasade, Entity, IDataStorage} from 'anubis-data-storage'
+import {Entity} from 'anubis-data-storage'
+import {DataStorageFacade} from 'anubis-data-storage/src'
+import {Rule} from 'anubis-rule-system/src'
 import {IdentificationData} from '../../data/IdentificationData'
 import {EdgeShapeData, FixtureData, RigidbodyData} from 'anubis-physic-system'
 import {Vec2} from 'planck'
@@ -23,10 +24,10 @@ const edge: Array<[number, number, number, number]> = [
 /**
  * @event GameBoardCreation
  */
-export class GameBoardStartRule extends StartRule {
+export class GameBoardStartRule extends Rule {
 	// TODO Сделать вызов start во время init(), а не как сейчас во время UpdateMessage.
 	//  Это позволит отлавливать сообщение ResizeMessage.
-	protected start(dataStorage: IDataStorage): void {
+	protected execute(): void {
 		const gameBoardEntity = new Entity(
 			new IdentificationData({type: 'GameBoard'}),
 			new RigidbodyData({type: 'static', position: new Vec2(0, 0)}),
@@ -37,7 +38,7 @@ export class GameBoardStartRule extends StartRule {
 				)
 			))
 		)
-		new DataStorageFasade(dataStorage).addEntity(gameBoardEntity)
-		this.messageEmitter.emit(new GameBoardCreation(gameBoardEntity))
+		new DataStorageFacade(this.context.dataStorage).addEntity(gameBoardEntity)
+		this.context.messageEmitter.emit(new GameBoardCreation(gameBoardEntity))
 	}
 }

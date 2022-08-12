@@ -1,22 +1,22 @@
+import {Game} from 'anubis-game-system'
+import {ISize} from 'base-types'
+import {useRef, useState} from 'react'
+import useBooleanState from 'use-boolean-state'
+import useResizeObserver from 'use-resize-observer'
+import {BatMoveMessage} from '../../../game/messages/BatMoveMessage'
+import {ResizeMessage} from '../../../game/messages/ResizeMessage'
+import {StartGameMessage} from '../../../game/messages/StartGameMessage'
+import {useCameraCorrection} from '../../../hooks/useCameraCorrection'
+import {useEventListener} from '../../../hooks/useEventListener'
+import {usePauseGame} from '../../../hooks/usePauseGame'
+import {usePointerMovement} from '../../../hooks/usePointerMovement'
+import {useRequestPointerLock} from '../../../hooks/useRequestPointerLock'
+import {useScale} from '../../../hooks/useScale'
 import {ScaleAnimatedGroup} from '../../animate/ScaleAnimatedGroup'
 import {DebugCenterLines} from '../../debug/DebugCenterLines'
 import {Canvas} from '../../svg/Canvas'
 import {GameCanvasStyle} from './GameCanvas.module.scss'
-import {Game} from 'anubis-game-system'
-import {useRef, useState} from 'react'
-import useResizeObserver from 'use-resize-observer'
-import {useRequestPointerLock} from '../../../hooks/useRequestPointerLock'
-import {useScale} from '../../../hooks/useScale'
-import {useCameraCorrection} from '../../../hooks/useCameraCorrection'
-import {usePauseGame} from '../../../hooks/usePauseGame'
-import {StartGameMessage} from '../../../game/messages/StartGameMessage'
-import {BatMoveMessage} from '../../../game/messages/BatMoveMessage'
-import {useEventListener} from '../../../hooks/useEventListener'
 import {GameRenderer} from './GameRenderer'
-import useBooleanState from 'use-boolean-state'
-import {usePointerMovement} from '../../../hooks/usePointerMovement'
-import {ISize} from 'base-types'
-import {ResizeMessage} from '../../../game/messages/ResizeMessage'
 
 const MAIN_BUTTON = 0
 const RIGHT_BUTTON = 2
@@ -38,7 +38,7 @@ export function GameCanvas({game}: IGameCanvasProps) {
 		ref,
 		onResize: ({width = 0, height = 0}) => {
 			setSize({width, height})
-			game.messageEmitter.emit(new ResizeMessage({width, height}))
+			game.context.messageEmitter.emit(new ResizeMessage({width, height}))
 			// TODO После отправки ResizeMessage должно сгенерироваться сообщение с новыми размерами игрового мира.
 			//  Это нужно для пересчета scale.
 		}
@@ -51,9 +51,9 @@ export function GameCanvas({game}: IGameCanvasProps) {
 	const [isIntroEnd, setIntroEnd] = useBooleanState(false)
 	const onAnimationEnd = () => setIntroEnd()
 
-	const emitStartGameMessage = () => game.messageEmitter.emit(new StartGameMessage)
+	const emitStartGameMessage = () => game.context.messageEmitter.emit(new StartGameMessage)
 	const emitBatMoveMessage = (movementX: number, movementY: number) => {
-		game.messageEmitter.emit(
+		game.context.messageEmitter.emit(
 			new BatMoveMessage(
 				movementX / scale,
 				movementY / -scale

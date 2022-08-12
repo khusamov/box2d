@@ -3,8 +3,8 @@ import {clickSoundUrl} from '../../sounds'
 import {BrickBallCollisionMessage} from '../messages/BrickBallCollisionMessage'
 
 export class BrickBallCollisionSoundRule extends Rule {
-	public async init() {
-		const response = await fetch(clickSoundUrl.toString())
+	protected async execute() {
+		const response = await fetch(clickSoundUrl)
 		const clickSoundArrayBuffer = await response.arrayBuffer()
 
 		const context = new AudioContext
@@ -14,7 +14,7 @@ export class BrickBallCollisionSoundRule extends Rule {
 
 		const clickSoundAudioBuffer = await context.decodeAudioData(clickSoundArrayBuffer)
 
-		this.messageEmitter.on(BrickBallCollisionMessage, () => {
+		this.context.messageEmitter.on(BrickBallCollisionMessage, () => {
 			const clickSoundSourceNode = context.createBufferSource()
 			clickSoundSourceNode.buffer = clickSoundAudioBuffer
 			clickSoundSourceNode.connect(soundGainNode)

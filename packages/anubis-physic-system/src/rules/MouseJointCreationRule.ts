@@ -1,6 +1,6 @@
+import {DataStorageFacade} from 'anubis-data-storage/src'
 import {Rule} from 'anubis-rule-system'
-import {UpdateMessage} from 'anubis-game-system'
-import {DataAfterAddingMessage, DataStorageFasade, EntityAfterAddingMessage, IDataStorage, isData} from 'anubis-data-storage'
+import {DataAfterAddingMessage, EntityAfterAddingMessage, isData} from 'anubis-data-storage'
 import {MouseJointData} from '../data/joint/MouseJointData'
 import {Body, World, MouseJoint} from 'planck'
 import {PhysicWorldData} from '../data/PhysicWorldData'
@@ -13,14 +13,14 @@ import {TPartialPicked} from '../types/TPartialPicked'
  * @event MouseJointCreationMessage
  */
 export class MouseJointCreationRule extends Rule {
-    public init(): void {
-    	this.messageEmitter.on(DataAfterAddingMessage, async ({data}) => {
+    public execute(): void {
+    	this.context.messageEmitter.on(DataAfterAddingMessage, async ({data}) => {
     		if (data instanceof MouseJointData) {
 				await this.createAndAddMouseJoint(data)
 			}
 		})
 
-        this.messageEmitter.on(EntityAfterAddingMessage, async ({entity}) => {
+        this.context.messageEmitter.on(EntityAfterAddingMessage, async ({entity}) => {
         	const mouseJointDataList = entity.flat(Infinity).filter(isData(MouseJointData))
 
 			for (const mouseJointData of mouseJointDataList) {
@@ -58,25 +58,25 @@ export class MouseJointCreationRule extends Rule {
 			throw new Error('Соединение не создано')
 		}
 
-		const dataStorageFasade = new DataStorageFasade(await this.getDataStorage())
+		const dataStorageFacade = new DataStorageFacade(this.context.dataStorage)
 		const mouseJointData = (
 			new MouseJointData(
 				mouseJointDataOrder.mouseJointDef,
 				mouseJoint
 			)
 		)
-		dataStorageFasade.createDataFasade(mouseJointDataOrder).replace(mouseJointData)
-		this.messageEmitter.emit(new MouseJointCreationMessage(mouseJointData))
+		dataStorageFacade.createDataFasade(mouseJointDataOrder).replace(mouseJointData)
+		this.context.messageEmitter.emit(new MouseJointCreationMessage(mouseJointData))
 	}
 
 	private async findBodyB({findBodyB}: TPartialPicked<IJointFindBody, 'findBodyA'>): Promise<Body> {
-		const bodyB = findBodyB(await this.getDataStorage())
+		const bodyB = findBodyB(this.context.dataStorage)
 		if (bodyB) {
 			return bodyB
 		} else {
 			return new Promise<Body>(resolve => {
-				this.messageEmitter.on(EntityAfterAddingMessage, async (_, {dispose}) => {
-					const bodyB = findBodyB(await this.getDataStorage())
+				this.context.messageEmitter.on(EntityAfterAddingMessage, async (_, {dispose}) => {
+					const bodyB = findBodyB(this.context.dataStorage)
 					if (bodyB) {
 						resolve(bodyB)
 						dispose()
@@ -87,26 +87,17 @@ export class MouseJointCreationRule extends Rule {
 	}
 
 	private async getWorld(): Promise<World> {
-		const dataStorageFasade = new DataStorageFasade(await this.getDataStorage())
-		const world = dataStorageFasade.find(isData(PhysicWorldData))?.world
+		const dataStorageFacade = new DataStorageFacade(this.context.dataStorage)
+		const world = dataStorageFacade.find(isData(PhysicWorldData))?.world
     	return new Promise<World>(resolve => {
 			if (world) {
 				resolve(world)
 			} else {
-				this.messageEmitter.once(
+				this.context.messageEmitter.once(
 					PhysicWorldCreationMessage,
 					({world}) => resolve(world)
 				)
 			}
-		})
-	}
-
-	private async getDataStorage(): Promise<IDataStorage> {
-    	return new Promise<IDataStorage>(resolve => {
-			this.messageEmitter.once(
-				UpdateMessage,
-				({dataStorage}) => resolve(dataStorage)
-			)
 		})
 	}
 }

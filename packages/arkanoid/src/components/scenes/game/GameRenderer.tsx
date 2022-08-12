@@ -1,6 +1,6 @@
 import {Game} from 'anubis-game-system'
-import {DataStorageFasade, isData} from 'anubis-data-storage/src'
-import {PhysicWorldData} from 'anubis-physic-system/src'
+import {DataStorageFacade, isData} from 'anubis-data-storage'
+import {PhysicWorldData} from 'anubis-physic-system'
 import {PlanckRenderer} from '../../renderer/PlanckRenderer'
 
 interface IGameRendererProps {
@@ -8,8 +8,8 @@ interface IGameRendererProps {
 }
 
 export function GameRenderer({game}: IGameRendererProps) {
-	const dataStorageFasade = new DataStorageFasade(game.dataStorage)
-	const world = dataStorageFasade.find(isData(PhysicWorldData))?.world
+	const dataStorageFacade = new DataStorageFacade(game.context.dataStorage)
+	const world = dataStorageFacade.find(isData(PhysicWorldData))?.world
 	return !world ? null : (
 		<PlanckRenderer world={world}/>
 	)

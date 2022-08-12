@@ -6,7 +6,6 @@ export function useGame(level: Level): Game | undefined {
 	const [game, setGame] = useState<Game>()
 	useEffect(() => {
 		const game = new GameCreator(level).create()
-		game.init()
 		game.start()
 		setGame(game)
 		return () => game.dispose()

@@ -1,13 +1,16 @@
+import {DataStorageFacade} from 'anubis-data-storage'
+import {Rule} from 'anubis-rule-system'
 import {Vec2} from 'planck'
-import {StartRule} from 'anubis-game-system'
-import {DataStorageFasade, Entity, IDataStorage} from 'anubis-data-storage'
+import {Entity} from 'anubis-data-storage'
 import {BoxShapeData, FixtureData, RigidbodyData} from 'anubis-physic-system'
 import {IdentificationData} from '../../data/IdentificationData'
 
-export class BrickWallStartRule extends StartRule {
-	protected start(dataStorage: IDataStorage): void {
-		new DataStorageFasade(dataStorage).addEntity(
-			...createBrickEntityList({y: 10})
+const brickWallOffsetY = 10
+
+export class BrickWallStartRule extends Rule {
+	protected execute(): void {
+		new DataStorageFacade(this.context.dataStorage).addEntity(
+			...createBrickEntityList({y: brickWallOffsetY})
 		)
 	}
 }

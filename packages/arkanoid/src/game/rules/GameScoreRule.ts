@@ -1,18 +1,18 @@
+import {DataStorageFacade} from 'anubis-data-storage'
 import {Rule} from 'anubis-rule-system'
-import {UpdateMessage} from 'anubis-game-system'
-import {DataStorageFasade, Entity} from 'anubis-data-storage'
+import {Entity} from 'anubis-data-storage'
 import {IdentificationData} from '../data/IdentificationData'
 import {GameScoreData} from '../data/GameScoreData'
 import {BrickBallCollisionMessage} from '../messages/BrickBallCollisionMessage'
 
 /**
- * 	Счет в игре.
+ * Счет в игре.
  */
 export class GameScoreRule extends Rule {
 	// TODO А ведь кешировать данные в правилах запрещено...
 	private gameScoreData: GameScoreData = new GameScoreData
 
-	public init(): void {
+	protected execute(): void {
 		this.addGameScoreEntity()
 		this.addBrickBallCollisionHandler()
 	}
@@ -21,17 +21,15 @@ export class GameScoreRule extends Rule {
 	 * Добавить обработчик столкновения мячика с кирпичиком.
 	 */
 	private addBrickBallCollisionHandler() {
-		this.messageEmitter.on(BrickBallCollisionMessage, () => {
-			this.messageEmitter.once(UpdateMessage, ({dataStorage}) => {
-				const gameScoreData = (
-					new GameScoreData(
-						this.gameScoreData.score + calculateScoreIncrement(this.gameScoreData),
-						performance.now()
-					)
+		this.context.messageEmitter.on(BrickBallCollisionMessage, () => {
+			const gameScoreData = (
+				new GameScoreData(
+					this.gameScoreData.score + calculateScoreIncrement(this.gameScoreData),
+					performance.now()
 				)
-				new DataStorageFasade(dataStorage).createDataFasade(this.gameScoreData).replace(gameScoreData)
-				this.gameScoreData = gameScoreData
-			})
+			)
+			new DataStorageFacade(this.context.dataStorage).createDataFasade(this.gameScoreData).replace(gameScoreData)
+			this.gameScoreData = gameScoreData
 		})
 	}
 
@@ -39,14 +37,12 @@ export class GameScoreRule extends Rule {
 	 * Добавить сущность для хранения счета в игре.
 	 */
 	private addGameScoreEntity() {
-		this.messageEmitter.once(UpdateMessage, ({dataStorage}) => {
-			new DataStorageFasade(dataStorage).addEntity(
-				new Entity(
-					new IdentificationData({type: 'GameScore'}),
-					this.gameScoreData
-				)
+		new DataStorageFacade(this.context.dataStorage).addEntity(
+			new Entity(
+				new IdentificationData({type: 'GameScore'}),
+				this.gameScoreData
 			)
-		})
+		)
 	}
 }
 

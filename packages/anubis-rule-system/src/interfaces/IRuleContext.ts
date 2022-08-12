@@ -1,6 +1,6 @@
 import {IMessageEmitter} from 'anubis-message-broker'
 import {IDataStorage} from 'anubis-data-storage'
-import {TUserContext} from 'anubis-message-broker/src'
+import {TUserContext} from 'anubis-message-broker'
 
 /**
  * Контекст правила игры.

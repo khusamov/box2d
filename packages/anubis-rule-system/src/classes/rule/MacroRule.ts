@@ -16,7 +16,10 @@ export class MacroRule extends Rule {
 
 	public override init(context: IRuleContext): void {
 		this.rules.init(context)
+		super.init(context)
 	}
+
+	public execute() {}
 
 	public override dispose() {
 		this.rules.dispose()
