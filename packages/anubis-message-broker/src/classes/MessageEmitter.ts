@@ -1,11 +1,12 @@
 import {IDisposable} from 'base-types'
-import {TMessageConstructor} from '../types/TMessageConstructor'
-import {TMessageListener} from '../types/TMessageListener'
+import {createMessageListenerContext} from '../functions/createMessageListenerContext'
+import {IEventEmitter} from '../interfaces/IEventEmitter'
 import {IMessage} from '../interfaces/IMessage'
 import {IMessageEmitter} from '../interfaces/IMessageEmitter'
-import {IEventEmitter} from '../interfaces/IEventEmitter'
+import {TMessageConstructor} from '../types/TMessageConstructor'
+import {TMessageListener} from '../types/TMessageListener'
 import {TUserContext} from '../types/TUserContext'
-import {createMessageListenerContext} from '../functions/createMessageListenerContext'
+import {InvalidMessageError} from './InvalidMessageError'
 
 type TListener = (...args: any[]) => void
 interface IListenerRef {
@@ -57,6 +58,9 @@ export class MessageEmitter<C extends TUserContext> implements IMessageEmitter<C
 	 * @param message Экземпляр сообщения.
 	 */
 	public emit(message: IMessage) {
+		if (message.constructor.name === 'Function') {
+			throw new InvalidMessageError
+		}
 		this.eventEmitter.emit(message.constructor.name, message)
 	}
 
