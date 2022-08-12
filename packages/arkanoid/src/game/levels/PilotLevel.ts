@@ -1,5 +1,6 @@
 import {Level} from 'anubis-rule-system'
 import {PhysicFeature} from 'anubis-physic-system'
+import {BallPlayOutRule} from '../rules/BallPlayOutRule'
 import {GameBoardStartRule} from '../rules/start/GameBoardStartRule'
 import {BrickWallStartRule} from '../rules/start/BrickWallStartRule'
 import {BatStartRule} from '../rules/start/BatStartRule'
@@ -53,7 +54,8 @@ export class PilotLevel extends Level {
 			new GameScoreRule,
 			new BallPositionRule,
 			new BatMovingRuleByType[movingType],
-			new BrickBallCollisionRule
+			new BrickBallCollisionRule,
+			new BallPlayOutRule
 		)
 	}
 }
