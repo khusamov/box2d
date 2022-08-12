@@ -25,11 +25,13 @@ export {PhysicWorldCreationRule} from './rules/PhysicWorldCreationRule'
 export {ShapeCreationRule} from './rules/ShapeCreationRule'
 export {PhysicWorldUpdateRule} from './rules/PhysicWorldUpdateRule'
 
-export {getEntityFromContact} from './functions/getEntityFromContact'
-export {ContactFacade} from './classes/ContactFacade'
-
 export {PhysicFeature} from './features/PhysicFeature'
 export {PhysicWorldFeature} from './features/PhysicWorldFeature'
 export type {IPhysicWorldFeatureParameters} from './features/PhysicWorldFeature'
 export {JointFeature} from './features/JointFeature'
 export {RigidbodyFeature} from './features/RigidbodyFeature'
+
+export {ContactFacade} from './classes/ContactFacade'
+export {PhysicWorldRuleHelper} from './classes/PhysicWorldRuleHelper'
+
+export {getEntityFromContact} from './functions/getEntityFromContact'
