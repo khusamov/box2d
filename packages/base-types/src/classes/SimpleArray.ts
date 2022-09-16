@@ -17,10 +17,14 @@ export class SimpleArray<T> extends Array<T> {
 		super(...items)
 	}
 
+	public override filter<S extends T>(predicate: (value: T, index: number, array: T[]) => value is S, thisArg?: any): S[]
+	public override filter(predicate: (value: T, index: number, array: T[]) => unknown, thisArg?: any): T[]
 	public override filter() {
 		return Array.from(this).filter(arguments[0], arguments[1])
 	}
 
+	public override find<S extends T>(predicate: (this: void, value: T, index: number, obj: T[]) => value is S, thisArg?: any): S | undefined
+	public override find(predicate: (value: T, index: number, obj: T[]) => unknown, thisArg?: any): T | undefined
 	public override find() {
 		return Array.from(this).find(arguments[0], arguments[1])
 	}
