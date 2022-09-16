@@ -4,7 +4,7 @@ import {map} from '../../functions/map'
 import {Bot} from '../Bot'
 import {Command} from './Command'
 
-const lookRangeMaximum = 5
+const lookRangeMaximum = 10
 
 export class LookCommand extends Command {
 	public execute(): void {
@@ -14,6 +14,8 @@ export class LookCommand extends Command {
 			0, this.bot.genome.sequence.maximum,
 			0, lookRangeMaximum
 		)
+		this.bot.genome.jump()
+		const signOffset: number = [1, -1][this.bot.genome.readCode() & 1] as number
 
 		const direction = createVec2(this.bot.body.getAngle(), lookRange)
 
@@ -33,27 +35,14 @@ export class LookCommand extends Command {
 			let target: 'bot' | 'edge' | undefined
 			if (data instanceof Bot) target = 'bot'
 			if (data === 'edge') target = 'edge'
-			const distance = Vec2.distance(this.bot.body.getPosition(), closest.point)
 			switch (target) {
-				case 'bot':
-					if (distance < lookRangeMaximum / 2) {
-						this.bot.body.applyForceToCenter(
-							createVec2(
-								this.bot.body.getAngle(),
-								3000
-							)
-						)
-					}
+				default:
+					// TODO Возможно стоит количество шагов перехода сделать параметром.
+					this.bot.genome.jump(10 * signOffset)
 					break
+				case 'bot':
 				case 'edge':
-					if (distance < lookRangeMaximum) {
-						this.bot.body.applyForceToCenter(
-							createVec2(
-								this.bot.body.getAngle(),
-								-800
-							)
-						)
-					}
+					this.bot.genome.jump(5 * signOffset)
 					break
 			}
 		}

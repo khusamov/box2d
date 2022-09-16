@@ -3,7 +3,6 @@ import {World, Fixture, Edge, Polygon, Circle, Vec2} from 'planck';
 import {convertPlanckListToArray} from '../../functions/convertPlanckListToArray';
 import {toDegree} from '../../functions/toDegree';
 import {Bot} from '../../model/Bot'
-import {codeCommandMap} from '../../model/BotVirtualMachine'
 import {PlanckRendererStyle, EdgeStyle, CircleStyle, PolygonStyle} from './PlanckRenderer.module.scss'
 
 interface IPlanckRendererProps {
@@ -13,8 +12,9 @@ interface IPlanckRendererProps {
 function printUserData(data: any) {
 	if (data instanceof Bot) {
 		const statements = data.genome.sequence.map(code => {
-			const CommandClass = codeCommandMap[code]
-			return CommandClass ? CommandClass.name.replace('Command', '') : code
+			// const CommandClass = codeCommandMap[code]
+			// return CommandClass ? CommandClass.name.replace('Command', '') : code
+			return code
 		})
 		console.log(Array.from(statements))
 	}

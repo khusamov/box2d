@@ -1,4 +1,3 @@
-import {codeCommandMap} from './BotVirtualMachine'
 import {Genome} from './Genome'
 import {NotDefineCodeError} from './NotDefineCodeError'
 import {Sequence} from './Sequence'
@@ -11,16 +10,13 @@ export class EasyGenome extends Genome {
 		return this._sequence
 	}
 
-	public constructor(
-		private length: number = 100,
-		codeValueMaximum: number = (Object.keys(codeCommandMap).length - 1)
-	) {
+	public constructor(sequence: Sequence) {
 		super()
-		this._sequence = Sequence.createRandom(length, codeValueMaximum)
+		this._sequence = sequence
 	}
 
 	public readCode(offset: number = 0): number {
-		const index = (this.programCounter + offset) % this.length
+		const index = (this.programCounter + offset) % this.sequence.length
 		const code = this.sequence.at(index)
 		if (code === undefined) {
 			throw new NotDefineCodeError(this, index)
@@ -29,6 +25,6 @@ export class EasyGenome extends Genome {
 	}
 
 	public jump(offset: number = 1): void {
-		this.programCounter = (this.programCounter + offset) % this.length
+		this.programCounter = (this.programCounter + offset) % this.sequence.length
 	}
 }

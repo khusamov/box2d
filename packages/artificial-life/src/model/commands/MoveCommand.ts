@@ -1,3 +1,4 @@
+import {Vec2} from 'planck'
 import {createVec2} from '../../functions/createVec2'
 import {map} from '../../functions/map'
 import {Command} from './Command'
@@ -12,6 +13,9 @@ export class MoveCommand extends Command {
 			0, this.bot.genome.sequence.maximum,
 			0, forceMax
 		)
+
+		this.bot.body.setLinearVelocity(new Vec2(0, 0))
+		this.bot.body.setAngularVelocity(0)
 
 		this.bot.body.applyForceToCenter(createVec2(this.bot.body.getAngle(), force))
 	}
