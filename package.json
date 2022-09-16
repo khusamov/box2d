@@ -6,9 +6,11 @@
 		"packages/*"
 	],
 	"scripts": {
-		"start": "yarn arkanoid",
+		"start": "yarn artificial-life",
 		"arkanoid": "yarn workspaces foreach --include 'arkanoid' run start",
 		"arkanoid:build": "yarn workspaces foreach --include 'arkanoid' run build",
+		"artificial-life": "yarn workspaces foreach --include 'artificial-life' run start",
+		"artificial-life:build": "yarn workspaces foreach --include 'artificial-life' run build",
 		"sample1": "yarn workspaces foreach --include 'sample1' run start",
 		"base-types:build": "yarn workspaces foreach --include 'base-types' run build",
 		"base-types:build:watch": "yarn workspaces foreach --include 'base-types' run build:watch",
