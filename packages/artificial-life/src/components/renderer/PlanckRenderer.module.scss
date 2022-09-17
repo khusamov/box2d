@@ -1,5 +1,5 @@
 .PlanckRendererStyle {
-	g.EdgeStyle {
+	.EdgeStyle {
 		path {
 			// https://www.flagcolorcodes.com/ussr
 			stroke: #CC0000;
@@ -7,14 +7,19 @@
 			fill: transparent;
 		}
 	}
-	circle.CircleStyle {
+	.CircleStyle {
 		// https://www.flagcolorcodes.com/ussr
 		fill: #CC0000;
 		stroke: transparent;
 	}
-	path.PolygonStyle {
+	.PolygonStyle {
 		// https://www.flagcolorcodes.com/ussr
 		fill: #CC0000;
 		stroke: transparent;
+	}
+	.DeadBotStyle {
+		* {
+			fill: #d7d7d7;
+		}
 	}
 }

@@ -1,9 +1,10 @@
+import classNames from 'classnames'
 import {Fragment} from 'react'
 import {World, Fixture, Edge, Polygon, Circle, Vec2} from 'planck';
 import {convertPlanckListToArray} from '../../functions/convertPlanckListToArray';
 import {toDegree} from '../../functions/toDegree';
 import {Bot} from '../../model/Bot'
-import {PlanckRendererStyle, EdgeStyle, CircleStyle, PolygonStyle} from './PlanckRenderer.module.scss'
+import {PlanckRendererStyle, EdgeStyle, CircleStyle, PolygonStyle, DeadBotStyle} from './PlanckRenderer.module.scss'
 
 interface IPlanckRendererProps {
 	world: World
@@ -20,6 +21,14 @@ function printUserData(data: any) {
 	}
 }
 
+function isDead(data: any): boolean {
+	let isDead = false
+	if (data instanceof Bot) {
+		isDead = data.isDead()
+	}
+	return isDead
+}
+
 export function PlanckRenderer({world}: IPlanckRendererProps) {
 	return (
 		<g className={PlanckRendererStyle}>
@@ -29,9 +38,13 @@ export function PlanckRenderer({world}: IPlanckRendererProps) {
 					const y = body.getTransform().p.y
 					const angle = body.getTransform().q.getAngle()
 					const fixtureList = convertPlanckListToArray(body.getFixtureList())
+					const className = classNames({
+						[DeadBotStyle]: isDead(body.getUserData())
+					})
 					return (
 						<g
 							key={index}
+							className={className}
 							transform={`translate(${x}, ${y}), rotate(${toDegree(angle)})`}
 							onClick={() => printUserData(body.getUserData())}
 						>

@@ -1,18 +1,19 @@
 import {createVec2} from '../../functions/createVec2'
 import {Command} from './Command'
 
-const attackForceMaximum = 5000
-
 /**
  * Атаковать.
  */
 export class AttackCommand extends Command {
+	public constructor(private readonly attackForce: number = 9000) {
+		super()
+	}
+
 	public execute(): void {
-		this.bot.body.applyForceToCenter(
-			createVec2(
-				this.bot.body.getAngle(),
-				attackForceMaximum
-			)
-		)
+		const force = this.attackForce
+
+		this.force.push(force)
+
+		this.bot.body.applyForceToCenter(createVec2(this.bot.body.getAngle(), force))
 	}
 }

@@ -4,10 +4,13 @@ import {Command} from './Command'
 export interface ICommandInfo {
 	command: Command
 	/**
-	 * Вероятность появления команды в геноме.
-	 * Часть целого.
+	 * Частота появления команды в геноме.
 	 */
-	probability: number
+	frequency: number
 }
 
-export class CommandProvider extends SimpleArray<ICommandInfo>{}
+export class CommandProvider extends SimpleArray<ICommandInfo>{
+	public get frequencyDistribution() {
+		return this.map(({frequency}) => frequency)
+	}
+}

@@ -1,15 +1,17 @@
 import {Body, Box, Circle, Shape, Vec2, World} from 'planck'
 import {convertPlanckListToArray} from '../functions/convertPlanckListToArray'
 import {getRandomInt} from '../functions/getRandomInt'
-import {map} from '../functions/map'
 import {toRadian} from '../functions/toRadian'
 import {DummyGenome} from './DummyGenome'
+import {Energy} from './Energy'
 import {Genome} from './Genome'
+import {Sensor, SensorActivateType} from './Sensor'
 
 export class Bot {
+	public readonly friction: number
 	public readonly density: number
 	public size: number
-	public energy: number
+	public energy: Energy
 
 	public constructor(
 		public readonly genome: Genome = new DummyGenome,
@@ -18,11 +20,13 @@ export class Bot {
 		 */
 		public readonly body: Body = new Body
 	) {
-		const codeMaximum = genome.sequence.length > 0 ? genome.sequence.maximum : 0
-
-		this.density = map(genome.readCode(0), 0, codeMaximum, 10, 15)
-		this.size = map(genome.readCode(1), 0, codeMaximum, .4, .5)
-		this.energy = map(genome.readCode(2), 0, codeMaximum, 100, 1000)
+		this.friction = genome.readCode(0, [0, 1])
+		this.density = genome.readCode(1, [10, 15])
+		this.size = genome.readCode(2, [.4, .5])
+		this.energy = new Energy(
+			genome.readCode(3, [500, 5000]),
+			genome.readCode(4, [1000, 5000])
+		)
 
 		if (body.getWorld()) {
 			body.setUserData(this)
@@ -34,9 +38,46 @@ export class Bot {
 
 			this.body.createFixture(
 				createBotShape(this.size, this.genome),
-				this.density
+				{
+					density: this.density,
+					friction: this.friction,
+					userData: 'body'
+				}
+			)
+
+			this.body.createFixture(
+				//new Circle(new Vec2(1, 0), .11),
+				new Box(1, 0.01, new Vec2(1, 0)),
+				{
+					isSensor: true,
+					userData: new Sensor(type => {
+						switch (type) {
+							case SensorActivateType.Bot:
+								this.genome.interrupt(0)
+								break
+							case SensorActivateType.Edge:
+								this.genome.interrupt(1)
+								break
+						}
+					})
+				}
 			)
 		}
+	}
+
+	public isDead() {
+		//return false
+		return this.energy.value <= 0
+	}
+
+	public get shape(): Shape {
+		const botBodyFixture = convertPlanckListToArray(this.body.getFixtureList()).find(fixture => fixture.getUserData() === 'body')
+
+		if (!botBodyFixture) {
+			throw new Error('Не найдено тело бота')
+		}
+
+		return botBodyFixture.getShape()
 	}
 }
 
@@ -46,7 +87,11 @@ function createBotShape(size: number, genome: Genome) {
 	const attackCommands = genome.sequence.filter(item => item === 4).length
 	const fleeCommands = genome.sequence.filter(item => item === 5).length
 
-	const type: 'circle' | 'box' = moveCommands + attackCommands > stopCommands + fleeCommands ? 'circle' : 'box'
+	const type: 'circle' | 'box' = (
+		moveCommands + attackCommands > stopCommands + fleeCommands
+			? 'circle'
+			: 'box'
+	)
 
 	let botShape: Shape
 	switch (type) {
@@ -68,10 +113,16 @@ function createBoxShape(size: number) {
 	return new Box(size, size)
 }
 
-export function createBotBody(world: World, position: Vec2): Body {
+interface IDamping {
+	angularDamping?: number
+	linearDamping?: number
+}
+
+export function createBotBody(world: World, position: Vec2, damping: IDamping = {}): Body {
 	return world.createBody({
 		type: 'dynamic',
 		angle: toRadian(getRandomInt(0, 360)),
-		position
+		position,
+		...damping
 	})
 }

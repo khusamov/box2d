@@ -1,16 +1,16 @@
 import {Bot} from '../Bot'
-
-const dummyBot = new Bot
+import {EnergyConsumption} from './EnergyConsumption'
 
 export type TCommandConstructor = {
 	new(): Command
 }
 
 export abstract class Command {
-	private _bot: Bot = dummyBot
+	private _bot: Bot | undefined
+	public force: EnergyConsumption = new EnergyConsumption
 
 	protected get bot(): Bot {
-		if (this._bot === dummyBot) {
+		if (!this._bot) {
 			throw new Error('Не задан бот')
 		}
 		return this._bot
@@ -18,8 +18,17 @@ export abstract class Command {
 
 	protected abstract execute(): void
 
-	public apply(bot: Bot) {
+	/**
+	 * Выполнить команду в отношении определенного бота.
+	 * @param {Bot} bot
+	 * @returns {number} Возвращает силу, которая была затрачена во время выполнения команды.
+	 */
+	public apply(bot: Bot): number {
 		this._bot = bot
 		this.execute()
+		this._bot = undefined
+		const force = this.force.value
+		this.force.clear()
+		return force
 	}
 }

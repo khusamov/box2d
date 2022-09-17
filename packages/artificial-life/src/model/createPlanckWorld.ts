@@ -13,6 +13,9 @@ import {RotateCommand} from './commands/RotateCommand'
 import {StopCommand} from './commands/StopCommand'
 import {Sequence} from './Sequence'
 
+// TODO Модуль createPlanckWorld() УДАЛИТЬ!
+// TODO И почистить Sequence.
+
 const velocityIterations = 6
 const positionIterations = 2
 
@@ -33,19 +36,18 @@ const vm = new BotVirtualMachine(
 		/**
 		 * Карта соответствия кодов (индекс) генома и команд.
 		 */
-		{command: new MoveCommand, probability: 100},
-		{command: new LookCommand, probability: 50},
-		{command: new RotateCommand, probability: 100},
-		{command: new StopCommand, probability: 20},
-		{command: new AttackCommand, probability: 20},
-		{command: new FleeCommand, probability: 100},
+		{command: new MoveCommand, frequency: 100},
+		{command: new LookCommand, frequency: 50},
+		{command: new RotateCommand, frequency: 100},
+		{command: new StopCommand, frequency: 20},
+		{command: new AttackCommand, frequency: 20},
+		{command: new FleeCommand, frequency: 100},
 	)
 )
 
-const a = {
-	time: 0
-}
-
+/**
+ * @deprecated
+ */
 export function update(world: World, timeInterval: number) {
 	world.step(timeInterval, velocityIterations, positionIterations)
 
@@ -62,13 +64,12 @@ export function update(world: World, timeInterval: number) {
 		}
 	})
 
-	a.time += timeInterval
-	if (a.time < 0.2) return
-	a.time = 0
-
-	for (const bot of bots) vm.update(bot)
+	vm.update(timeInterval, bots)
 }
 
+/**
+ * @deprecated
+ */
 export function createPlanckWorld() {
 	const world = new World({
 		gravity: new Vec2(0, 0),
@@ -91,7 +92,7 @@ export function createPlanckWorld() {
 					const commandDistribution: number[] = []
 					for (const info of vm.commandProvider) {
 						commandDistribution.push(
-							...Array(info.probability).fill(vm.commandProvider.indexOf(info))
+							...Array(info.frequency).fill(vm.commandProvider.indexOf(info))
 						)
 					}
 					return commandDistribution[getRandomInt(0, commandDistribution.length - 1)] as number
@@ -105,6 +106,9 @@ export function createPlanckWorld() {
 	return world
 }
 
+/**
+ * @deprecated
+ */
 function createPetriDishEdge(world: World) {
 	const extremeX = petriDish.width / 2
 	const extremeY = petriDish.height / 2

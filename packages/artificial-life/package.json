@@ -45,6 +45,7 @@
     "anubis-game-system": "workspaces:*",
     "anubis-message-broker": "workspaces:*",
     "base-types": "workspaces:*",
+    "classnames": "^2.3.2",
     "events": "^3.3.0",
     "inversion-of-control": "workspaces:*",
     "planck": "^1.0.0-alpha.4",

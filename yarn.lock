@@ -1857,6 +1857,7 @@ __metadata:
     anubis-game-system: "workspaces:*"
     anubis-message-broker: "workspaces:*"
     base-types: "workspaces:*"
+    classnames: ^2.3.2
     events: ^3.3.0
     inversion-of-control: "workspaces:*"
     node-sass: ^7.0.1
@@ -2201,6 +2202,13 @@ __metadata:
   version: 1.0.3
   resolution: "chrome-trace-event@npm:1.0.3"
   checksum: cb8b1fc7e881aaef973bd0c4a43cd353c2ad8323fb471a041e64f7c2dd849cde4aad15f8b753331a32dda45c973f032c8a03b8177fc85d60eaa75e91e08bfb97
+  languageName: node
+  linkType: hard
+
+"classnames@npm:^2.3.2":
+  version: 2.3.2
+  resolution: "classnames@npm:2.3.2"
+  checksum: 2c62199789618d95545c872787137262e741f9db13328e216b093eea91c85ef2bfb152c1f9e63027204e2559a006a92eb74147d46c800a9f96297ae1d9f96f4e
   languageName: node
   linkType: hard
 

@@ -1,21 +1,18 @@
 import {Fixture, Vec2} from 'planck'
 import {createVec2} from '../../functions/createVec2'
-import {map} from '../../functions/map'
 import {Bot} from '../Bot'
 import {Command} from './Command'
 
-const lookRangeMaximum = 10
+type TSign = 1 | -1
 
 export class LookCommand extends Command {
+	public constructor(private readonly lookRangeMaximum: number = 10) {
+		super()
+	}
+
 	public execute(): void {
-		this.bot.genome.jump()
-		const lookRange = map(
-			this.bot.genome.readCode(),
-			0, this.bot.genome.sequence.maximum,
-			0, lookRangeMaximum
-		)
-		this.bot.genome.jump()
-		const signOffset: number = [1, -1][this.bot.genome.readCode() & 1] as number
+		const lookRange = this.bot.genome.readCode(1, [0, this.lookRangeMaximum])
+		const signOffset: TSign = [1, -1][this.bot.genome.readCode(2) & 1] as TSign
 
 		const direction = createVec2(this.bot.body.getAngle(), lookRange)
 
@@ -46,5 +43,7 @@ export class LookCommand extends Command {
 					break
 			}
 		}
+
+		this.force.push(lookRange * 10)
 	}
 }

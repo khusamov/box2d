@@ -1,31 +1,55 @@
 import {Bot} from './Bot'
 import {CommandProvider} from './commands/CommandProvider'
 
+interface IBotVirtualMachineParameters {
+	/**
+	 * Конвертация силы (Ньютон) в единицы энергии.
+	 * Значение от 0 до 1.
+	 */
+	forceToEnergyRate?: number
+
+	/**
+	 * Частота выполнения команд бота.
+	 * Число операций в секунду.
+	 */
+	frequency?: number
+}
+
 /**
  * Виртуальная машина ботов.
- * Что она делает?
- * 1) Выполняет команды ботов.
  */
 export class BotVirtualMachine {
-	public constructor(public readonly commandProvider: CommandProvider) {}
+	private botPauseTime = 0
+	private readonly frequency: number
+	private readonly forceToEnergyRate: number
 
-	public update(bot: Bot) {
-		const code = bot.genome.readCode()
-		const commandInfo = this.commandProvider[code]
-		if (commandInfo) {
-			commandInfo.command.apply(bot)
-		} else {
-			// Повторение последней команды, если текущая команда не найдена.
-			// for (let offset = 1; offset < bot.genome.sequence.length; offset++) {
-			// 	const code = bot.genome.readCode(-offset)
-			// 	const CommandClass = codeCommandMap[code]
-			// 	if (CommandClass) {
-			// 		const command = new CommandClass(bot)
-			// 		command.execute()
-			// 		break
-			// 	}
-			// }
+	public constructor(
+		public readonly commandProvider: CommandProvider,
+		{forceToEnergyRate = .01, frequency = 5}: IBotVirtualMachineParameters = {}
+	) {
+		this.forceToEnergyRate = forceToEnergyRate
+		this.frequency = frequency
+	}
+
+	public update(timeInterval: number, bots: Bot[]) {
+		this.botPauseTime += timeInterval
+		if (this.botPauseTime > 1 / this.frequency) {
+			this.botPauseTime = 0
+			for (const bot of bots) {
+				this.updateBot(bot)
+			}
 		}
-		bot.genome.jump()
+	}
+
+	private updateBot(bot: Bot) {
+		if (!bot.isDead()) {
+			const code = bot.genome.readCode()
+			const commandInfo = this.commandProvider[code]
+			if (commandInfo) {
+				const force = commandInfo.command.apply(bot)
+				bot.energy.decrease(force * this.forceToEnergyRate)
+			}
+			bot.genome.jump()
+		}
 	}
 }

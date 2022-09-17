@@ -1,16 +1,14 @@
-import {map} from '../../functions/map'
 import {Command} from './Command'
 
-const torqueMaximum = 50
-
 export class RotateCommand extends Command {
+	public constructor(private readonly rotateTorqueMaximum: number = 50) {
+		super()
+	}
+
 	public execute(): void {
-		this.bot.genome.jump()
-		const torque = map(
-			this.bot.genome.readCode(),
-			0, this.bot.genome.sequence.maximum,
-			-torqueMaximum, torqueMaximum
-		)
+		const torque = this.bot.genome.readCode(1, [-this.rotateTorqueMaximum, this.rotateTorqueMaximum])
+
+		this.force.push(torque / this.bot.shape.getRadius())
 
 		this.bot.body.applyTorque(torque)
 	}
